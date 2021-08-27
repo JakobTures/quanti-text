@@ -1,1 +1,13 @@
 R1
+R2
+R3
+BT19
+tidytext1
+tidytext2
+tidytext3
+tidytext4
+quanteda1
+quanteda2
+quanteda3
+ML1
+ML2

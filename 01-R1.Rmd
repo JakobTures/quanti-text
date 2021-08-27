@@ -1,3 +1,3 @@
-# (PART) R Intro {-}
+# (PART) R & RStudio {-}
 
-# Introduction to R #1 {#R1}
+# R Basics {#R1}
