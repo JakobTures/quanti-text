@@ -1,0 +1,12 @@
+--- 
+title: "Quantitative Textanalyse mit R"
+author: "Jakob Tures"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+link-citations: yes
+github-repo: https://github.com/JakobTures/quanti-text.git
+---
+
+# Introduction {-}
