@@ -7,3 +7,37 @@ knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
 ```
+
+## Installation
+
+### R
+
+### RStudio
+
+## Erste Schritte
+
+### Hello World!
+
+### Rechnen mit R
+
+### Logische Vergleiche
+
+## Objekte
+
+## Vektoren
+
+### Subsetting
+
+### Typen von Vektoren
+
+## Weitere Datentypen
+
+### Dataframes
+
+### Listen
+
+### Matrizen
+
+## If/Else statements
+
+## For-loops

@@ -1,7 +1,37 @@
-# dplyr & ggplot {#R3}
+# dplyr & ggplot2 {#R3}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
 ```
+
+## Transformation mit dplyr
+
+### `mutate()`
+
+### `select()`
+
+### `rename()`
+
+### `filter()`
+
+### `summarise()` & `group_by()`
+
+### Export von Tabellen
+
+## Graphische Analyse mit ggplot2
+
+### ggplot2 syntax
+
+### aesthetics & geoms
+
+### Beispiele
+
+#### kontinuierliches x & y
+
+#### kategoriales x
+
+#### kontinuierliches x
+
+### Graphiken exportieren

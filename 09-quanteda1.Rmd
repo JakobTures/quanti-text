@@ -1,6 +1,6 @@
 # (PART) quanteda {-}
 
-# corpus, tokenisation & DFM {#quanteda1}
+# corpus, tokenisation & DTM {#quanteda1}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)

@@ -5,3 +5,33 @@ knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
 ```
+
+## RStudio workflow
+
+### R scripts
+
+### Projekte
+
+### Kommentare
+
+### Speichern
+
+## R packages
+
+### Installieren und Laden
+
+## Funktionen
+
+### namesspaces
+
+## tidyverse
+
+### tibbles
+
+### tidydata
+
+## Hilfe?
+
+### Hilfe!
+
+### Empfohlene externe Resourcen
