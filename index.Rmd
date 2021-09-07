@@ -34,7 +34,7 @@ in ihrem Kontext und ihrer enormen Komplexität von Menschen verstanden wird und
 Ebenen analysiert werden können die tiefer liegen als das reine geschriebene
 Wort es ausdrücken könnte. In der quantitativen Textanalyse nutzen wir hingegen
 vor allem computergestützte Methoden. Computer können menschliche Sprache jedoch
-nicht in dem Sinne *verstehen*, wie eine menschliche Kodierer*in dies kann.
+nicht in dem Sinne *verstehen*, wie eine menschliche Kodierer:in dies kann.
 Möchten wir beispielsweise den emotionalen Gehalt eines Textes -- das
 **sentiment** -- analysieren, können wir ein dictionary mit nach Emotionen
 kodierten Wörtern an unsere Textdaten anlegen, die Relation von "positiven" und
@@ -51,7 +51,7 @@ schwierig sein kann -- vermutlich kennt jeder von uns die Situation, das
 sentiment von Textnachrichten falsch ausgelegt zu haben. Auch bei der Anwendung
 der ausgfeilteren Methoden quantitativer Textanalyse müssen wir uns dieser
 Beschränkungen stets bewusst sein. Unsere Techniken und Algorithmen werden die
-Fähigkeit menschlicher Kodierer*innen Sprache in ihrem Kontext zu verstehen
+Fähigkeit menschlicher Kodierer:innen Sprache in ihrem Kontext zu verstehen
 nicht erreichen.
 
 Somit drängt sich natürlich die Frage zwingend auf, warum sollten wir überhaupt
@@ -75,7 +75,7 @@ Textanalyse können wir hingegen enorm große Textmengen in relativ wenig Zeit
 analysieren. Wenn ein sehr großes Analyseprojekt mit aufwendigen Algorithmen
 mehrere Stunden Rechenzeit in Anspruch nimmt -- diese Größenordnung werden wir
 in disem Kurs nicht erreichen -- steht dies im Verhältnis zu mehreren Jahren
-Arbeitszeit menschlicher Kodierer*innen. Im Rahmen dieses Kurses werden wir die
+Arbeitszeit menschlicher Kodierer:innen. Im Rahmen dieses Kurses werden wir die
 Plenarprotokolle des 19. Deutschen Bundestags analysieren. Dies sind mehr als
 200 Protokolle mit jeweils bis zu mehreren hundert Seiten Text. Diese per Hand
 zu analysieren ist mehr oder weniger unmöglich. Computergestützt wird aus
@@ -83,11 +83,11 @@ zu analysieren ist mehr oder weniger unmöglich. Computergestützt wird aus
 Rechenzeit sogar noch einen Kaffee holen. 
 
 Ein weiteres starkes Argument für quantitative Textanalyse ist aus meiner Sicht
-die Nachvollziehbarkeit und Transparenz der Analyse. Jede Nutzer*in mit Zugang
+die Nachvollziehbarkeit und Transparenz der Analyse. Jede Nutzer:in mit Zugang
 zu den Daten und unserem R-scripts kann die Analyse replizieren oder auch
 modifizieren. Diese Replizierbarkeit ist eine fundamentale Säule empirischer
 Wissenschaft und unabhängig von der nicht in Frage gestellten Fähigkeit und
-Gründlichkeit qualitativer Forscher*innen dort in dieser Form nicht möglich.
+Gründlichkeit qualitativer Forscher:innen dort in dieser Form nicht möglich.
 
 Eine letzte einleitende Bemerkung: Auch wenn ich in den obrigen zeilen viele
 Vergleiche zur qualitativen Textanalyse -- der klassischen "Heimat" von
