@@ -17,21 +17,26 @@ stammdaten <- tibble(
     xml_text(),
   Partei = xml_find_all(raw_xml, "MDB/BIOGRAFISCHE_ANGABEN/PARTEI_KURZ") %>% 
     xml_text(),
-  religion = xml_find_all(raw_xml, "MDB/BIOGRAFISCHE_ANGABEN/RELIGION") %>% 
-    xml_text(),
   erste_WP = xml_find_all(raw_xml, "MDB/WAHLPERIODEN/WAHLPERIODE[1]/WP") %>% 
     xml_text(),
   letzte_WP = xml_find_all(raw_xml, "MDB/WAHLPERIODEN/WAHLPERIODE[last()]/WP") %>% 
     xml_text()
 )
 
-# convert column to numeric
+# convert columns to numeric & code NAs
 stammdaten <- stammdaten %>% 
   mutate(letzte_WP = as.numeric(letzte_WP)) %>% 
-  mutate(erste_WP = as.numeric(erste_WP))
+  mutate(erste_WP = as.numeric(erste_WP)) %>% 
+  mutate(Titel = na_if(Titel, ""))
+
+# compute age at entry into BT
+stammdaten <- stammdaten %>% 
+  mutate(alter = interval(dmy(geb), dmy("24.09.2017")) / duration(num = 1, units = "years")) %>% 
+  mutate(alter = as.integer(floor(alter)))
+
+# reorder columns
+stammdaten <- stammdaten %>% 
+  relocate(nachname:Titel, Partei:alter, geb)
 
 # save the data for further use
 save(stammdaten, file = "stammdaten.RData")
-
-
-

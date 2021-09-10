@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>12 Anwendungsbeispiele 2 | Quantitative Textanalyse mit R</title>
-  <meta name="description" content="12 Anwendungsbeispiele 2 | Quantitative Textanalyse mit R" />
+  <title>4 ggplot2 | Quantitative Textanalyse mit R</title>
+  <meta name="description" content="4 ggplot2 | Quantitative Textanalyse mit R" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="12 Anwendungsbeispiele 2 | Quantitative Textanalyse mit R" />
+  <meta property="og:title" content="4 ggplot2 | Quantitative Textanalyse mit R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="https://github.com/JakobTures/quanti-text.git" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="12 Anwendungsbeispiele 2 | Quantitative Textanalyse mit R" />
+  <meta name="twitter:title" content="4 ggplot2 | Quantitative Textanalyse mit R" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="quanteda2.html"/>
-<link rel="next" href="ML1.html"/>
+<link rel="prev" href="R3.html"/>
+<link rel="next" href="BT19.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -261,9 +261,65 @@ Quantitative Textanalyse mit R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="quanteda3" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Anwendungsbeispiele 2</h1>
+<div id="R4" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> ggplot2</h1>
+<div id="graphische-analyse-mit-ggplot2" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Graphische Analyse mit ggplot2</h2>
+<p>Wir arbeiten in diesem Kapitel mit den in Kapitel <a href="R3.html#R3">3</a> transformierten
+Daten weiter. Dazu müssten Sie entweder das Script aus der Vorwoche nochmals
+durchführen, den unten stehenden code Block, welcher alle Veränderungen an den
+Daten in kompakter Form enthält ausführen, oder sie laden die Daten –
+vorausgesetzt Sie haben sie gespeichert. Vor dem Laden der Daten müssen wir
+erneut das <strong>tidyverse</strong> laden.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="R4.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb86-2"><a href="R4.html#cb86-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="R4.html#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;scripts/stammdaten.RData&quot;</span>)</span>
+<span id="cb86-4"><a href="R4.html#cb86-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-5"><a href="R4.html#cb86-5" aria-hidden="true" tabindex="-1"></a>stammdaten_19 <span class="ot">&lt;-</span> stammdaten <span class="sc">%&gt;%</span> </span>
+<span id="cb86-6"><a href="R4.html#cb86-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(letzte_WP <span class="sc">==</span> <span class="dv">19</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-7"><a href="R4.html#cb86-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">titel =</span> Titel,</span>
+<span id="cb86-8"><a href="R4.html#cb86-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">partei =</span> Partei) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-9"><a href="R4.html#cb86-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">str_c</span>(nachname, vorname, <span class="at">sep =</span> <span class="st">&quot;, &quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-10"><a href="R4.html#cb86-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">titel_dummy =</span> <span class="fu">if_else</span>(<span class="sc">!</span><span class="fu">is.na</span>(titel), <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-11"><a href="R4.html#cb86-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">partei =</span> <span class="fu">factor</span>(partei)) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-12"><a href="R4.html#cb86-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">partei =</span> <span class="fu">fct_collapse</span>(partei,</span>
+<span id="cb86-13"><a href="R4.html#cb86-13" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Union =</span> <span class="fu">c</span>(<span class="st">&quot;CDU&quot;</span>, <span class="st">&quot;CSU&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-14"><a href="R4.html#cb86-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">partei =</span> <span class="fu">fct_infreq</span>(partei)) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-15"><a href="R4.html#cb86-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(nachname<span class="sc">:</span>titel), <span class="sc">-</span>geb) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-16"><a href="R4.html#cb86-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(name, titel_dummy, partei, alter, erste_WP, letzte_WP)</span></code></pre></div>
+<div id="ggplot2-syntax" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> ggplot2 syntax</h3>
+</div>
+<div id="aesthetics-geoms" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> aesthetics &amp; geoms</h3>
+</div>
+<div id="graphische-analyse-der-stammdaten" class="section level3" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> Graphische Analyse der Stammdaten</h3>
+<div id="kontinuierliches-x-y" class="section level4" number="4.1.3.1">
+<h4><span class="header-section-number">4.1.3.1</span> kontinuierliches x &amp; y</h4>
+<p>Alter vs. 1. WP
+Alter vs WPs (Übung)</p>
+</div>
+<div id="kategoriales-x" class="section level4" number="4.1.3.2">
+<h4><span class="header-section-number">4.1.3.2</span> kategoriales x</h4>
+<p>Anzahl MdBs nach Partei</p>
+<p>Anzahl Titel nach Partei
+Anteil Titel nach Partei</p>
+</div>
+<div id="kontinuierliches-x" class="section level4" number="4.1.3.3">
+<h4><span class="header-section-number">4.1.3.3</span> kontinuierliches x</h4>
+<p>Boxplot für Alter nach Partei</p>
+<p>Verteilung Alter
+übereinander
+nach facet?</p>
+<p>Verteilung WPs (+ nach facet -&gt;Übung)</p>
+</div>
+</div>
+<div id="graphiken-exportieren" class="section level3" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> Graphiken exportieren</h3>
 
+</div>
+</div>
 </div>
 
 
@@ -273,8 +329,8 @@ Quantitative Textanalyse mit R
           </div>
         </div>
       </div>
-<a href="quanteda2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ML1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="R3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="BT19.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -296,7 +352,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/JakobTures/quanti-text.git/12-quanteda3.Rmd",
+"link": "https://github.com/JakobTures/quanti-text.git/04-R4.Rmd",
 "text": "Edit"
 },
 "history": {

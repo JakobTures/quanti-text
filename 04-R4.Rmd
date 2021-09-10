@@ -1,0 +1,70 @@
+# ggplot2 {#R4}
+
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache.path = 'cache/')
+```
+
+## Graphische Analyse mit ggplot2
+
+Wir arbeiten in diesem Kapitel mit den in Kapitel \@ref(R3) transformierten
+Daten weiter. Dazu müssten Sie entweder das Script aus der Vorwoche nochmals
+durchführen, den unten stehenden code Block, welcher alle Veränderungen an den
+Daten in kompakter Form enthält ausführen, oder sie laden die Daten --
+vorausgesetzt Sie haben sie gespeichert. Vor dem Laden der Daten müssen wir
+erneut das **tidyverse** laden.
+
+``` {r load_R4, include = FALSE}
+library(tidyverse)
+
+load(file = "stammdaten_19.RData")
+```
+
+``` {r transform_kompakt, evaluate = FALSE}
+library(tidyverse)
+
+load("scripts/stammdaten.RData")
+
+stammdaten_19 <- stammdaten %>% 
+  filter(letzte_WP == 19) %>% 
+  rename(titel = Titel,
+         partei = Partei) %>% 
+  mutate(name = str_c(nachname, vorname, sep = ", ")) %>% 
+  mutate(titel_dummy = if_else(!is.na(titel), TRUE, FALSE)) %>% 
+  mutate(partei = factor(partei)) %>% 
+  mutate(partei = fct_collapse(partei,
+                               Union = c("CDU", "CSU"))) %>% 
+  mutate(partei = fct_infreq(partei)) %>% 
+  select(-c(nachname:titel), -geb) %>% 
+  relocate(name, titel_dummy, partei, alter, erste_WP, letzte_WP)
+```
+
+### ggplot2 syntax
+
+### aesthetics & geoms
+
+### Graphische Analyse der Stammdaten
+
+#### kontinuierliches x & y
+Alter vs. 1. WP
+Alter vs WPs (Übung)
+
+#### kategoriales x
+Anzahl MdBs nach Partei
+
+Anzahl Titel nach Partei
+  Anteil Titel nach Partei
+
+
+
+#### kontinuierliches x
+Boxplot für Alter nach Partei
+
+Verteilung Alter
+  übereinander
+  nach facet?
+  
+Verteilung WPs (+ nach facet ->Übung)
+
+### Graphiken exportieren

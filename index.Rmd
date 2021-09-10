@@ -103,14 +103,14 @@ bleiben und andersherum. Die relevante Frage ist also nicht, welcher Ansatz ist
 
 ## Kursinhalte {-}
 
-Der erste Block des Kurses (Kapitel \@ref(R1), \@ref(R2) & \@ref(R3)) umfasst
-eine Einführung in R und RStudio. R ist eine Programmiersprache die vor allem
-für statistische Analysen Anwendung findet. Die Grundfunktionen von R können
-durch das Einbinden von professionellen und nutzergeschriebenen *packages*
-erweitert werden. Diese Erweiterungen sind es, die R so flexibel machen und
-neben statistischen Analysen unter anderem auch das Schreiben von Websiten
-direkt in R -- so wie diese Website -- und die Aufbereitung und Analyse von
-Textdaten ermöglichen. RStudio ist ein IDE -- 
+Der erste Block des Kurses (Kapitel \@ref(R1), \@ref(R2), \@ref(R3) & \@ref(R4))
+umfasst eine Einführung in R und RStudio. R ist eine Programmiersprache die vor
+allem für statistische Analysen Anwendung findet. Die Grundfunktionen von R
+können durch das Einbinden von professionellen und nutzergeschriebenen
+*packages* erweitert werden. Diese Erweiterungen sind es, die R so flexibel
+machen und neben statistischen Analysen unter anderem auch das Schreiben von
+Websites direkt in R -- so wie diese Website -- und die Aufbereitung und Analyse
+von Textdaten ermöglichen. RStudio ist ein IDE -- 
 *integrated development environment* -- für R und vereinfacht das Arbeiten mit
 der Sprache. Der erste Block umfasst Informationen zur Installation beider
 Softwares, der Bedienung von RStudio sowie grundlegenden R Befehlen.
@@ -129,7 +129,7 @@ beginnen mit dem Umgang mit Textdaten und der statistischen Analyse einzelner
 Wörter bevor wir uns der Arbeit mit Wortkombinationen widmen. Abgeschlossen wird
 der Block mit Techniken zur sentiment Analyse anhand eines dictionaries.
 
-Block Vier (Kapitel \@ref(quanteda1), \@ref(quanteda2) & \@ref(quanteda4)) führt
+Block Vier (Kapitel \@ref(quanteda1), \@ref(quanteda2) & \@ref(quanteda3)) führt
 ein weiteres package zur quantitativen Textanalyse ein, **quanteda**. Dieses
 nutzt eine alternative Struktur für Textdaten, deren Prinzipien wir beleuchten
 und uns damit auseinandersetzen, wie wir sie mit dme **tidyverse** integrieren
