@@ -1,4 +1,4 @@
-# ggplot2 {#R4}
+# Graphische Analyse mit ggplot2 {#R4}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
@@ -6,7 +6,6 @@ knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
-## Graphische Analyse mit ggplot2
 
 Wir arbeiten in diesem Kapitel mit den in Kapitel \@ref(R3) transformierten
 Daten weiter. Dazu müssten Sie entweder das Script aus der Vorwoche nochmals
@@ -21,10 +20,10 @@ library(tidyverse)
 load(file = "stammdaten_19.RData")
 ```
 
-``` {r transform_kompakt, evaluate = FALSE}
+``` {r transform_kompakt, eval = FALSE}
 library(tidyverse)
 
-load("scripts/stammdaten.RData")
+load("stammdaten.RData")
 
 stammdaten_19 <- stammdaten %>% 
   filter(letzte_WP == 19) %>% 
@@ -36,35 +35,626 @@ stammdaten_19 <- stammdaten %>%
   mutate(partei = fct_collapse(partei,
                                Union = c("CDU", "CSU"))) %>% 
   mutate(partei = fct_infreq(partei)) %>% 
-  select(-c(nachname:titel), -geb) %>% 
-  relocate(name, titel_dummy, partei, alter, erste_WP, letzte_WP)
+  mutate(geschlecht = factor(geschlecht)) %>% 
+  select(-c(nachname:titel, letzte_WP, geb)) %>% 
+  relocate(name, titel_dummy, partei, geschlecht, alter, erste_WP)
 ```
 
-### ggplot2 syntax
 
-### aesthetics & geoms
+## ggplot2 syntax
 
-### Graphische Analyse der Stammdaten
+Die graphische Datenanalyse mit dem core tidyverse package **ggplot2** folgt
+einer intuitiven Logik. Jede Grafik beginnt mit dem Initieren eines leeren
+*plots*. Diese leere "Leinwand" füllen wir dann in weiteren Schritten mit den
+darzustellenden graphischen Elementen.
 
-#### kontinuierliches x & y
-Alter vs. 1. WP
-Alter vs WPs (Übung)
+Zum Initieren des plots nutzen wir die Funktion `ggplot()` -- auch wenn der Name
+des packages **ggplot2** lautet, trägt der Funktionsname keine "2". Der Funktion
+geben wir das Datenobjekt welches geplottet werden soll als Argument.
 
-#### kategoriales x
-Anzahl MdBs nach Partei
+``` {r ggplot_demo_1}
+ggplot(data = stammdaten_19)
+```
 
-Anzahl Titel nach Partei
-  Anteil Titel nach Partei
+Die neu erstellte Grafik öffnet sich im "Plots" Tab von RStudio und erstrahlt in
+blendender Leere, da wir noch keine graphischen Elemente hinzugefügt haben.
+
+
+### geoms & aesthetics
+
+Diese graphischen Element werden *geoms* genannt. Wir fügen Sie einem plot hinzu
+indem wir nach `ggplot()` ein `+` schreiben und den Befehl für das geom in der
+nächsten Zeile eingeben. Weitere geoms können wir auf die selbe Art und Weise
+hinzufügen. Die grundsätzliche Syntax -- dies ist kein ausführbarer Code --
+sieht damit wie folgt aus:
+
+``` {r ggplot_demo_2, eval = FALSE}
+ggplot(data = ...) +
+  geom_1() +
+  geom_2() +
+  ...
+```
+
+Die geom Funktionen beginnen immer mit `geom_` und enden mit einem Wort das die
+Art des graphischen Objekts beschreibt. Beispielsweise `geom_point()` für
+scatterplots, `geom_line()` für lineplots oder `geom_col()` für barplots.
+
+Die *aesthetics* eines geoms dienen zur Zuordnung der x und y Variablen die in
+das Koordinatensytem geplottet werden sollen. Darüber hinaus können aesthetics
+auch genutzt werden um die graphische Darstellung der geplottet Elemente anhand
+der Werte einer weiteren Variable zu manipulieren -- beispielsweise die Farbe
+oder Größe geplotteter Punkte oder die Dicke von Linien. Dies klingt noch sehr
+abstrakt, wird aber in späteren Beispielen deutlich werden. 
+
+Betrachten wir zunächst wie die Zuordnung von x und y Variablen syntaktisch
+funktioniert. Diese *müssen* festgelegt werden. Alle weiteren aesthetics sind
+optional. Zur Definition der aesthetics nutzen wir die Funktion `aes()` als ein
+Argument der jeweiligen geom Funktion. Innerhalb von `aes()` weisen wir `x` und
+`y` die Variablen die auf der x-Achse beziehungsweise der y-Achse abgetragen
+werden sollen zu. Die Syntax sieht wie folgt aus:
+
+``` {r ggplot_demo_3, eval = FALSE}
+ggplot(data = ...) +
+  geom_1(aes(x = x_variable, y = y_variable)) +
+  geom_2(aes(x = x_variable, y = y_variable)) +
+  ...
+```
+
+Nutzen wir die selben x und y Variablen für alle geoms, können wir die
+Zuordnung auch direkt in der Funktion `ggplot()` vornehmen. 
+
+``` {r ggplot_demo_4, eval = FALSE}
+ggplot(data = ..., aes(x = x_variable, y = y_variable)) +
+  geom_1() +
+  geom_2() +
+  ...
+```
+
+Dies ist die grundsätzliche Syntax von **ggplot2**. Im Folgenden nutzen wir das
+package zur graphischen Analyse unserer Beispieldaten. Dabei betrachten wir nur
+einen Teil der verfügbaren geoms und der Möglichkeiten die Darstellung über die
+aesthetics zu manipluieren. Als Übersicht über alle verfügbaren geoms empfehle
+ich dringend das cheatsheet für **ggplot2**:
+<https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization.pdf>{target="_black"}
+Eine ausführlichere Einführung gibt das Kapitel "Data visualisation" in "R for
+Data Science":
+<https://r4ds.had.co.nz/data-visualisation.html>{target="_blank"}
+
+
+## Graphische Analyse der Stammdaten
+
+Variablen sind kontinuierlich, wenn sie jeden Wert -- möglicherweise im Minimum
+und Maximum begrenzt -- annehmen können. Sie sind auch immer numerisch. Ein in
+den Sozialwissenschaften häufig anzutreffendes Beispiel für eine kontinuierliche
+Variable wäre das Einkommen beziehungsweise monetäre Werte im Allgemeinen,
+vorausgesetzt sie werden als exakter Geldwert gemessen. In unserem
+Beispielsdatensatz sind das Alter und die erste Wahlperiode in der ein MdB in
+den Bundestag eintrat kontinuierliche Variablen.
+
+Variablen sind kategorial, wenn Sie als Werte nur eine begrenzte Anzahl
+vordefinierter Kategorien annehmen können. Wird das Einkommen statt als exakter
+Wert als Mitgliedschaft in breiten Einkommensgruppen gemessen, ist dies eine
+kategoriale Variable. In den Beispieldaten sind die Parteimitgliedschaft, das
+Geschlecht sowie die Dummyvariable zum akademischen Titel kategoriale Variablen.
+
+Geoms können danach unterschieden werden, für welche Typen von x und y Variablen
+sie anwendbar sind. Dieser Logik folgt auch das pben verlinkte cheatsheet.
+
+
+### kontinuierliches x & y
+
+Das Alter und die erste Wahlperiode in der ein MdB im Bundestag vertreten war,
+sind die einzigen kontinuierlichen Variablen in unserem Beispielsdatensatz. Eine
+Korrelation zwischen beiden Variablen ist naheliegend. Je älter ein MdB desto
+früher konnte er oder sie potentiell das erste mal in den Bundestag einziehen.
+Das Alter bei Ersteinzug in den BT wird aber zwischen den MdBs variieren. So
+werden wir Abgeordnete finden, die erst im relativ hohen Alter das erste Mandat
+erlangt haben und Andere die dabei überdurchschnittlich jung waren. Die erste
+Wahlperiode wird also nicht strikt vom Alter abhängen, dass ein Zusammenhang
+besteht scheint aber intuitiv schlüsig. 
+
+Das Alter erklärt in unserer ad hoc Hypothese also den ersten Einzug in den
+Bundestag. Dabei müssen wir von einem negativen Zusammenhang ausgehen. Je höher
+das Alter, desto niedriger die Wahlperiode des ersten Einzugs. Typischerweise,
+wird die erklärende unabhängige Variable auf der x-Achse, die zu erklärende
+abhängige Variable auf der y-Achse abgetragen. Mit `geom_point()` können wir
+einen scatterplot erstellen um die Kombination der Werte für Alter und die erste
+Wahlperiode für jeden MdB als Punkt in einem Koordinatensystem darzustellen.
+
+
+``` {r alter_erstewp_1}
+ggplot(data = stammdaten_19, aes(x = alter, y = erste_WP)) +
+  geom_point()
+```
+
+Der plot spricht auf den ersten Blick für den angenommenen Zusammenhang zwischen
+Alter und erster Wahlperiode. Je weiter die erste Wahlperiode zurückliegt, desto
+älter sind die MdBs. So finden wir beispielsweise unter den wenigen Abgeordneten
+die bereits im 11. Bundestag vertreten waren nur über 60-jährige, im 12. nur
+über 55-jährige und so weiter. Wir sehen aber auch, dass die Altersspannweite
+bei den nicht so weit in der Vergangenheit liegenden Wahlperioden sehr groß ist.
+Sehen wir uns dies für den 19. Bundestag genauer an.
+
+``` {r alter_19bt}
+stammdaten_19 %>% 
+  filter(erste_WP == 19) %>% 
+  summarise(minimum = min(alter),
+            maximum = max(alter),
+            spannweite = maximum - minimum,
+            anzahl = n())
+```
+
+Wir sehen, dass die 279 MdBs für die der 19. Bundestag das erste Mandat
+darstellt, bei Einzug zwischen 24 und 77 Jahre alt waren. Eine Spannweite von
+53 Jahren!
+
+Beim betrachten des plots fällt etwas weitere auf. Wir wissen, dass wir Daten zu
+732 Abgeordneten haben. Ohne die Punkt im scatterplot zu zählen, sollte deutlich
+sein, dass wir keine 732 Punkte sehen. Wohin sind unsere Datenpunkte
+verschwunden? Das Problem ist, dass beide Variablen in unserem Datensatz relativ
+wenig unterschiedliche Werte annehmen können. Wir haben nur eine begrenzte
+Anzahl möglicher erster Wahlperioden und, auch wenn hier die Menge möglicher
+Werte größer ist, eine absteckbare Menge an Altern die ein MdB haben kann. So
+wird es zur Regel statt zur Ausnahme, dass mehrere Abgeordnete die selbe
+Kombination beider Werte haben, also beispielsweise mehrere 50-jährige MdBs ihr
+erstes Mandat im 19. Bundestag hatten. Diese Punkte liegen dann alle
+übereinander und sind im scatterplot nicht zu unterscheiden.
+
+Sidenote: Mehr mögliche Werte -- wir zum Beispiel das genaue Alter in Tagen
+statt gerundet auf Jahre -- könnten das Problem abschwächen, aber auch dann
+wären gleiche Wertkombinationen zwischen Abgeordneten nicht unwahrscheinlich.
+
+Wie können wir diese übereinanderliegenden Werte sichtbar machen? **ggplot2**
+bietet uns dazu zwei praktische geoms an. Eine Möglichkeit ist statt
+`geom_point()` die Funktion `geom_count()` zu verwenden. Im Unterschied zum
+normalen scatterplot, variieren die Punkte hier in ihrer Größe relativ zu der
+Anzahl Beobachtung pro Wertekombination. Je mehr Abgeordnete die selben Werte
+für Alter und ihr erstes Mandat haben, desto größer wird der Punkt dargestellt.
+
+``` {r alter_erstewp_2}
+ggplot(data = stammdaten_19, aes(x = alter, y = erste_WP)) +
+  geom_count()
+```
+
+Eine weitere Möglichkeit ist `geom_jitter()`. Hier werden wieder einzelne Punkte
+geplottet, diese werden aber zufällig leicht in x und y Richtung verschoben.
+Übereinanderliegende Punkte bewegen sich in der Darstellung somit auseinander.
+Das Problem mit dieser Form des plots ist, dass die dargestellten Punkte nicht
+mehr (exakt) den tatsächlichen Werten entsprechen. Die Darstellung kann
+trotzdem hilfreich sein um generelle Muster zu erkennen, wir müssen den
+Zufallsfaktor aber bei der Interpretation der Grafik mitbedenken.
+
+``` {r alter_erstewp_3}
+ggplot(data = stammdaten_19, aes(x = alter, y = erste_WP)) +
+  geom_jitter()
+```
+
+Beide Darstellungen zeigen uns, dass die Altersspanne in der pro Wahlperiode die
+Mehrzahl der Abgeordneten fallen zwar immernoch groß ist, aber deutlich kleiner
+als der erte scatterplot suggeriert hat. Zudem verschiebt sich dieser
+Schwerpunkt mit abnehmenden y langsam nach rechts, was auf den angenommenen
+Zusammenhang zwischen Alter und erster Wahlperiode hindeutet.
+
+Um diesen Zusammenhang zu verifizieren -- oder zu falsifizieren -- könnten wir
+eine Regressionsgerade über die geplotteten Puntke legen. Diese visualisiert
+den linearen Zusammenhang zwischen zwei Variablen als gerade Linie. Die
+Regressionsgerade wird dabei so über die Daten gelegt, dass Sie diesen
+Zusammenhang bestmöglichst beschreibt, also die Abweichung von den
+tatsächlichen Daten minimiert. Um dies zu realisieren, können wir
+`geom_smooth()` nutzen. Dabei legen wir als erstes Argument `method = 'lm'`
+fest. Wir teilen der Funktion so mit, dass wir ein lineares Modell, also eine
+lineare Regression, berechnen möchten. Das Argument `se = FALSE` unterdrückt
+die Darstellung des Konfidenzintervals -- ein Maß für die Unsicherheit des
+geschätzten Zusammenhangs.
+
+``` {r alter_erstewp_4}
+ggplot(data = stammdaten_19, aes(x = alter, y = erste_WP)) +
+  geom_jitter() +
+  geom_smooth(method = 'lm', se = FALSE)
+```
+
+Der Winkel in dem die Regressionsgerade verläuft -- die *slope* -- zeigt uns den
+Zusammenhang zwischen beiden Variablen an. Mit steigendem Alter nimmt also der
+Wert der ersten Wahlperiode ab. Dabei ist der Verlauf der Geraden aber nicht
+sehr steil. Die Korrelation zwischen den Variablen ist zwar da und auch
+deutlich, aber nicht besonders stark. Dies liegt vor allem daran, dass die
+überwiegende Mehrzahl der MdBs erst in einer der letzten Wahlperioden in den
+Bundestag eingezogen sind. Die wenigen Abgeordneten die schon seit mehr als
+16--20 Jahren im Bundestag vertreten sind, sind zwar auch älter, aber zu wenige
+um die Regressionsgerade stärker zu beeinflussen.
+
+An der Regressionsgerade können wir auch den Mittelwert einer Variable gegeben
+dem Wert der anderen Variable schätzen. So können wir beispielsweise ablesen,
+dass ein 60-jähriger MdB im Durchschnitt ca. ab der 17. Wahlperiode im Bundestag
+vertreten war. Die Betonung liegt dabei auf *im Durchschnitt*, da es natürlich
+auch 60-jährige gibt die erst kürzlich oder schon vor der 17. Wahlperiode ihr
+Mandat erlangt haben.
+
+Weiterführende Informationen dazu, wie wir scatterplots und Regressionsgeraden
+nach einer dritten Variable gruppiert darstellen können, finden Sie unter:
+<https://jakobtures.github.io/web-scraping/ggplot.html#continuous-x-continuous-y>{target="_blank"}
+
+
+### kategoriales x, kontinuierliches y
+
+In Kapitel \@ref(R3) haben wir mit `summarise()` und `group_by()` die Anzahl
+von Mandaten pro Partei berechnet. Diese könnten wir auch in einer Graphik
+darstellen. Die Variable zur Parteimitgliedschaft ist dabei eine kategoriale
+Variable, die Anzahl der Abgeordneten ist kontinuierlich, liegt aber nicht als
+Variable vor. Dies benötigen wir aber auch nicht, da `geom_bar()` -- für
+barplots -- die Anzahl von Beobachtungen pro Kategorie der x Variable
+automatisch berechnet. So müssen wir in den aesthetics auch nur die x Variable
+zuordnen.
+
+``` {r mdb_partei_1}
+stammdaten_19 %>% 
+  ggplot(aes(x = partei)) +
+    geom_bar()
+```
+
+So schnell und einfach kommen wir zu einem barplot der Parteimitgliedschaft. Die
+Darstellung ist dabei aber nicht sonderlich hübsch. Ein Problem ist, dass das
+label "BÜNDNIS 90/DIE GRÜNEN" so lang ist, dass es mit dem label "DIE LINKE."
+überlappt. Mit `scale_x_discrete()` können wir Optionen für kategoriale x-Achsen
+verändern. In dem Argument `labels =` können wir eine Liste eigener labels
+festlegen oder labels einzelner Kategorien verändern.
+
+``` {r mdb_partei_2}
+stammdaten_19 %>% 
+  ggplot(aes(x = partei)) +
+    geom_bar() +
+    scale_x_discrete(labels = c("BÜNDNIS 90/DIE GRÜNEN" = "DIE GRÜNEN"))
+
+```
+
+Optionen für die y-Achse und andere Typen von Skalen sind ebenfalls verfügbar,
+beispielsweise `scale_y_continuous()`. Innerhalb dieser Funktionen, können wir
+auch die Achsenlabels selbst benennen. Oder wir nutzen `labs()`, was neben den
+Achsennamen auch die Bennenung weiterer Elemente der Graphik erlaubt.
+Beispielsweise:
+
+``` {r mdb_partei_3}
+stammdaten_19 %>% 
+  ggplot(aes(x = partei)) +
+    geom_bar() +
+    scale_x_discrete(labels = c("BÜNDNIS 90/DIE GRÜNEN" = "DIE GRÜNEN")) +
+    labs(x = "Partei",
+         y = "Mandate",
+         title = "Anzahl Mandate im 19. Bundestag nach Parteizugehörigkeit",
+         caption = "Daten: https://www.bundestag.de/services/opendata")
+```
+
+Soweit, so gut. Aber die Balken sind doch noch sehr eintönig grau. In der
+`aes()` Funktion innerhalb von `geom_bar()` oder auch `ggplot()`, können wir
+über das `fill =` Argument festlegen, dass die Balken nach dem Wert einer
+Variable eingefärbt werden sollen. Setzen wir dieses gleich der Variable
+"partei", bekommt jeder Balken eine eigene Farbe zugewiesen. Die automatisch
+erstellte Farblegende, verstecken wir mit einem weiteren Argument.
+
+``` {r mdb_partei_4}
+stammdaten_19 %>% 
+  ggplot(aes(x = partei)) +
+    geom_bar(aes(fill = partei), show.legend = FALSE) +
+    scale_x_discrete(labels = c("BÜNDNIS 90/DIE GRÜNEN" = "DIE GRÜNEN")) +
+    labs(x = "Partei",
+         y = "Mandate",
+         title = "Anzahl Mandate im 19. Bundestag nach Parteizugehörigkeit",
+         caption = "Daten: https://www.bundestag.de/services/opendata")
+```
+
+Noch schöner wäre es, wenn die Balkenfarben mit den tatsächlichen Parteifarben
+übereinstimmen würden. Dazu können wir die Farben der Balken per Hand festlegen
+statt sie autpmatisch zuweisen zu lassen. Hier erstellen wir einen Vektor mit
+Farbnamen den wir dann für das `fill =` Argument nutzen. Beachten Sie dabei,
+dass `fill =` diesmal nicht innerhalb von `aes()` steht. Dies liegt daran, dass
+wir die Farben nicht anhand einer Variable festlegen sondern konstant zuweisen,
+was außerhalb von `aes()` erfolgt.
+
+``` {r mdb_partei_5}
+parteifarben <- c("black", "red", "deepskyblue", "yellow2", "limegreen", "violetred", "grey")
+
+stammdaten_19 %>% 
+  ggplot(aes(x = partei)) +
+    geom_bar(fill = parteifarben) +
+    scale_x_discrete(labels = c("BÜNDNIS 90/DIE GRÜNEN" = "DIE GRÜNEN")) +
+    labs(x = "Partei",
+         y = "Mandate",
+         title = "Anzahl Mandate im 19. Bundestag nach Parteizugehörigkeit",
+         caption = "Daten: https://www.bundestag.de/services/opendata")
+```
+
+Eine Übersicht über alle verfügbaren Farben, finden Sie unter:
+<http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf>{target="_blank"}
+
+Mich persönlich stört an dieser Stelle noch der graue Hintergrund des plots.
+Dieser ist Teil des standard *themes* von **ggplot2**, `theme_gray()`. Wir
+können aber auch andere themes auswählen. Eine Übersicht finden sie hier:
+<https://ggplot2.tidyverse.org/reference/ggtheme.html>{target="_blank"}
+
+``` {r mdb_partei_6}
+stammdaten_19 %>% 
+  ggplot(aes(x = partei)) +
+    geom_bar(fill = parteifarben) +
+    scale_x_discrete(labels = c("BÜNDNIS 90/DIE GRÜNEN" = "DIE GRÜNEN")) +
+    labs(x = "Partei",
+         y = "Mandate",
+         title = "Anzahl Mandate im 19. Bundestag nach Parteizugehörigkeit",
+         caption = "Daten: https://www.bundestag.de/services/opendata") +
+    theme_minimal()
+```
+
+Nutzen wir für die `fill` aesthetic eine zweite Variable, beispielsweise die
+Informationen zu akademischen Titeln, erhalten wir einen gestapelten barplot.
+Hier macht es wiederum Sinn, die automatisch erstellte Farblegende nicht
+auszublenden.
+
+``` {r mdb_partei_titel_1}
+stammdaten_19 %>% 
+  ggplot(aes(x = partei)) +
+    geom_bar(aes(fill = titel_dummy)) +
+    scale_x_discrete(labels = c("BÜNDNIS 90/DIE GRÜNEN" = "DIE GRÜNEN")) +
+    labs(x = "Partei",
+         y = "Mandate",
+         title = "Anzahl Mandate mit/ohne Titel im 19. Bundestag nach Parteizugehörigkeit",
+         caption = "Daten: https://www.bundestag.de/services/opendata") +
+    theme_minimal()
+```
+
+Möchten wir die Balken nicht stapeln sondern nebeneinander darstellen, können
+wir dies über das Argument `position = "dodge"` festlegen. Um die Darstellung
+weiter aufzuhübschen können wir außerdem den Titel der Farblegende in `labs()`
+anpassen.
+
+``` {r mdb_partei_titel_2}
+stammdaten_19 %>% 
+  ggplot(aes(x = partei)) +
+    geom_bar(aes(fill = titel_dummy), position = "dodge") +
+    scale_x_discrete(labels = c("BÜNDNIS 90/DIE GRÜNEN" = "DIE GRÜNEN")) +
+    labs(x = "Partei",
+         y = "Mandate",
+         title = "Anzahl Mandate mit/ohne Titel im 19. Bundestag nach Parteizugehörigkeit",
+         caption = "Daten: https://www.bundestag.de/services/opendata",
+         fill = "Akadem. Titel") +
+    theme_minimal()
+```  
+
+
+### kontinuierliches x
+
+In Kapitel \@ref(R3) haben wir deskriptive Statistiken zur Altersverteilung
+berechnet. Auch diese können wir graphisch darstellen. Dazu bietet sich unter
+anderem `geom_histogram()` an. Ein Histogramm unterteilt eine kontinuierliche
+Variable in eine festlegbare Anzahl von Abschnitten -- *bins* -- und stellt
+die Anzahl von Beobachtungen die in jedes bin fallen als Balken dar. Als
+Standard unterteilt **ggplot2** eine Variable in 30 bins, dies können wir aber
+über das `bins =` Argument beeinflussen.
+
+``` {r alter_distribution_histo_1}
+stammdaten_19 %>% 
+  ggplot(aes(x = alter)) +
+    geom_histogram() +
+    labs(x = "Alter",
+         y = "Anzahl",
+         title = "Altersverteilung im 19. Bundestag",
+         caption = "Daten: https://www.bundestag.de/services/opendata") +
+    theme_minimal()
+```
+
+Um die Grafik besser interpretierbar zu machen, könnten wir eine vertikale Linie
+hinzufügen die den Mittelwert der x Variable markiert. Dazu nutzen wir
+`geom_vline()` und legen für `xintercept =` den x Wert fest, an dem die Linie
+eingezeichnet werden soll. Außerdem scheint es angebracht, die Anzahl der bins
+zu reduzieren. Mit 30 bins, deckt jeder Balken knapp 2 Jahre ab. So werden
+zufällige Fluktuationen in der Altersverteilung überinterpretiert.
+
+``` {r alter_distribution_histo_2}
+stammdaten_19 %>% 
+  ggplot(aes(x = alter)) +
+    geom_histogram(bins = 15) +
+    geom_vline(aes(xintercept = mean(alter)), colour = "red") +
+    labs(x = "Alter",
+         y = "Anzahl",
+         title = "Altersverteilung im 19. Bundestag",
+         caption = "Daten: https://www.bundestag.de/services/opendata") +
+    theme_minimal()
+```
+
+Wir sehen, dass die Alterstruktur annäherend um den Mittelwert normalverteilt
+ist, die Verteilung aber leicht links-schief ist. Das bedeutet, dass die
+Verteilung auf der linken Seite etwas langsamer ansteigt als die auf der rechten
+abnimmt. Dies ist hier vor allem mit dem starken Abfall von Mandatsträgern beim
+erreichen des Rentenalters erklärbar.
+
+Durch das Verringern der bins auf 15 -- jeder bin deckt so 3-4 Jahre ab --,
+erscheint die Altersverteilung deutlich näher an einer Normalverteilung, da
+Fluktuationen in der Altersverteilung so weniger betont werden. Wenn es unser
+Ziel ist, die generelle Altersverteilung im Bundestag zu bewerten, macht dieser
+Ansatz aus meiner Sicht auch durchaus Sinn. Wir sollten aber davon absehen,
+solange an der bins Schraube zu drehen, bis wir ein Bild bekommen, dass uns
+gefällt. Vielmehr sollten wir vor dem plotten darüber nachdenken, was das Ziel
+der graphischen Darstellung ist und die bins entsprechend festlegen.
+
+Möchten wir die Histogramme für alle Parteien vergleichen, können wir *facets*
+nutzen. Dabei werden in einem plot mehrere einzelne plots neben- und
+untereinander dargestellt. In der Funktion `facet_wrap()` schreiben wir dazu
+den Namen der Variable nachdem die Kacheln gebildet werden sollen und setzen
+davor eine Tilde `~`.
+
+
+``` {r alter_distribution_histo_3}
+stammdaten_19 %>% 
+  ggplot(aes(x = alter)) +
+    geom_histogram(bins = 15) +
+    facet_wrap(~ partei) +
+    labs(x = "Alter",
+         y = "Anzahl",
+         title = "Altersverteilung im 19. Bundestag nach Partei",
+         caption = "Daten: https://www.bundestag.de/services/opendata") +
+    theme_minimal()
+```
+
+Um dies besser interpretierbar zu machen, könnten wir die Mittelwerte des Alters
+für jede Partei einzeichnen. Diese müssen wir dazu zunächst pro Partei berechen.
+Dazu nutzen wir wiederum die dplyr Funktionen und hängen `ggplot()` am Ende der
+pipe an. In diesem Zuge, können wir auch die Parteilosen herausfiltern, da ihre
+Anzahl für eine inhaltliche Interpretation deutlich zu klein ist.
+
+``` {r alter_distribution_histo_4}
+stammdaten_19 %>% 
+  filter(partei != "Plos") %>% 
+  group_by(partei) %>% 
+  mutate(arith_mittel = mean(alter)) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = alter)) +
+    geom_histogram(bins = 15) +
+    geom_vline(aes(xintercept = arith_mittel), colour = "red") +
+    facet_wrap(~ partei) +
+    labs(x = "Alter",
+         y = "Anzahl",
+         title = "Altersverteilung im 19. Bundestag nach Partei",
+         caption = "Daten: https://www.bundestag.de/services/opendata") +
+    theme_minimal()
+```
+
+Sie Befunde aus Kapitel \@ref(R3) lassen sich zunächst bestätigen. Der relativ
+hohe Mittelwert wird durch relativ viele besonders alte Mandatsträger:innen
+etwas nach oben verschoben. Keine andere Partei hat so "viele" -- es geht hier
+eigentlich um eine geringe Anzahl von Personen -- Abgeordnete über 70. FDP und
+GRÜNE als die im Mittelwert jüngsten Parteien unterscheiden sich in Ihrer
+Altersspannweite. Die FDP hat viele sehr junge aber auch sehr alte MdBs, während
+die Spannweite bei den Grünen deutlich enger ist. Wir erkennen nun auch, dass
+die Altersverteilung in der Union relativ nahe an der generellen
+Altersverteilung des 19. Bundestags liegt. Interessant sind die Verteilungen von
+SPD und von DIE LINKE. Anders als die alleinige Betrachtung des Mittelwerts
+suggeriert, liegt der Schwerpunkt der Altersverteilung in beiden Parteien bei
+den über 50-jährigen. Es gilt zu erinnern, dass die Histogramme für die
+kleineren Parteien auf wenig Fällen basieren. Die Fluktuationen zwischen den
+bins sollten deshalb nicht überinterpretiert werden.
+
+Eine Alternative zu Histogrammen sind density plots. Diese können wir als
+geglätte Version eines Histogramms verstehen. Statt abgesteckter bins für die
+jeweils die Anzahl Beobachtungen die in dieses Interval der x Variable fallen
+exakt gezählt werden, wird bei einem density plot die "Dichte" der Daten über
+alle x Werte hinweg geschätzt. Diese Dichte wird auf der y-Achse abgetragen und
+summiert sich zu 1 auf. Dabei werden Fluktuationen in der Verteilung weniger
+detailliert abgebildet, aber wie bekommen dafür ein klareres Bild der generellen
+Verteilung einer kontinuierlichen Variable. Zwei weitere Vorteile sind, dass wir
+für density plots keine Entscheidungen zur Größe beziehungsweise Anzahl der bins
+treffen müssen und diese sich besser zum übereinanderlegen eignen als
+Histogramme.
+
+So könnten wir beispielsweise die in Kapitel \@ref(R3) bereits angesprochene
+Altersverteilung für Träger akademischer Titel und Personen ohne einen Titel in
+zwei übereinandergelegten density plots gleichzeitig betrachten und vergleichen.
+Dazu plotten wir mir `geom_density()` und nutzen entweder die `fill` oder
+`colour` aesthetic. Bei `fill` wird die Fläche unter der Kurve gefüllt, bei
+`colour` werden nur die Kurven farblich gezeichnet.
+
+```` {r alter_titel_dens_1}
+stammdaten_19 %>% 
+  ggplot(aes(x = alter, colour = titel_dummy)) +
+    geom_density() +
+    labs(x = "Alter",
+         y = "Density",
+         title = "Altersverteilung im 19. Bundestag",
+         caption = "Daten: https://www.bundestag.de/services/opendata",
+         colour = "Akadem. Titel") +
+    theme_minimal()
+````
+
+Beide Verteilungen sind sich relativ ähnlich. Wir haben aber auch gesehen, dass
+es möglicherweise Unterschiede zwischen den Parteien gibt. Diese können wir
+erneut mit einem facet vergleichen. Dazu filtern wir erneut zunächst die
+Parteilosen heraus, da durch ihre geringe Anzahl nicht genug Daten zur Verfügung
+stehen um belastbare Ergebnisse zur Verteilung zu berechnen.
+
+``` {r alter_titel_dens_2}
+stammdaten_19 %>% 
+  filter(partei != "Plos") %>% 
+  ggplot(aes(x = alter, colour = titel_dummy)) +
+    geom_density() +
+    facet_wrap(~ partei) +
+    labs(x = "Alter",
+         y = "Density",
+         title = "Altersverteilung im 19. Bundestag",
+         caption = "Daten: https://www.bundestag.de/services/opendata",
+         colour = "Akadem. Titel") +
+    theme_minimal()
+```
+
+Die plots bestätigen die Ergebnisse aus Kapitel \@ref(R3) weitestgehend. Union
+und SPD Mandatsträger mit und ohne Titel sind in der Altersverteilung sehr
+ähnlich. In AfD und LINKE sind Träger akademischer Titel klar älter. Bei den
+GRÜNEN klar jünger. Bei der FDP ist das Bild etwas differenzierter. Während
+Mandatsträger ohne Titel vor allem unter den jüngeren zu finden sind, ist die
+Alterverteilung bei Titelträgern relativ gleich über alle Alter hinweg.
+
+
+## Graphiken exportieren
+
+Nachdem wir nun einige schöne Graphiken erstellt haben, folgt die Frage, wie
+wie diese in unsere Papers und Hausarbeiten einbinden können. Arbeiten wir in
+R Markdown, können wir direkt den **ggplot2** output nutzen, arbeiten wir aber
+in externer Software -- z. B. Word oder LaTeX -- müssen wir die Graphiken
+exportieren. Ein einfacher Weg ist die Funktion `ggsave()`.
+
+Um die letzte erstelle Graphik abzuspeichern, müssen wir `ggsave()` nur einen
+Dateinamen beziehungsweise Pfad als Argument mitgeben. Das Format der Graphik
+legen wir dabei einfach über die Dateiendung fest. Ich empfehle generell eine
+Vektorgraphik zu nutzen -- beispielsweise ".eps" oder ".svg". Der Vorteil ist,
+dass diese stufenlos skalierbar sind. Wir können die Größe der Graphik beim
+Import also in beide Richtungen anpassen, ohne dass die Darstellungsqualität
+leidet. Pixelbasierte Formate wie ".jpeg" oder ".png" sind bereits komprimiert
+und verlieren dadruch an Qualität. Möchten wir diese vergrößern, wird die
+Darstellung zunehmend verschwommen. Dsa Verkleinern funktioniert evtl. besser,
+kann aber auch graphische Artefakte erzeugen.
+
+Hier speichern wir die letzte erstellte Graphik -- die density plots nach
+Parteien -- als ".eps".
+
+``` {r age_density_party_export}
+ggsave("age_density_by_party.eps")
+```
+
+Flexibler einsetzen lässt sich sich `ggsave()`, wenn wir plots zunächst einem
+Objekt zuweisen. So ist es nicht mehr notwendig direkt nach der Erstellung einer
+Graphik den Export vorzunehmen. Hier erstellen wir zwei Graphiken und weisen
+diese zunächst Objekten zu um sie später abzuspeichern. Durch die
+Objektzuweisung bekommen wir dabei keinen output. ich würde empfehlen zunächst
+die Graphik zu gestalten bis das Endergbnis erreicht ist und die Objektzuweisung
+erst dann hinzuzufügen. Die erstellten Graphiken exportieren wir am Ende des
+Blocks. Dabei handelt es sich um den bar plot der Abgeordneten nach Parteien.
+Einmal wie oben als Version mit den Parteifarben, einmal als greyscale Variante,
+welche sich besser zum Druck eignet. Dazu fügen wir `scale_fill_grey()` hinzu.
 
 
 
-#### kontinuierliches x
-Boxplot für Alter nach Partei
+``` {r mdb_partei_export}
+mdb_partei_colour <- stammdaten_19 %>% 
+  ggplot(aes(x = partei)) +
+    geom_bar(fill = parteifarben) +
+    scale_x_discrete(labels = c("BÜNDNIS 90/DIE GRÜNEN" = "DIE GRÜNEN")) +
+    labs(x = "Partei",
+         y = "Mandate",
+         title = "Anzahl Mandate im 19. Bundestag nach Parteizugehörigkeit",
+         caption = "Daten: https://www.bundestag.de/services/opendata") +
+    theme_minimal()
 
-Verteilung Alter
-  übereinander
-  nach facet?
-  
-Verteilung WPs (+ nach facet ->Übung)
+mdb_partei_grey <- stammdaten_19 %>% 
+  ggplot(aes(x = partei)) +
+    geom_bar(aes(fill = partei)) +
+    scale_x_discrete(labels = c("BÜNDNIS 90/DIE GRÜNEN" = "DIE GRÜNEN")) +
+    labs(x = "Partei",
+         y = "Mandate",
+         title = "Anzahl Mandate im 19. Bundestag nach Parteizugehörigkeit",
+         caption = "Daten: https://www.bundestag.de/services/opendata") + 
+    scale_fill_grey()
 
-### Graphiken exportieren
+ggsave("mdb_party_colour.eps", plot = mdb_partei_colour)
+ggsave("mdb_party_grey.eps", plot = mdb_partei_grey)
+```
+
+Wir können für `ggsave()` noch weitere Argumente festlegen. Zum Beispiel um die
+Größe und Auflösung der Graphik einzustellen. Diese sind vor allem interessant,
+wenn wir uns für das Speichern in einem pixelbasierten Format entscheiden. Für
+mehr Informationen betrachten Sie bitte `?ggsave()`.

@@ -1,4 +1,4 @@
-# dplyr {#R3}
+# Transformation und Analyse mit dplyr {#R3}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
@@ -12,9 +12,11 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 Dieses Kapitel behandelt die Bereinigung, Transformation und deskriptive
 statistische Analyse von Daten mit **dplyr**, sowie deren graphische Analyse mit
 **ggplot2**. Zur Veranschaulichung der Arbeitsschritte, analysieren wir eine
-Auswahl biographischer Daten der Bundestagsabgeordneten des 19. Bundestags. Die
-Daten stammen aus einer vom Bundestag bereitgestellten ".xml" Datei und wurden
-am 07.09.2021 von folgender URL heruuntergeladen:
+Auswahl biographischer Daten der Bundestagsabgeordneten des 19. Bundestags.
+Darunter auch die Regierungsmitglieder und Funktionsträger wie
+Bundestagspräsident*innen. Die Daten stammen aus einer vom Bundestag
+bereitgestellten ".xml" Datei und wurden am 07.09.2021 unter folgender URL
+heruntergeladen:
 <https://www.bundestag.de/services/opendata>{target="_blank"}
 
 Das script zur Extraktion der interessierenden Variablen aus den XML Daten und
@@ -48,9 +50,9 @@ stammdaten
 ```
 
 Der tibble enthält 4089 Zeilen, also Daten zu 4089 Abgeordneten. Zu jeder
-Beobachtung, stehen 8 Variablen bereit. Nachname, Vorname, akademischer Titel,
-Parteizugehörigkeit, die erste und letzte Wahlperiode in der das MdB im
-Bundestag vertreten war sowie Alter und Geburtsdatum.
+Beobachtung, stehen 9 Variablen bereit. Nachname, Vorname, akademischer Titel,
+Geschlecht, Parteizugehörigkeit, die erste und letzte Wahlperiode in der das MdB
+im Bundestag vertreten war sowie Alter und Geburtsdatum.
 
 Wie Sie sehen, werden bei tibbles standardmäßig nur die ersten 10 Zeilen
 gedruckt. Die Darstellung ist dadurch kompakt und übersichtlich, eventuell
@@ -67,7 +69,7 @@ print(stammdaten, n = 20)
 ```
 
 
-## Data wrangling mit dplyr
+## Datentransformation mit **dplyr**
 
 Das **dplyr** package enthält eine Reihe von Funktionen zur Bereinigung,
 Transformation und deskriptiven Analyse von Daten. Wir beginnen damit, Zeilen
@@ -75,6 +77,13 @@ und Spalten die wir nicht benötigen aus dem tibble zu entfernen, bevor wir die
 Daten in einigen bestehenden Spalten transformieren und neue Spalten aus den
 vorhandenen Daten erzeugen sowie gruppierte Zusammenfassungen der Daten
 berechnen.
+
+Empfohlene weiterführende Resourcen zu **dplyr** sind das entsprechende RStudio
+cheatsheet:
+<https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf>{target="_blank"}
+sowie das Kapitel "Data transformation" in "R for Data Science":
+<https://r4ds.had.co.nz/transform.html>{target="_blank"}
+
 
 ### `filter()`
 
@@ -181,11 +190,13 @@ stammdaten_19 %>%
 Wir können `select()`auch nutzen um Variablen zu entfernen. Dazu schreiben wir
 `-` vor den zu entfernenden Spaltennamen. Da das genaue Geburtsdatum der
 Abgeordneten im Folgenden nicht mehr benötigt wird, können wir die Spalte "geb"
-entfernen.
+entfernen. "letzte_WP" kann ebenfalls entfernt werden, da die Spalte nach dem
+Filtern keine Informationen mehr enthält, ihr Wert ist für alle Beobachtungen
+"19".
 
 ``` {r select_2}
 stammdaten_19 <- stammdaten_19 %>% 
-  select(-geb)
+  select(-c(geb, letzte_WP))
 
 stammdaten_19
 ```
@@ -223,7 +234,7 @@ beschreibt, wir die Daten transformiert oder generiert werden sollen. Dies kann
 eine einfache Berechnung wie `mutate(neue_spalte = spalte_a + spalte b)` sein,
 aber auch weitere Funktionen beinhalten. Hier nutzen wir die Funktion `str_c()`
 aus dem core tidyverse package **stringr** um zwei Strings zu einem zu
-kombinieren. Das optionale Argument `sep = ` wird dazu genutzt festzulegen,
+kombinieren. Das optionale Argument `sep = ` wird dazu genutzt um festzulegen,
 welche Zeichen zwischen die zu kombinierenden Strings eingefügt werden. Setzen
 wir dies um und betrachten die neue sowie die alten Spalten:
 
@@ -236,17 +247,18 @@ stammdaten_19 %>%
 ```
 
 Die Spalte "titel" listet aktuell die akademischen Titel der Abgeordneten. Liegt
-ein Titel vor, wird dieser benannt. Liegt keiner vor enthält die Spalte ein
-`NA`, die Repräsentation fehlender Werte in R. Für diese Analyse interessiert
-uns nur ob ein Titel vorliegt, aber nicht welcher. Dazu könnten wir eine neue
-Spalte generieren, welche einen logischen Vektor enthält der angibt ob ein Titel
-vorliegt, `TRUE`, oder nicht, `FALSE`. Dies ist eine sogenannte Dummyvariable.
-Zum generieren können wir die **dplyr** Funktion `if_else()` nutzen. Wir geben
-als erstes Argument eine Bedingung an die getestet wird. Hier `!is.na(titel)`,
-was testet ob der Inhalt von "titel" *nicht* -- angezeigt durch das `!` --
-missing ist. Das zweite und dritte Argument geben an, was eingesetzt werden soll
-wenn die getestete Bedingung erfüllt beziehungsweise nicht erfüllt ist. Hier
-soll im ersten Fall `TRUE`, im zweiten `FALSE` eingesetzt werden.
+ein Titel vor, wird dieser genau benannt. Liegt keiner vor enthält die Spalte
+ein `NA`, die Repräsentation fehlender Werte in R. Für diese Analyse
+interessiert uns nur ob ein Titel vorliegt, aber nicht welcher. Dazu könnten wir
+eine neue Spalte generieren, welche einen logischen Vektor enthält der angibt ob
+ein Titel vorliegt, `TRUE`, oder nicht, `FALSE`. Dies ist eine sogenannte
+Dummyvariable. Zum generieren können wir die **dplyr** Funktion `if_else()`
+nutzen. Wir geben als erstes Argument eine Bedingung an die getestet wird. Hier
+`!is.na(titel)`, welche testet ob der Inhalt von "titel" *nicht* -- angezeigt
+durch das `!` -- missing ist. Das zweite und dritte Argument geben an, was
+eingesetzt werden soll wenn die getestete Bedingung erfüllt beziehungsweise
+nicht erfüllt ist. Hier soll im ersten Fall `TRUE`, im zweiten `FALSE`
+eingesetzt werden.
 
 ``` {r mutate_titel}
 stammdaten_19 <- stammdaten_19 %>% 
@@ -285,7 +297,7 @@ Dies scheint funktioniert zu haben, es fallen aber auch zwei Probleme auf um die
 wir uns noch kümmern sollten. Erstens könnten wir daran interessiert sein die
 Union als ganzes zu analysiseren. Zweitens sind die Kategorien aktuell
 alphabetisch geordnet, inhaltlicher sinnvoller wäre aber beispielsweise eine
-Ordnung anhand der größe der Fraktionen im 19. Bundestag.
+Ordnung nach der Größe der Fraktionen im 19. Bundestag.
 
 Fassen wir zuerst "CDU" und "CDU" zur "Union" zusammen. Dazu können wir
 `fct_collapse()` nutzen. Dabei geben wir vor dem `=` den Namen der neuen
@@ -313,6 +325,17 @@ stammdaten_19 <- stammdaten_19 %>%
 levels(stammdaten_19$partei)
 ```
 
+Die Spalte "geschlecht" liegt ebenfalls als character vector vor und kann auf
+dem selben Weg in einen factor umgewandelt werden.
+
+
+``` {r factor_5}
+stammdaten_19 <- stammdaten_19 %>% 
+  mutate(geschlecht = factor(geschlecht))
+
+levels(stammdaten_19$geschlecht)
+```
+
 Damit sind die Daten zur weiteren Analyse vorbereitet. Wir können nun noch nicht
 mehr benötigte Spalten entfernen um den tibble übersichtlich zu halten, sowie
 die dann noch vorhandenen Spalten in eine sinnvollere Reihenfolge bringen.
@@ -335,13 +358,26 @@ natürlich subjektiv, Ich würde aber folgende Reihenfolge vorschlagen und mit
 
 ``` {r cleanup_2}
 stammdaten_19 <- stammdaten_19 %>% 
-  relocate(name, titel_dummy, partei, alter, erste_WP, letzte_WP)
+  relocate(name, titel_dummy, partei, geschlecht, alter, erste_WP)
 
 stammdaten_19
 ```
 
+## Speichern der transformierten Daten
 
-### `summarise()` & `group_by()`
+Wir werden im nächsten Kapitel mit den hier transformierten Daten
+weiterarbeiten. Dazu sollten Sie entweder zu Beginn des Kapitels das script aus
+diesem Kapitel nochmals durchlaufen lassen, oder sie speichern die bearbeiteten
+Daten:
+
+``` {r save_R3}
+save(stammdaten_19, file = "stammdaten_19.RData")
+```
+
+
+## Deskriptive Datenanalyse mit **dplyr**
+
+### `summarise()`
 
 Die Funktion `summarise()` ermöglicht es uns, zusammenfassende Maßzahlen zu
 einem tibble zu berechnen. Die Syntax funktioniert dabei ähnlich zu `mutate()`.
@@ -376,11 +412,14 @@ Wirklich mächtig wird `summarise()` erst durch die Kombination mit `group_by()`
 So können wir die Daten gruppieren und die zusammenfassenden Statistiken für
 jede dieser Gruppen separat berechnen.
 
+
+### `summarise()` & `group_by()`
+
 Unsere Daten bieten sich für eine Analyse nach Parteimitgliedschaft an. Als
 ersten Schritt können wir die Daten also nach dem Inhalt der Spalte "partei"
 gruppieren und zunächst einmal Zählen, wie viele Abgeordnete pro Partei im
 Bundestag vertreten sind. Dazu nutzen wir innerhalb von `mutate()` die **dplyr**
-Funktion `n()`, welche die Gruppengröße, also die Anzahl beobachtungen pro
+Funktion `n()`, welche die Gruppengröße, also die Anzahl Beobachtungen pro
 Gruppe, zurückgibt.
 
 
@@ -400,7 +439,8 @@ stammdaten_19 %>%
             arith_mittel = mean(alter),
             std_abweichung = sd(alter),
             median = median(alter),
-            maximum = max(alter))
+            maximum = max(alter),
+            anzahl = n())
 ```
 
 Oft ist es hilfreich die Daten nach einer Statistik die uns interessiert zu
@@ -417,21 +457,35 @@ stammdaten_19 %>%
             arith_mittel = mean(alter),
             std_abweichung = sd(alter),
             median = median(alter),
-            maximum = max(alter)) %>% 
+            maximum = max(alter),
+            anzahl = n()) %>% 
   arrange(desc(arith_mittel))
 ```
+
+Für die Mehrzahl der Parteien liegt der Mittelwert des Alters bei ca. 50 Jahren.
+Dabei beträgt die Differenz des arithmetischen Mitels zwischen AfD und Union
+etwa 1 Jahr. Wir sehen für die AfD aber auch eine höhere Standardabweichung und
+einen neidrigeren Median. Wir könnten also vermuten, dass in der AfD einige
+besonders alte Abgeordnete vertreten sind, welche den Mittelwert nach oben
+verzerren. Die FDP ist dem Mittelwert nach die jüngste, die Grünen die
+zweitjüngste Partei. Dabei ist auffällig, dass die Grünen die engste Spannweite
+des Alters aufweisen. Es gibt keine Abgeordneten unter 32 und keine über 64. Die
+FDP hat demgegenüber sehr junge und sehr alte MdBs. Die Statistiken für die
+Gruppe der parteilosen sind nicht besonders belastbar, da sie nur aus 10
+Personen besteht, deuten aber auf ein relativ junges Durchschnittsalter hin.
+Diesen ersten Befunden werden wir bei der graphischen Analyse
+(Kapitel \@ref(R4)) weiter auf den Grund gehen. 
 
 Die Spalte "titel_dummy" ist ein logischer Vektor der `TRUE` enthält, wenn ein
 MdB einen akademischen Titel besitzt und `FALSE`, wenn keiner vorliegt. Hinter
 einem logischen Vektor stehen Zahlenwerte. `TRUE` ist die Repräsentation von 1,
 `FALSE` von 0. Wir können also direkt mit den Werten des Vektors rechnen. Um die
-absolute Anzahl an Titeln zu berechenn, reicht es also Summe des Vektors zu
-bilden. Alle Werte des vektors werden aufaddiert und da wir nur Einsen und
-Nullen haben, ist das Ergebnis gleich der Anzahl der Abgeordneten die einen
-akademischen Titel tragen. Um den relativen Anteil zu berechnen, können wir das
-arithmetische Mittel nutzen. Alle Einsen und Nullen werden aufaddiert und durch
-die Anzahl der Beobachtungen geteilt. Dies ist der Anteil der Abgeordneten mit
-Titel.
+absolute Anzahl an Titeln zu berechenn, reicht es also die Summe des Vektors zu
+bilden. Alle Werte werden so aufaddiert und da wir nur Einsen und Nullen haben,
+ist das Ergebnis gleich der Anzahl der Abgeordneten die einen akademischen Titel
+tragen. Um den relativen Anteil zu berechnen, können wir das arithmetische
+Mittel nutzen. Alle Einsen und Nullen werden aufaddiert und durch die Anzahl der
+Beobachtungen geteilt. Dies ist der Anteil der Abgeordneten mit Titel.
 
 ``` {r titel_summary}
 stammdaten_19 %>% 
@@ -451,8 +505,13 @@ stammdaten_19 %>%
             arith_mittel = mean(alter),
             std_abweichung = sd(alter),
             median = median(alter),
-            maximum = max(alter))
+            maximum = max(alter),
+            anzahl = n())
 ```
+
+Abgeordnete mit Titel sind im Durchschnitt etwas älter. Dies macht Sinn, da
+sowohl das Erlangen eines Titels als auch eines Bundestagmandats hohe
+Zeitinvestiotionen darstellen.
 
 Wir können auch nach mehreren Spalten gleichzeitig gruppieren. In diesem Fall
 werden die Statistiken für jede Gruppenkombination berechnet.
@@ -464,8 +523,16 @@ stammdaten_19 %>%
             arith_mittel = mean(alter),
             std_abweichung = sd(alter),
             median = median(alter),
-            maximum = max(alter))
+            maximum = max(alter),
+            anzahl = n())
 ```
+
+Wir sehen an den Mittelwerten, dass der oben für den gesamten Bundestag
+analysierte Unterschied im mittleren Alter von MdBs mit und ohne Titel nicht für
+alle Parteien gleichermaßen gilt. Während Titelträger in AfD, FDP und LINKE im
+Mittel klar älter sind als Abgeordnete ohne Titel, ist die Differenz für die
+Union und die SPD sehr gering. Bei den Grünen sind Titelträger im Mittel
+sogar jünger.
 
 An dieser Stelle müssen wir noch über eine Besonderheit in der Zusammenarbeit
 von `group_by()` und `summarise()` sprechen, welche zu Problemen führen kann,
@@ -491,17 +558,6 @@ Gruppen tendieren. So verhindern sie versehentliche Berechnungen auf
 Gruppenbasis und die Gruppierung lässt sich jederzeit schnell wieder herstellen,
 sollten dies notwendig werden.
 
-
-`# Groups:   district [2]`. Another `summarise()` function would compute the
-statistic by "district" and then remove this level as well. We can also use
-`ungroup()` to remove all grouping from a tibble. In the case of this example,
-it does not make a practical difference as we only compute the summary and then
-move on. But, if we assign the results of a summary to an object for later use,
-we have to decide if we want to remove the grouping or keep it in effect,
-depending on the goals of the analysis. In general, I would always ungroup the
-data and group it again if the need arises, as this is less error prone and just
-a minor increase in the amount of typing needed.
-
 ``` {r ungroup}
 stammdaten_19 %>% 
   group_by(partei, titel_dummy) %>% 
@@ -509,22 +565,13 @@ stammdaten_19 %>%
             arith_mittel = mean(alter),
             std_abweichung = sd(alter),
             median = median(alter),
-            maximum = max(alter)) %>% 
+            maximum = max(alter),
+            anzahl = n()) %>% 
   ungroup()
 ```
 
-### Speichern der Daten
 
-Wir werden im nächsten Kapitel mit den hier transformierten Daten
-weiterarbeiten. Dazu sollten Sie entweder zu Beginn des Kapitels das script aus
-diesem Kapitel nochmals durchlaufen lassen, oder sie speichern die bearbeiteten
-Daten:
-
-``` {r save_R3}
-save(stammdaten_19, file = "stammdaten_19.RData")
-```
-
-### Export von Tabellen
+## Export von Tabellen
 
 Das Exportieren von Tabellen -- beispielsweise die oben berechneten Statistiken
 -- aus R ist leider nicht ganz so einfach wie man denken oder hoffen würde. Wir
@@ -565,7 +612,8 @@ stammdaten_19 %>%
             arith_mittel = mean(alter),
             std_abweichung = sd(alter),
             median = median(alter),
-            maximum = max(alter)) %>% 
+            maximum = max(alter),
+            anzahl = n()) %>% 
   ungroup() %>% 
   write_csv(file = "alter_partei_titel_1.csv")
 ```
@@ -591,6 +639,7 @@ Export von Tabellen mitbringen. Aus Platzgründen können wir nicht auf die
 Details eingehen, hier aber einige Startpunkte:
 
 Möchten sie direkt nach ".xlsx" exportieren, wären zwei der Optionen:
+
 * **writexl**: <https://cran.r-project.org/web/packages/writexl/index.html>{target="_blank"}
 * **openxlsx**: <https://cran.r-project.org/web/packages/openxlsx/index.html>{target="_blank"}
 
@@ -608,7 +657,7 @@ dargettellt werden soll sowie Tabellen und Grafiken enthalten. Einige Resourcen
 zu R Markdown finden Sie hier:
 
 * Einführung der RStudio website: <https://rmarkdown.rstudio.com/lesson-1.html>{target_"blank"}
-* Das R Markdown cheat sheet: <https://raw.githubusercontent.com/rstudio/cheatsheets/master/rmarkdown-2.0.pdf>{target="_blank"}
+* Das R Markdown cheatsheet: <https://raw.githubusercontent.com/rstudio/cheatsheets/master/rmarkdown.pdf>{target="_blank"}
 * Kapitel zu R Markdown in "R for Data Science" von Hadley Wickham und Garrett Grolemund: <https://r4ds.had.co.nz/r-markdown.html>{target="_blank"}
 * "R Markdown Cookbook" von Yihui Xie, Christophe Dervieux, Emily Riederer: <https://bookdown.org/yihui/rmarkdown-cookbook/>{target="_blank"}
 

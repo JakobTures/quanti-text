@@ -1,5 +1,6 @@
 library(tidyverse)
 library(xml2)
+library(lubridate)
 
 # read the xml data from the file
 raw_xml <- read_xml("MDB_STAMMDATEN.XML")
@@ -15,6 +16,8 @@ stammdaten <- tibble(
     xml_text(),
   geb = xml_find_all(raw_xml, "MDB/BIOGRAFISCHE_ANGABEN/GEBURTSDATUM") %>% 
     xml_text(),
+  geschlecht = xml_find_all(raw_xml, "MDB/BIOGRAFISCHE_ANGABEN/GESCHLECHT") %>% 
+    xml_text(),
   Partei = xml_find_all(raw_xml, "MDB/BIOGRAFISCHE_ANGABEN/PARTEI_KURZ") %>% 
     xml_text(),
   erste_WP = xml_find_all(raw_xml, "MDB/WAHLPERIODEN/WAHLPERIODE[1]/WP") %>% 
@@ -25,18 +28,18 @@ stammdaten <- tibble(
 
 # convert columns to numeric & code NAs
 stammdaten <- stammdaten %>% 
-  mutate(letzte_WP = as.numeric(letzte_WP)) %>% 
-  mutate(erste_WP = as.numeric(erste_WP)) %>% 
+  mutate(letzte_WP = as.integer(letzte_WP)) %>% 
+  mutate(erste_WP = as.integer(erste_WP)) %>% 
   mutate(Titel = na_if(Titel, ""))
 
-# compute age at entry into BT
+# compute age at entry into 19. BT
 stammdaten <- stammdaten %>% 
   mutate(alter = interval(dmy(geb), dmy("24.09.2017")) / duration(num = 1, units = "years")) %>% 
   mutate(alter = as.integer(floor(alter)))
 
 # reorder columns
 stammdaten <- stammdaten %>% 
-  relocate(nachname:Titel, Partei:alter, geb)
+  relocate(nachname:Titel, geschlecht:alter, geb)
 
 # save the data for further use
 save(stammdaten, file = "stammdaten.RData")
