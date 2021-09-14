@@ -15,14 +15,11 @@ besteht darin, dass unser code nach dem Ausführen nicht erhalten bleibt. Wir
 können zwar durch die console scrollen um nachzuvollziehen, welche Befehle wir
 genutzt haben, dies ist uns aber spätestens nach dem Schließen von RStudio nicht
 mehr zugänglich. In der Realität werden Sie aber häufig längere Zeiträume an
-einem Projket arbeiten und möchten eventuell ihren code mit Kommiliton:innen,
+einem Projekt arbeiten und möchten eventuell ihren code mit Kommiliton:innen,
 Kolleg:innen oder der R community teilen. Je komplexer unser code wird, desto
 mehr Fehler werden wir auch machen. Ein früher Fehler in der console der erst
-spät auffällt, kann bedeuten, dass der Großteil unserer Arbeit wiederholt werden
+spät auffällt kann bedeuten, dass der Großteil unserer Arbeit wiederholt werden
 müsste.
-
-Dies sind einige der Argumente die dafür sprechen, mit R scripts statt direkt in
-der console zu arbeiten.
 
 
 ### R scripts
@@ -55,25 +52,25 @@ Statt die Befehle Zeile für Zeile in die console einzugeben und jede Zeile
 direkt auszuführen, schreiben wir zunächst den kompletten code block in unser
 neues script. Danach können wir unser komplettes script durch einen Klick auf
 "Source" in der toolbar des script Fensters ausführen. Ich empfehle Ihnen
-stattdessen aber scripts stets Befehl für Befehl auszuführen. So haben Sie die
+stattdessen aber, scripts stets Befehl für Befehl auszuführen. So haben Sie die
 volle Kontrolle über den Prozess, sehen sofort das Ergebnis (oder den Fehler)
 jedes einzelnen Befehls und können die Ausführung an jeder beliebigen Stelle
 pausieren, zum Beispiel um den Code besser nachzuvollziehen, Fehler zu erkennen
-oder Veränderungen vorzunehmen. Umsetzen könenn Sie dies mit einem Klick auf
-"Run" in der toolbar des script Fensters oder noch einfacher durch das Drücken
-von "CTRL" + "Enter". In beiden Fällen wird die Zeile in der sich aktuell Ihr
-cursor befindet ausgeführt. Dieser springt daraufhin automatisch in die nächste
-Zeile, so dass sie auch Befehl für Befehl schnell ihr ganzes script ausführen
-können, dabei aber die volle Kontrolle behalten. Was für Sie praktikabler ist,
-müssen Sie selbst entscheiden und kann auch von der Situation abhängen. Bedenken
-Sie aber immer, dass R zu jeden Zeitpunkt davon ausgeht, dass Sie wissen was Sie
+oder Veränderungen vorzunehmen. Umsetzen können Sie dies mit einem Klick auf
+"Run" in der Toolbar des Scripttabs oder noch einfacher durch das Drücken von
+"CTRL" + "Enter". In beiden Fällen wird die Zeile in der sich aktuell Ihr Cursor
+befindet ausgeführt. Dieser springt daraufhin automatisch in die nächste Zeile,
+so dass Sie auch Befehl für Befehl schnell ihr ganzes script ausführen können,
+dabei aber die volle Kontrolle behalten. Was für Sie praktikabler ist, müssen
+Sie selbst entscheiden und kann auch von der Situation abhängen. Bedenken Sie
+aber immer, dass R zu jeden Zeitpunkt davon ausgeht, dass Sie wissen was Sie
 tun. Es wird keine Warnmeldungen geben, wenn Sie etwas überschreiben das Sie
 eigentlich nicht überschreiben wollten.
 
 Sie sollten ihr script regelmäßig abspeichern. Nicht nur dann wenn Sie eine
-Arbeitssession beenden, sondern regelmäßig. Dies können sie über "File" > "Save"
-erreichen oder durch die Tastenkombination "CTRL" + "S". Sie können den Namen
-des scripts frei wählen, die Endung muss jedoch immer ".R" sein.
+Arbeitssession beenden, sondern *regelmäßig*. Dies können sie über "File" >
+"Save" erreichen oder durch die Tastenkombination "CTRL" + "S". Sie können den
+Namen des scripts frei wählen, die Endung muss jedoch immer ".R" sein.
 
 Ein Problem, dass Ihnen früher oder später begegnen wird, ist dass Sie
 versehentlich versuchen werden inkompletten code aus einem script auszuführen.
@@ -82,8 +79,8 @@ Der Grund ist sehr häufig eine fehlende schließende Klammer, wie in
 der fehlenden Klammer davon aus, dass der code noch weitergehen soll. R
 übernimmt dann den inkompletten code in die console, führt ihn aber nicht aus
 sondern beginnt eine neue Zeile mit einem `+`. Dies bedeutet, dass wir hinter
-dem `+` den code fortsetzen können. In der Regel ist es am praktikabelsten die
-Ausführung des codes abzubrechen indem sie in die console klicken und danach
+dem `+` den code fortsetzen können. In der Regel ist es dann am praktikabelsten
+die Ausführung des codes abzubrechen indem sie in die console klicken und danach
 "Esc" drücken. Dann können wir den code in unserem script korrigieren und erenut
 ausführen.
 
@@ -108,9 +105,9 @@ RStudio. Der "Files" tab (rechts-unten) zeigt nun auch den Inhalt des
 Projektordners. Dies ist ihr aktuelles working directory, mehr dazu gleich. Sie
 können nun Dateien erstellen und bearbeiten und speichern diese ganz normal ab.
 Das Projekt selbst muss nie gespeichert werden. Möchten Sie in einer späteren R
-session ihre Arbeit an dem Projekt fortsetzen, klicken Sie auf "File" > "Open
+Session ihre Arbeit an dem Projekt fortsetzen, klicken Sie auf "File" > "Open
 Project". Das Projekt wird geöffnet, alle Dateien die Sie bei der letzten
-session geöffnet hatten sind erneut geöffnet und Sie befinden sich auch wieder
+Session geöffnet hatten sind erneut geöffnet und Sie befinden sich auch wieder
 im working directory des Projekts. Projekte sind eine einfache und praktische
 Methode um Ihre Arbeiten zu organisieren und aufgeräumt zu halten.
 
@@ -136,9 +133,8 @@ wird.
 Einer der wichtigsten skills beim Schreiben von code, ist das Kommentieren des
 selbigen. Kommentare können wir direkt in scripts schreiben, diese werden jedoch
 nicht ausgeführt sondern dienen der Erläuterung und Strukturierung des codes.
-Einen Kommentar markieren wir mit einem oder mehreren `#` zu Beginn einer Zeile.
-Text der auf ein `#` folgt wird von R als Kommentar erkannt und entsprechend
-nicht ausgeführt.
+Einen Kommentar markieren wir mit einem oder mehreren `#`. Text der auf ein `#`
+folgt wird von R als Kommentar erkannt und entsprechend nicht ausgeführt.
 
 Wenn Sie über längere Zeit an einem Projekt arbeiten oder dieses nach längerer
 Zeit erneut öffnen, kann es für sie selbst manchmal schwierig sein
@@ -146,7 +142,7 @@ nachzuvollziehen, was Sie mit ihrem code erreichen wollten. Gut kommentierter
 code erleichtert dies stark. Dies wird nochmals relevanter, wenn Sie ihren code
 mit anderen Personen teilen. Für die meisten Probleme in R bestehen eine
 Vielzahl möglicher Ansätze. Gut kommentierter code hilft Anderen zu verstehen,
-was ihr Ansatz ist. Hier können Sie die Zeit die Sie in das Kommentieren
+was *ihr* Ansatz ist. Hier können Sie die Zeit die Sie in das Kommentieren
 investieren als Respekt gegenüber der Zeit verstehen, die Andere investieren um
 Ihnen mit Ihrem code zu helfen.
 
@@ -183,19 +179,19 @@ schlechtesten bringen Sie die Ordnerstruktur einer anderen Person durcheinander.
 beispielsweise Datensätze oder exportierte Graphiken. Die R community ist
 grundsätzlich sehr bereitwillig auch Anfängern mit coding Problemen zu helfen.
 Wir sollten diese Bereitschaft damit würdigen gut kommentierten code
-weiterzugeben und davon abzusehen, in die Datenstruktur von anderen Personen
+weiterzugeben und davon abzusehen, in die Dateistruktur anderer Personen
 einzugreifen.
 
 ### Speichern
 
-Aus meiner Sicht ist es aus dem Blickwinkel reproduzierbarer Datenanalyse meist
+Aus dem Blickwinkel reproduzierbarer Datenanalyse ist es aus meiner Sicht meist
 der beste Ansatz, ein script zu erstellen in dem die rohen Daten eingelesen,
 bereinigt, transformiert sowie statistisch und graphisch analysiert werden. So
 ist es jeder Person mit Zugriff auf die Daten und ihr script möglich, jeden
 ihrer Arbeitsschritte nachzuvollziehen und zu reproduzieren. Dies ist eine der
 Säulen transparenter wissenschaftlicher Praxis. Bei diesem Ansatz müssen wir
 also selten die Ergebnisse unserer Analysen als Datensatz abspeichern. Das
-script -- die .R Datei -- ist ausreichend.
+script -- die ".R" Datei -- ist ausreichend.
 
 Es gibt aber auch Situationen in denen es sinnvoll sein kann, Ergebnisse
 abzuspeichern. Quantitative Textanalysen können bespielsweise sehr
@@ -231,7 +227,7 @@ save(data, file = "peter_paul_mary.RData")
 ```
 
 Um die gespeicherten Daten wieder zu laden, nutzen wir die Funktion `load()` mit
-dem Namen bzw. Pfad der Datei als einziges Argument.
+dem Namen beziehungsweise Pfad der Datei als einzigem Argument.
 
 ``` {r df_load}
 load("peter_paul_mary.RData")
@@ -240,7 +236,8 @@ load("peter_paul_mary.RData")
 So haben wir Daten in dem schnellen und gut komprimierten nativen ".RData"
 Format gespeichert. Der Nachteil ist, dass diese Daten auch nur in R genutzt
 werden können. Interessieren sie sich dafür, Daten in einem besser
-transportierbaren Format zu speichern, biete sich ".csv" an. Mehr dazu hier:
+transportierbaren Format zu speichern, bietet sich ".csv" an. Mehr dazu in
+Kapitel \@ref(export) sowie hier:
 <https://jakobtures.github.io/web-scraping/files.html>{target="_blank"}
 
 
@@ -251,14 +248,9 @@ wird uns durch das ganze Seminar begleiten. Das tiydverse ist eine beliebte
 Sammlung von R packages die einer gemeinsamen Philosophie der Funktionssyntax
 sowie der Datenstruktur folgen und dabei viele datenanalytische Arbeitsprozesse
 abdecken. Der Vorteil ist, dass Sie, sobald Sie die Grundlogik verstanden haben,
-sehr schnell auch weitere tidyverse packages verstehen werden. Dies ist
-letztlich Geschmackssache, aber aus meiner Sicht führt das Arbeiten mit dem
-tidyverse zu intuitiverem und flüßiger zu schreibendem R code, vor allem dank
-der pipe `%>%`, die im nächsten Kapitel eingeführt wird.
-
-Für eine umfassendere Einführung in das tidyverse, bietet sich das Buch "R for
-Data Science" von Wickham & Grolemund an, welches auch Online zugänglich ist:
-<https://r4ds.had.co.nz/>{target="_blank"}
+sehr schnell auch weitere tidyverse packages verstehen werden. Letztlich ist es
+Geschmackssache, aber aus meiner Sicht führt das Arbeiten mit dem tidyverse zu
+intuitiverem und flüßiger zu schreibendem R code, vor allem dank der pipe `%>%`.
 
 Aktuell besteht das core **tidyverse** package aus acht individuellen packages.
 Diese werden alle automatisch geladen wenn wir `library(tidyverse)` schreiben.
@@ -268,7 +260,7 @@ Reinigen und Transformieren von Daten, die angesprochene pipe oder die
 graphische Analyse. Im weiteren werden wir viele Funktionen aus dem core
 **tidyverse** sehr regelmäßig nutzen.
 
-Nebem dem core tidyverse besteht eine wachsende Zahl zugehöriger packages,
+Nebem dem core **tidyverse** besteht eine wachsende Zahl zugehöriger packages,
 welche nach den selben Grundsätzen funktionieren, dabei aber speziellere
 Aufgabenfelder abdecken. Auch diese wurden mit `install.packages("tidyverse")`
 bereits installiert, müssen aber explizit geladen werden. Darunter
@@ -277,13 +269,18 @@ packages zum Einlesen bestimmter Datentypen.
 
 Eine volle Liste der tidyverse packages finden Sie unter: <https://www.tidyverse.org/packages/>{target="_blank"}
 
+Für eine umfassendere Einführung in das tidyverse bietet sich das Buch "R for
+Data Science" von Wickham & Grolemund an, welches auch Online zugänglich ist:
+<https://r4ds.had.co.nz/>{target="_blank"}
+
+
 ### tidy data
 
 Das tidyverse folgt einer geteilten Philosophie der Datenstruktur namens
 *tidy data*. Einfach ausgedrückt steht tidy data dafür, dass jede Variable eines
 Datensatz eine eigene Spalte in einer Tabelle bekommt und jede Beobachtung eine
 eigene Zeile. Die Werte zu den Kombinationen von Variablen und Beobachtungen
-stehen in den Zellen.
+stehen dann logisch folgend in den Zellen.
 
 Betrachten wir folgenden data frame, welcher aktuelle (04.09.2021) Umfragewerte
 für die Wahl zum 20. Bundestag enthält. Die Daten stammen von:
@@ -304,7 +301,7 @@ data.frame(
 
 Diese Darstellungsform ist uns sofort intuitiv verständlich. So sehen Tabellen
 in Excel oder in Zeitungen aus und die Darstellung ist kompakt und
-übersichtlich. Aber ist Sie auch tidy? Dazu müssen wir uns Gedanken darüber
+übersichtlich. Aber ist Sie auch *tidy*? Dazu müssen wir uns Gedanken darüber
 machen, welche Variablen die Tabelle enthält. Die erste Spalte bildet die
 Variable "Institut" ab. Dies macht Sinn. Die restlichen 7 Spalten enthalten die
 Umfragewerte für die 6 aktuell im Bundestag vertretenen Parteien sowie
@@ -330,11 +327,11 @@ Diese Darstellung ist tidy. Wir haben 3 Variablen "Institut", "Partei" und
 nun nicht mehr das komplette Set von Umfragewerten eines Umfrageinstituts,
 sondern der Umfragewert einer Partei bei einem Insitut. Das Ergebnis ist eine
 Tabelle die den Prinzipien der tidy data folgt, die uns auf den ersten Blick
-aber ungewohnt erscheint, da wir nicht daran gewohnt sind Daten in dieser Form
-darzustellen. Dies erfordert zu Beginn etwas Gewöhnung. Wir sollten aber auch
-bedenken, dass es an dieser Stelle nicht das Ziel ist eine schöne Tabelle zu
-präsentieren sondern ein Datenobjekt zu konstruieren welches uns die praktische
-und komfortabele Weiterarbeit mit den diversen tidyverse packages ermöglicht.
+aber seltsam erscheint, da wir nicht daran gewohnt sind Daten in dieser Form
+darzustellen. Wir sollten aber auch bedenken, dass es an dieser Stelle nicht das
+Ziel ist eine schöne Tabelle für menschliche Leser zu präsentieren sondern ein
+Datenobjekt zu konstruieren, welches uns die praktische und komfortabele
+Weiterarbeit mit den diversen tidyverse packages ermöglicht.
 
 Mehr zu den angedeuteten Prinzipien der tidy data finden Sie im entsprechenden
 Kapitel von "R for Data Science" von Wickham & Grolemund:
@@ -347,13 +344,18 @@ Das **tibble** package ist Teil des core **tidyverse** und bietet eine
 Alternative zur base R Darstellung von Tabellen als data frames. Dabei liegen
 viele der Unterschiede zwischen tibbles und data frames eher im Detail. Für uns
 sind vor allem die Art wie tibbles in die console gedruckt werden und wie das
-subsetting funktioniert relevant. Mehr zu beidem gleich. Eine ausführlichere
-Einführung finden Sie in "R for Data Science":
+subsetting funktioniert relevant. Mehr zu Beidem gleich. Eine ausführlichere
+Einführung finden Sie erneut in "R for Data Science":
 <https://r4ds.had.co.nz/tibbles.html>{target="_blank"}
 
 Tibbles erstellen wir dabei auf die selbe Weise wie data frames, nutzen dazu
-aber die Funktion `tibble()`. Dazu müssen wir aber zunächst das **tibble**
-beziehungsweise das **tidyverse** package, welches **tibble** enthält laden.
+aber die Funktion `tibble()`. Dazu müssen wir zunächst das **tibble**
+beziehungsweise das **tidyverse** package, welches **tibble** enthält, laden.
+Das Laden von packages sollte in den ersten Zeilen eines scripts passieren. So
+werden alle notwendigen packages zu Beginn eines scripts geladen und andere
+Nutzer*innen sehen sofort welche packages eventuell noch nachinstalliert werden
+müssen. 
+
 Hier geben wir die Daten direkt bei der Erstellung des tibbles ein. Wie bei data
 frames können wir tibbles aber auch aus zuvor definierten Vektoren
 zusammensetzen.
@@ -370,7 +372,7 @@ wird, desto unübersichtlicher wird er auch. Wir sollten längeren code deshalb
 Segmente zusammengehörig sind. Das Einrücken übernimmt RStudio weitestgehend
 automatisch, wir können aber auch selbst tab stops hinzufügen oder entfernen um
 Zeilen einzurücken. Eine übersichtlicher formatierte, inhaltlich aber identische
-Version des vorangegangenen codes könne wie folgt aussehen:
+Version des vorangegangenen codes könnte wie folgt aussehen:
 
 ``` {r tibble_2}
 tibble(
@@ -437,11 +439,11 @@ ermöglicht das Aneinanderketten von Befehlen, wobei das Ergebnis des
 vorangegangenen Befehls an den nächsten weitergegeben wird. Dies klingt noch
 sehr abstrakt, betrachten wir also ein praktisches Beispiel.
 
-Folgender code hat das Ziel, für einen vektor von Zahlen einen auf eine
+Folgender code hat das Ziel, für einen Vektor von Zahlen den auf eine
 Nachkommastelle gerundeten Mittelwert zu berechnen. Dazu müssen wir zunächt den
 Vektor erstellen und einem Objekt zuweisen, dann den Mittelwert berechnen und
 erneut einem Objekt zuweisen und in einem letzten Schritt das Runden mit der
-Funktion `round()` vornehmen. Das Argument `digits = ` legt dabei die Anzahl der
+Funktion `round()` vornehmen. Das Argument `digits =` legt dabei die Anzahl der
 Nachkommastellen fest.
 
 
@@ -477,7 +479,7 @@ eneut als erstes Argument eingesetzt, hier in die Funktion `round()`. Die
 Rundung wird also auf den in der Zeile zuvor berechneten Mittelwert angewandt.
 
 Dies funktioniert reibungslos mit allen Funktionen, die ein Datenobjekt auf das
-sie angwandt werden sollen als erstes Argument nehmen, was sehr häufig der Fall
+sie angewandt werden sollen als erstes Argument nehmen, was sehr häufig der Fall
 ist, aber nicht immer.
 
 Der resultierende code ist intuitiver zu lesen und weniger schreibintensiv,
@@ -508,9 +510,9 @@ und neuen Funktionen, zu deren Funktionsweise, den zugelassenen Argumenten
 oder den zurückgegebenen Ergebnissen?
 
 Der einfachste Weg ist das Nutzen der eingebauten Hilfefunktionalitäten in R.
-Dazu schreiben wir einfach ein `?` vor den Namen einer Funktion zu der wir Hilfe
-benötigen. Die zugehörige Hilfedatei öffnet sich dann im "Help" Tab, 
-rechts-unten. Versuchen wir dies für die Funktion `rnorm()`.
+Dazu schreiben wir in der console einfach ein `?` vor den Namen einer Funktion
+zu der wir Hilfe benötigen. Die zugehörige Hilfedatei öffnet sich dann im "Help"
+Tab, rechts-unten. Versuchen wir dies für die Funktion `rnorm()`.
 
 ``` {r help, eval = FALSE}
 ?rnorm()
@@ -558,8 +560,8 @@ Einzelne dieser vignettes, rufen wir wie folgt auf:
 vignette("types")
 ```
 
-Eine ausführlichere Dokumentation zu einem package, finden Sie meist auf der
-dazugehörigen CRAN Seite, hier z.B. für **tibble**:
+Eine ausführlichere Dokumentation zu einem package, finden Sie außerdem meist
+auf der dazugehörigen CRAN Seite, hier z.B. für **tibble**:
 <https://cran.r-project.org/web/packages/tibble/index.html>{target="_blank"}.
 
 
@@ -569,16 +571,18 @@ Es gibt eine Vielzahl von websites und Büchern zu R und RStudio. Einige davon
 möchte ich hier vorstellen.
 
 Die website von RStudio umfasst eine große Sammlung von Resourcen zu R und
-der Arbeit mit spezfischen packages, darunter auch viele Webinars und tutorial
+der Arbeit mit spezfischen packages, darunter auch viele Webinars und Tutorial
 Videos. Diese finden sie unter dem Menüpunkt "Resources" auf:
 <https://www.rstudio.com/>{target="_blank"}
 
 Die RStudio *cheatsheets* zu einigen der beliebteren packages bieten auf kleinem
 Raum meist sehr gut zusammengefasste Informationen zu den Funktionen und der
-Arbeitsweise eines packages:
+Arbeitsweise eines packages. Die Nutzung der cheatsheets sei von mir dringend
+empfohlen, und sie sind nicht nur beim Erlernen eines neuen packages sondern
+auch als Erinnerungsstütze extrem hilfreich:
 <https://www.rstudio.com/resources/cheatsheets/>{target="_blank"}
 
-Eine weitere Sammlung von tutorials zu unterschiedlichsten R Themen finden Sie
+Eine weitere Sammlung von Tutorials zu unterschiedlichsten R Themen finden Sie
 auf "R-bloggers":
 <https://www.r-bloggers.com/>{target="_blank"}
 

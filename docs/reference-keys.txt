@@ -6,7 +6,7 @@ erste-schritte
 übersicht-rstudio
 hello-world
 rechnen-mit-r
-vergleichsoperatoren
+vergleich
 objekte
 vektoren
 subsetting
@@ -42,7 +42,7 @@ speichern-der-transformierten-daten
 deskriptive-datenanalyse-mit-dplyr
 summarise
 summarise-group_by
-export-von-tabellen
+export
 weiterführende-resourcen
 R4
 ggplot2-syntax

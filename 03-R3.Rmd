@@ -9,25 +9,25 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 
 ## Die Stammdaten des 19. Bundestags
 
-Dieses Kapitel behandelt die Bereinigung, Transformation und deskriptive
-statistische Analyse von Daten mit **dplyr**, sowie deren graphische Analyse mit
-**ggplot2**. Zur Veranschaulichung der Arbeitsschritte, analysieren wir eine
-Auswahl biographischer Daten der Bundestagsabgeordneten des 19. Bundestags.
-Darunter auch die Regierungsmitglieder und Funktionsträger wie
-Bundestagspräsident*innen. Die Daten stammen aus einer vom Bundestag
-bereitgestellten ".xml" Datei und wurden am 07.09.2021 unter folgender URL
-heruntergeladen:
+Dieses und das Folgende Kapitel behandeln die Bereinigung, Transformation und
+deskriptive statistische Analyse von Daten mit **dplyr** sowie der graphische
+Analyse mit **ggplot2**. Zur Veranschaulichung analysieren wir eine Auswahl
+biographischer Daten der Bundestagsabgeordneten des 19. Bundestags. Darunter
+auch die Regierungsmitglieder und Funktionsträger wie Bundestagspräsident*innen.
+Die Daten stammen aus einer vom Bundestag bereitgestellten ".xml" Datei und
+wurden am 07.09.2021 unter folgender URL heruntergeladen:
 <https://www.bundestag.de/services/opendata>{target="_blank"}
 
 Das script zur Extraktion der interessierenden Variablen aus den XML Daten und
 der Konstruktion des hier genutzten tibbles, finden Sie in meinem GitHub:
 <https://github.com/JakobTures/quanti-text/blob/master/scripts/stammdaten.R>{target="_blank"}
 
-Das script speichert den tibble in der Datei "stammdaten.RData", die von
-Seminarteilnehmern auch in Moodle heruntergeladen werden kann. Laden wir diese
-Daten zunächst in R. Da es sich bei dem zu ladenden Datenobjekt um einen tibble
-handelt, müssen wir auch zunächst das **tidyverse** package laden. R kennt ohne
-dieses keine tibble und interpretiert das Objekt als data frame.
+Das script speichert einen tibble mit allen genutzten Daten in der Datei
+"stammdaten.RData", die von Seminarteilnehmern auch in Moodle heruntergeladen
+werden kann. Laden wir diese Daten zunächst in R. Da es sich bei dem Datenobjekt
+um einen tibble handelt, müssen wir auch zunächst das **tidyverse** package
+laden. R kennt ohne dieses keine tibbles und interpretiert das Objekt als data
+frame.
 
 ``` {r load_stammdaten, include = FALSE}
 library(tidyverse)
@@ -57,12 +57,12 @@ im Bundestag vertreten war sowie Alter und Geburtsdatum.
 Wie Sie sehen, werden bei tibbles standardmäßig nur die ersten 10 Zeilen
 gedruckt. Die Darstellung ist dadurch kompakt und übersichtlich, eventuell
 könnten wir aber daran interessiert sein mehr als 10 Zeilen zu sehen. Ein Weg
-ist das anklicken des Objekts im "Environment" Tab oder das äquivalente
-Schreiben von `View(objektname)` in der console. Nun öffnet sich das Objekt in
-einem neuen Tab und kann komplett betrachtet werden. Ein anderer Weg ist es R zu
-zwingen mehr Zeilen in die console abzudrucken. Dies ist mit der Funktion
-`print()` möglich. Als zweites Argument können wir mir `n = ` angeben, wie viele
-Zeilen wir sehen möchten.
+ist das anklicken des Objekts im "Environment" Tab oder das Schreiben von
+`View(objektname)` in der console. Nun öffnet sich das Objekt in einem neuen Tab
+und kann komplett betrachtet werden. Ein anderer Weg ist es, R zu zwingen mehr
+Zeilen in die console abzudrucken. Dies ist mit der Funktion `print()` möglich.
+Als zweites Argument können wir mit `n = ` angeben, wie viele Zeilen wir sehen
+möchten.
 
 ``` {r print_more_stammdaten}
 print(stammdaten, n = 20)
@@ -75,8 +75,7 @@ Das **dplyr** package enthält eine Reihe von Funktionen zur Bereinigung,
 Transformation und deskriptiven Analyse von Daten. Wir beginnen damit, Zeilen
 und Spalten die wir nicht benötigen aus dem tibble zu entfernen, bevor wir die
 Daten in einigen bestehenden Spalten transformieren und neue Spalten aus den
-vorhandenen Daten erzeugen sowie gruppierte Zusammenfassungen der Daten
-berechnen.
+vorhandenen Daten erzeugen.
 
 Empfohlene weiterführende Resourcen zu **dplyr** sind das entsprechende RStudio
 cheatsheet:
@@ -92,36 +91,17 @@ filtern. Die Funktion nimmt dabei die Daten auf die es angewandt werden soll als
 erstes und eine oder mehrere expressions als zweites Argument. Diese Ausdrücke
 sind letztlich die Regeln, nach denen die Funktion filtern soll.
 
-Zum Schreiben der Ausdrücke benötigen wir *vergleichende Operatoren*. Diese 
-vergleichen den Wert auf der linken Seite des Operators mit dem auf der rechten,
-und geben als Ergebnis ein `TRUE` zurück wenn der Test bestanden wurde
-bwziehungsweise `FALSE` wenn er nicht bestanden wurde.
-
-Um zu testen ob zwei Werte gleich sind, nutzen wir den Operator `==`. Bitte
-beachten Sie, dass wir zwei Gleichheitszeichen nutzen müssen. `==` vergleicht
-zwei Werte, während `=` den Wert auf der linken Seite mit dem auf der rechten
-Seite überschreibt. Möchten wir testen ob zwei Werte nicht gleich sind, nutzen
-wir `!=`.
-
-``` {r comp_op_1}
-42 == 42
-42 != 42
-```
-
-Ebenfalls können wir vergleichen ob der linke Werte kleiner `<`, kleiner-gleich
-`<=`, größer `>` oder größer-gleich `>=` ist.
-
-``` {r comp_op_2}
-10 < 42
-42 <= 42
-10 > 42
-90 >= 42
-```
+Zum Schreiben der Ausdrücke benötigen wir die in Kapitel \@ref(vergleich)
+bereits eingeführten Vergleichsoperatoren. Diese vergleichen den Wert auf der
+linken Seite des Operators mit dem auf der rechten, und geben als Ergebnis ein
+`TRUE` zurück wenn der Test bestanden wurde bwziehungsweise `FALSE` wenn er
+nicht bestanden wurde.
 
 Wir könnten nun beispielsweise daran interessiert sein, nur die Daten bestimmter
-Parteien zu analysieren. Filtern wir zunächst die Stammdaten der CDU-Abgeordneten
-heraus. Wir können dazu in `filter()` testen, ob der Wert der Spalte "Partei"
-gleich dem Wert "CDU" ist.
+Parteien zu analysieren. Filtern wir zunächst die Stammdaten der
+CDU-Abgeordneten heraus. Wir können dazu in `filter()` testen, ob der Wert der
+Spalte "Partei" gleich dem Wert "CDU" ist. Bitte denken Sie daran, dass wir zum
+Vergleich zweier Werte immer `==` schreiben müssen, nicht `=`.
 
 ``` {r filter_1}
 stammdaten %>% 
@@ -150,7 +130,7 @@ stammdaten %>%
 
 Statt mit `&` können wir in `filter()` Ausdrücke auch mit `,` verbinden. Das `|`
 lässt sich aber nicht auf ähnlichem Weg ersetzen. Möchten wir Unionsmitglieder
-filtern, also CDU- und CSU-Mitglieder, können wir dies mit `|` realisieren:
+filtern, also CDU- oder CSU-Mitglieder, können wir dies mit `|` realisieren:
 
 ``` {r filter_3}
 stammdaten %>% 
@@ -226,10 +206,10 @@ stammdaten_19
 `mutate()` dient dazu Daten in bestehenden Spalten zu transformieren und neue
 Spalten aus den Daten bestehender Spalten zu generieren.
 
-Aktuell ist der Name über zwei Spalten verteilt. Möchten wir stattdessen eine
-Spalte mit dem kompletten Namen erstellen, können wir dies mit `mutate()`
-umsetzen. Generell schreiben wir innerhalb der Klammern den Namen der zu
-transformierenden oder neu zu erstellenden Spalte `=` einem Ausdruck der
+Aktuell ist der Name der Abgeordneten über zwei Spalten verteilt. Möchten wir
+stattdessen eine Spalte mit dem kompletten Namen erstellen, können wir dies mit
+`mutate()` umsetzen. Generell schreiben wir innerhalb der Klammern den Namen der
+zu transformierenden oder neu zu erstellenden Spalte `=` einem Ausdruck der
 beschreibt, wir die Daten transformiert oder generiert werden sollen. Dies kann
 eine einfache Berechnung wie `mutate(neue_spalte = spalte_a + spalte b)` sein,
 aber auch weitere Funktionen beinhalten. Hier nutzen wir die Funktion `str_c()`
@@ -268,10 +248,10 @@ stammdaten_19 %>%
   select(titel, titel_dummy)
 ```
 
-Die Spalte "partei" ist auch als character vector abgelegt. Bei der
+Die Spalte "partei" ist auch als character Vektor abgelegt. Bei der
 Parteizugehörigkeit handelt es sich um eine kategoriale Variable. So gibt es nur
 eine begrenzte Anzahl möglicher Ausprägungen, nämlich die Namen der im 19.
-Bundestag vertretenen Parteien sowie die Kategorie "Parteilos". Die
+Bundestag vertretenen Parteien sowie die Kategorie "Plos" für Parteilose. Die
 Repräsentation kategorialer Variablen in R nennt sich *factor*. Das core
 tidyverse package **forcats** ermöglicht es uns Faktorvariablen anzulegen und zu
 manipulieren. Dies erleichtert vor allem die graphische Analyse im weiteren
@@ -312,6 +292,10 @@ stammdaten_19 <- stammdaten_19 %>%
 levels(stammdaten_19$partei)
 ```
 
+Das Zuammenfassen mehrer factors wäre auch mit `fct_recode()` möglich, erfordert
+aber etwas mehr Schreibart. Diese Funktion eignet sich aber zum Anpassen der
+Namen einzelner factors.
+
 Um die Kategorien manuell neu zu ordnen, könnten wir `fct_relevel()` nutzen.
 Dazu müssten wir aber die gewünschte Reihenfolge per Hand notieren. Bequemer
 geht es mit `fct_infreq()`, welche die Kategorien automatisch nach der
@@ -325,9 +309,8 @@ stammdaten_19 <- stammdaten_19 %>%
 levels(stammdaten_19$partei)
 ```
 
-Die Spalte "geschlecht" liegt ebenfalls als character vector vor und kann auf
+Die Spalte "geschlecht" liegt ebenfalls als character Vektor vor und kann auf
 dem selben Weg in einen factor umgewandelt werden.
-
 
 ``` {r factor_5}
 stammdaten_19 <- stammdaten_19 %>% 
@@ -419,8 +402,8 @@ Unsere Daten bieten sich für eine Analyse nach Parteimitgliedschaft an. Als
 ersten Schritt können wir die Daten also nach dem Inhalt der Spalte "partei"
 gruppieren und zunächst einmal Zählen, wie viele Abgeordnete pro Partei im
 Bundestag vertreten sind. Dazu nutzen wir innerhalb von `mutate()` die **dplyr**
-Funktion `n()`, welche die Gruppengröße, also die Anzahl Beobachtungen pro
-Gruppe, zurückgibt.
+Funktion `n()`, welche die Anzahl Beobachtungen pro Gruppe, also die
+Gruppengröße, zurückgibt.
 
 
 ``` {r partei_summary}
@@ -429,8 +412,8 @@ stammdaten_19 %>%
   summarise(abgeordnete = n())
 ```
 
-Weiter oben haben wir das Durchschnittsalter aller Abgeordneten berechnet. Dies
-können wir natürlich auch gruppiert nach der Partei machen.
+Eben haben wir das Durchschnittsalter aller Abgeordneten berechnet. Dies können
+wir natürlich auch gruppiert nach der Partei machen.
 
 ``` {r alter_by_partei}
 stammdaten_19 %>% 
@@ -444,9 +427,9 @@ stammdaten_19 %>%
 ```
 
 Oft ist es hilfreich die Daten nach einer Statistik die uns interessiert zu
-ordnen. Möchten wir beispielsweise Wissen, welche Partei den höchsten
+ordnen. Möchten wir beispielsweise wissen, welche Partei den höchsten
 beziehungsweise niedrigsten Mittelwert des Alters hat, können wir die Ergebnisse
-in einem weiteren Schritt mit der Funktion `arrange()` nach den Werten einer
+in einem weiteren Schritt mit der Funktion `arrange()` nach den Werten dieser
 Variable ordnen. Die zusätzliche Funktion `desc()` bewirkt, dass die Daten
 absteigend geordnet werden.
 
@@ -465,7 +448,7 @@ stammdaten_19 %>%
 Für die Mehrzahl der Parteien liegt der Mittelwert des Alters bei ca. 50 Jahren.
 Dabei beträgt die Differenz des arithmetischen Mitels zwischen AfD und Union
 etwa 1 Jahr. Wir sehen für die AfD aber auch eine höhere Standardabweichung und
-einen neidrigeren Median. Wir könnten also vermuten, dass in der AfD einige
+einen niedrigeren Median. Wir könnten also vermuten, dass in der AfD einige
 besonders alte Abgeordnete vertreten sind, welche den Mittelwert nach oben
 verzerren. Die FDP ist dem Mittelwert nach die jüngste, die Grünen die
 zweitjüngste Partei. Dabei ist auffällig, dass die Grünen die engste Spannweite
@@ -473,16 +456,16 @@ des Alters aufweisen. Es gibt keine Abgeordneten unter 32 und keine über 64. Di
 FDP hat demgegenüber sehr junge und sehr alte MdBs. Die Statistiken für die
 Gruppe der parteilosen sind nicht besonders belastbar, da sie nur aus 10
 Personen besteht, deuten aber auf ein relativ junges Durchschnittsalter hin.
-Diesen ersten Befunden werden wir bei der graphischen Analyse
-(Kapitel \@ref(R4)) weiter auf den Grund gehen. 
+Diesen ersten Befunden werden wir bei der graphischen Analyse im folgenden
+Kapitel weiter auf den Grund gehen. 
 
 Die Spalte "titel_dummy" ist ein logischer Vektor der `TRUE` enthält, wenn ein
 MdB einen akademischen Titel besitzt und `FALSE`, wenn keiner vorliegt. Hinter
 einem logischen Vektor stehen Zahlenwerte. `TRUE` ist die Repräsentation von 1,
 `FALSE` von 0. Wir können also direkt mit den Werten des Vektors rechnen. Um die
-absolute Anzahl an Titeln zu berechenn, reicht es also die Summe des Vektors zu
-bilden. Alle Werte werden so aufaddiert und da wir nur Einsen und Nullen haben,
-ist das Ergebnis gleich der Anzahl der Abgeordneten die einen akademischen Titel
+absolute Anzahl an Titeln zu berechenn, reicht es so die Summe des Vektors zu
+bilden. Alle Werte werden aufaddiert und da wir nur Einsen und Nullen haben, ist
+das Ergebnis gleich der Anzahl der Abgeordneten die einen akademischen Titel
 tragen. Um den relativen Anteil zu berechnen, können wir das arithmetische
 Mittel nutzen. Alle Einsen und Nullen werden aufaddiert und durch die Anzahl der
 Beobachtungen geteilt. Dies ist der Anteil der Abgeordneten mit Titel.
@@ -511,7 +494,7 @@ stammdaten_19 %>%
 
 Abgeordnete mit Titel sind im Durchschnitt etwas älter. Dies macht Sinn, da
 sowohl das Erlangen eines Titels als auch eines Bundestagmandats hohe
-Zeitinvestiotionen darstellen.
+Zeitinvestitionen darstellen.
 
 Wir können auch nach mehreren Spalten gleichzeitig gruppieren. In diesem Fall
 werden die Statistiken für jede Gruppenkombination berechnet.
@@ -532,18 +515,19 @@ analysierte Unterschied im mittleren Alter von MdBs mit und ohne Titel nicht fü
 alle Parteien gleichermaßen gilt. Während Titelträger in AfD, FDP und LINKE im
 Mittel klar älter sind als Abgeordnete ohne Titel, ist die Differenz für die
 Union und die SPD sehr gering. Bei den Grünen sind Titelträger im Mittel
-sogar jünger.
+sogar jünger. Auch dies werden wir in der graphischen Analyse erneut
+betrachten.
 
 An dieser Stelle müssen wir noch über eine Besonderheit in der Zusammenarbeit
 von `group_by()` und `summarise()` sprechen, welche zu Problemen führen kann,
 wenn Sie sich ihr nicht bewusst sind. Grundsätzlich wird jeder Aufruf von
 `summarise()` nach einem `group_by()` Befehl eine Ebene der Gruppierung
 auflösen. Für die Beispiele in denen wir nur nach Partei oder Titel gruppiert
-hhaben, bedeutet dies also, dass die Daten nach dem `summarise()` Befehl nicht
-mehr gruppiert waren. Wir hatten eine Gruppierungsebene und diese wurde
+haben, bedeutet dies also, dass die Daten nach dem `summarise()` Befehl nicht
+mehr gruppiert waren. Wir hatten *eine* Gruppierungsebene und diese wurde
 automatisch entfernt. Im letzten Beispiel hatten wir zwei Gruppierungsebenen.
 Von diesen wurde nur die niedrigere Gruppierungsebene -- die Reihenfolge der
-Variablen in `group_by()` bestimmt auch die reihenfolge der Gruppierung --, also
+Variablen in `group_by()` bestimmt auch die Reihenfolge der Gruppierung --, also
 die Gruppierung nach dem Titel aufgelöst. Die Gruppierung nach der
 Parteimitgliedschaft ist weiterhin aktiv. Dies ist auch im output anhand der
 Zeile `# Groups:   partei [7]` erkennbar. Die Daten sind nach der Partei
@@ -556,7 +540,7 @@ die Gruppierung wirklich weiterhin brauchen, würde ich immer zu einem
 `ungroup()` am Ende einer `group_by()` und `summarise()` Operation mit mehreren
 Gruppen tendieren. So verhindern sie versehentliche Berechnungen auf
 Gruppenbasis und die Gruppierung lässt sich jederzeit schnell wieder herstellen,
-sollten dies notwendig werden.
+sollte dies notwendig werden.
 
 ``` {r ungroup}
 stammdaten_19 %>% 
@@ -571,26 +555,27 @@ stammdaten_19 %>%
 ```
 
 
-## Export von Tabellen
+## Export von Tabellen {#export}
 
 Das Exportieren von Tabellen -- beispielsweise die oben berechneten Statistiken
 -- aus R ist leider nicht ganz so einfach wie man denken oder hoffen würde. Wir
 können natürlich immer copy & paste nutzen um die Werte in Word oder eine
 sonstige Software zu kopieren, dies aber nicht nur langweilige Fleißarbeit
-sondern auch fehleranfällig, vor allem bei umfassenderen Analysen als die, die
-wir bisher betrachet haben.
+sondern auch fehleranfällig, vor allem bei umfassenderen Analysen als solche,
+die wir bisher betrachet haben.
 
 Ein flexibler Weg zum direkten Export von Tabellen ist es, diese als ".csv"
-abzuspeichern. Diese Format kann wiedrum direkt in Excel und vermutlich auch in
+abzuspeichern. Dieses Format kann wiedrum direkt in Excel und vermutlich auch in
 Word importiert werden. Da ich kein aktiver Office Nutzer bin, kann Ich Ihnen
 hier nur begrenzte praktische Ratschläge geben. Der Import sollte aber im
 Normalfall möglich sein. 
 
-*CSV* steht für "comma-separated values". Da diese sehr einfach gehalten sind
-und von einer großen Bandbreite an Software verarbeitet werden können, ist dies
-eines der meistgenutzten Datenformate.
+*CSV* steht für "comma-separated values". Da diese Dateien sehr einfach gehalten
+sind und von einer großen Bandbreite an Software verarbeitet werden können, ist
+CSV eines der meistgenutzten Formate für zweidimensionale Datenstrukturen.
 
-Die Grundstruktur ist dabei wie folgt:
+Hier fehlt der Platz um ins Detail zu gehen, aber wir können kurz die
+Grundstruktur einer CSV Datei betrachten:
 
 ```
 column1, column2, column3
@@ -600,10 +585,13 @@ data3_1, data3_2, data3_3
 ```
 
 Die Zeilen einer Tabelle sind durch Zeilenumbrüche getrennt, die Spalten durch
-Kommas.
+Kommas. In der ersten Zeile stehen dabei häufig, aber nicht immer, die
+Spaltennamen. Damit wissen Sie bereits das Wichtigste. Mehr zu ".csv" Dateien
+finden sie unter:
+<https://jakobtures.github.io/web-scraping/files.html>{target="_blank"}
 
-So können wir beispielsweise das Ergebnis einer `summarise()` Operation mit
-`write_csv()` aus **readr** (core tidyverse) abspeichern.
+Wir können beispielsweise das Ergebnis einer `summarise()` Operation mit
+`write_csv()` aus **readr** (core **tidyverse**) abspeichern.
 
 ``` {r save_csv_1}
 stammdaten_19 %>% 
@@ -618,18 +606,17 @@ stammdaten_19 %>%
   write_csv(file = "alter_partei_titel_1.csv")
 ```
 
-Aus Gründen die vermutlich nur Microsoft selbst bekannt sind, können ".csv"
-Dateien in denen die Spalten durch Kommas getrennt sind -- der internationale
-Standard -- auf deutschen Windows Systemen nicht ohne weiteres importiert
-werden. Nutzen Sie statt Microsoft Office die open source Alternative Libre
-Office, ist das Problem bereits behoben. Möchten Sie aber Microsoft Office
-auf einem deutschen System nutzen, sollten Sie die Datei im Deutschen Standard
--- statt Kommas werden Semikolons als Trennzeichen der Spalten verwendet (die
-Kommas werden zur Darstellung von Dezimalzahlen benötigt) -- speichern. Dies ist
-mit `write_csv2()` auf einfachem Wege möglich..
+Aus Gründen die vermutlich nur Microsoft selbst bekannt sind -- ich tippe auf
+missverstandene "Nutzerfreundlichkeit" --, können ".csv" Dateien in denen die
+Spalten durch Kommas getrennt sind -- der internationale Standard -- auf
+deutschen Windows Systemen nicht ohne weiteres importiert werden. Nutzen Sie
+statt Microsoft Office die open source Alternative Libre Office, ist das Problem
+bereits behoben. Möchten Sie aber Microsoft Office auf einem deutschen System
+nutzen, sollten Sie die Datei im Deutschen Standard speichern. Dabei werden
+statt Kommas Semikolons als Trennzeichen der Spalten verwendet da die Kommas in
+Deutschland zur Darstellung von Dezimalzahlen benötigt werden. Dies ist mit
+`write_csv2()` auf einfachem Wege möglich.
 
-Mehr zu ".csv" Dateien finden sie unter:
-<https://jakobtures.github.io/web-scraping/files.html>{target="_blank"}
 
 
 #### Weiterführende Resourcen
@@ -646,7 +633,7 @@ Möchten sie direkt nach ".xlsx" exportieren, wären zwei der Optionen:
 Tabellen direkt im ".docx" Format zu erstellen ermöglicht **flextable**:
 <https://davidgohel.github.io/flextable/>{target="_blank"}
 
-**huxtable** kann Tabellen im ".tex" Foramt zur Arbeit in LaTeX ausgeben:
+**huxtable** kann Tabellen im ".tex" Format zur Arbeit in LaTeX ausgeben:
 <https://hughjonesd.github.io/huxtable/>{target="_blank"}
 
 Möchten sie externe Software zum Schreiben von Hausarbieten und Papers ganz
@@ -661,7 +648,7 @@ zu R Markdown finden Sie hier:
 * Kapitel zu R Markdown in "R for Data Science" von Hadley Wickham und Garrett Grolemund: <https://r4ds.had.co.nz/r-markdown.html>{target="_blank"}
 * "R Markdown Cookbook" von Yihui Xie, Christophe Dervieux, Emily Riederer: <https://bookdown.org/yihui/rmarkdown-cookbook/>{target="_blank"}
 
-Die Website die Sies aktuell betrachten sowie viele der verlinkten Resourcen
+Die Website die Sie aktuell betrachten sowie viele der verlinkten Resourcen
 sind mit **bookdown** geschrieben, welches auf R Markdown aufbaut und sich vor
 allem für umfangreichere Projekte eignet.
 

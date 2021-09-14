@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-09-13" />
+<meta name="date" content="2021-09-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,7 +160,7 @@ Quantitative Textanalyse mit R
 <li class="chapter" data-level="1.2.1" data-path="R1.html"><a href="R1.html#übersicht-rstudio"><i class="fa fa-check"></i><b>1.2.1</b> Übersicht RStudio</a></li>
 <li class="chapter" data-level="1.2.2" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>1.2.2</b> Hello World!</a></li>
 <li class="chapter" data-level="1.2.3" data-path="R1.html"><a href="R1.html#rechnen-mit-r"><i class="fa fa-check"></i><b>1.2.3</b> Rechnen mit R</a></li>
-<li class="chapter" data-level="1.2.4" data-path="R1.html"><a href="R1.html#vergleichsoperatoren"><i class="fa fa-check"></i><b>1.2.4</b> Vergleichsoperatoren</a></li>
+<li class="chapter" data-level="1.2.4" data-path="R1.html"><a href="R1.html#vergleich"><i class="fa fa-check"></i><b>1.2.4</b> Vergleichsoperatoren</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="R1.html"><a href="R1.html#objekte"><i class="fa fa-check"></i><b>1.3</b> Objekte</a></li>
 <li class="chapter" data-level="1.4" data-path="R1.html"><a href="R1.html#vektoren"><i class="fa fa-check"></i><b>1.4</b> Vektoren</a>
@@ -219,7 +219,7 @@ Quantitative Textanalyse mit R
 <li class="chapter" data-level="3.4.1" data-path="R3.html"><a href="R3.html#summarise"><i class="fa fa-check"></i><b>3.4.1</b> <code>summarise()</code></a></li>
 <li class="chapter" data-level="3.4.2" data-path="R3.html"><a href="R3.html#summarise-group_by"><i class="fa fa-check"></i><b>3.4.2</b> <code>summarise()</code> &amp; <code>group_by()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="R3.html"><a href="R3.html#export-von-tabellen"><i class="fa fa-check"></i><b>3.5</b> Export von Tabellen</a></li>
+<li class="chapter" data-level="3.5" data-path="R3.html"><a href="R3.html#export"><i class="fa fa-check"></i><b>3.5</b> Export von Tabellen</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="R4.html"><a href="R4.html"><i class="fa fa-check"></i><b>4</b> Graphische Analyse mit ggplot2</a>
 <ul>
@@ -272,7 +272,7 @@ Quantitative Textanalyse mit R
 <div id="header">
 <h1 class="title">Quantitative Textanalyse mit R</h1>
 <p class="author"><em>Jakob Tures</em></p>
-<p class="date"><em>2021-09-13</em></p>
+<p class="date"><em>2021-09-14</em></p>
 </div>
 <div id="einleitung" class="section level1 unnumbered">
 <h1>Einleitung</h1>
@@ -285,8 +285,8 @@ zwischen Wörtern, das Erkennen der emotionalen Haltung in geschriebener Sprache
 und die automatisierte Einordnung von Texten in latente oder explizite
 Kategorien. Diese und andere Techniken der quantiativen Textanalyse werden wir
 in diesem Kurs behandeln.</p>
-<p>Texte als Datenbasis empirischer Wissenschaft kommen vor allem in der
-qualitativen Forschung zum Einsatz. Hier werden Texte “per Hand” nach Ihren
+<p>Textdaten in der empirischen Wissenschaft werden vor allem in der
+qualitativen Forschung genutzt. Hier werden Texte “per Hand” nach Ihren
 Bedutungsinhalten kodiert oder kategorisiert. Dies hat den Vorteil, dass Sprache
 in ihrem Kontext und ihrer enormen Komplexität von Menschen verstanden wird und
 Ebenen analysiert werden können die tiefer liegen als das reine geschriebene
@@ -294,20 +294,20 @@ Wort es ausdrücken könnte. In der quantitativen Textanalyse nutzen wir hingege
 vor allem computergestützte Methoden. Computer können menschliche Sprache jedoch
 nicht in dem Sinne <em>verstehen</em>, wie eine menschliche Kodierer:in dies kann.
 Möchten wir beispielsweise den emotionalen Gehalt eines Textes – das
-<strong>sentiment</strong> – analysieren, können wir ein dictionary mit nach Emotionen
+<strong>Sentiment</strong> – analysieren, können wir ein Dictionary mit nach Emotionen
 kodierten Wörtern an unsere Textdaten anlegen, die Relation von “positiven” und
-“negativen” Wörtern berechnen und Aussagen zu dem durchschnittlichen sentiment
+“negativen” Wörtern berechnen und Aussagen zu dem durchschnittlichen Sentiment
 eines Textes treffen. Da bei diesen relativ einfachen Techniken in der Regel
 nur einzelne Wörter für sich betrachtet werden, kann der Computer bereits
 Probleme mit der Verneinung von Begriffen haben. “Nicht gut” können wir als
 Menschen sofort als negativ verstehen während unsere Software “nicht” und “gut”
 getrennt betrachtet und so im besten Fall ein neutrales, im schlimmsten Fall ein
-positives sentiment erkennt. Noch schwieriger wird es Ironie, Humor,
+positives Sentiment erkennt. Noch schwieriger wird es Ironie, Humor,
 Anspielungen usw. adäquat mit den Mitteln der quantitiven Analyse zu erfassen,
 eine Aufgabe die vor allem in der geschriebenen Sprache bereits für Menschen
 schwierig sein kann – vermutlich kennt jeder von uns die Situation, das
-sentiment von Textnachrichten falsch ausgelegt zu haben. Auch bei der Anwendung
-der ausgfeilteren Methoden quantitativer Textanalyse müssen wir uns dieser
+Sentiment von Textnachrichten falsch ausgelegt zu haben. Auch bei Anwendung der
+ausgfeilteren Methoden quantitativer Textanalyse müssen wir uns dieser
 Beschränkungen stets bewusst sein. Unsere Techniken und Algorithmen werden die
 Fähigkeit menschlicher Kodierer:innen Sprache in ihrem Kontext zu verstehen
 nicht erreichen.</p>
@@ -343,7 +343,7 @@ zu den Daten und unserem R-scripts kann die Analyse replizieren oder auch
 modifizieren. Diese Replizierbarkeit ist eine fundamentale Säule empirischer
 Wissenschaft und unabhängig von der nicht in Frage gestellten Fähigkeit und
 Gründlichkeit qualitativer Forscher:innen dort in dieser Form nicht möglich.</p>
-<p>Eine letzte einleitende Bemerkung: Auch wenn ich in den obrigen zeilen viele
+<p>Eine letzte einleitende Bemerkung: Auch wenn ich in den obrigen Zeilen viele
 Vergleiche zur qualitativen Textanalyse – der klassischen “Heimat” von
 Textanalysen – gezogen habe, möchte ich klar betonen, dass es mir weder um eine
 Aufwertung des einen noch um eine Abwertung des anderen Ansatzes geht.
@@ -352,6 +352,7 @@ bleiben und andersherum. Die relevante Frage ist also nicht, welcher Ansatz ist
 “besser”, sondern welcher ist adäquat für mein Forschungsinteresse?</p>
 <div id="beispiele" class="section level3 unnumbered">
 <h3>Beispiele</h3>
+<p>WIP</p>
 </div>
 </div>
 <div id="kursinhalte" class="section level2 unnumbered">
@@ -368,32 +369,34 @@ von Textdaten ermöglichen. RStudio ist ein IDE –
 der Sprache. Der erste Block umfasst Informationen zur Installation beider
 Softwares, der Bedienung von RStudio sowie grundlegenden R Befehlen.
 Abgeschlossen wird er mit einem Überblick zur Transformation von Daten und deren
-graphischer Analyse mit dem verbreiteten R package <strong>tidyverse</strong>.</p>
-<p>Kapitel <a href="BT19.html#BT19">5</a> befasst sich mit dem Datensatz der im Kurs zur Textanalyse
-verwendet wird, den Plenarprotokollen des 19. Deutschen Bundestags. Wir
-betrachten den Inhalt des Datensatzes sowie dessen Struktur.</p>
+graphischer Analyse mit dem <strong>tidyverse</strong>, einer populären Sammlung von R
+packages.</p>
+<p>Kapitel <a href="BT19.html#BT19">5</a> befasst sich mit dem Inhalt und der Struktur des
+Datensatzes, welcher im Kurs zur Textanalyse verwendet wird, den
+Plenarprotokollen des 19. Deutschen Bundestags.</p>
 <p>Im dritten Block (Kapitel <a href="tidytext1.html#tidytext1">6</a>, <a href="tidytext2.html#tidytext2">7</a>, <a href="tidytext3.html#tidytext3">8</a> &amp;
 <a href="tidytext4.html#tidytext4">9</a>) beginnt die eigentliche Textanalyse. Wir nutzen dazu das
 <strong>tidytext</strong> package, welches nach der Logik des <strong>tidyverse</strong> funktioniert und
-sich somit sehr gut in dessen datenanalytischen workflow integriert. Wir
+sich somit sehr gut in dessen datenanalytischen Workflow integriert. Wir
 beginnen mit dem Umgang mit Textdaten und der statistischen Analyse einzelner
-Wörter bevor wir uns der Arbeit mit Wortkombinationen widmen. Abgeschlossen wird
-der Block mit Techniken zur sentiment Analyse anhand eines dictionaries.</p>
+Wörter bevor wir uns der Arbeit mit Kombinationen mehrerer Wörter widmen.
+Abgeschlossen wird der Block mit Techniken der Sentiment Analyse anhand eines
+Dictionaries.</p>
 <p>Block Vier (Kapitel <a href="quanteda1.html#quanteda1">10</a>, <a href="quanteda2.html#quanteda2">11</a> &amp; <a href="quanteda3.html#quanteda3">12</a>) führt
 ein weiteres package zur quantitativen Textanalyse ein, <strong>quanteda</strong>. Dieses
 nutzt eine alternative Struktur für Textdaten, deren Prinzipien wir beleuchten
-und uns damit auseinandersetzen, wie wir sie mit dme <strong>tidyverse</strong> integrieren
+und uns damit auseinandersetzen, wie wir sie mit dem <strong>tidyverse</strong> integrieren
 können. Im Weiteren befassen wir uns mit grundlegenden Textanalyse Techniken in
 <strong>quanteda</strong> und vor allem mit Methoden die über die Möglichkeiten von
 <strong>tidytext</strong> hinausgehen.</p>
-<p>Der abschließenden fünften Block (Kapitel <a href="ML1.html#ML1">13</a> &amp; <a href="ML2.html#ML2">14</a>) führt in die
+<p>Der abschließende fünfte Block (Kapitel <a href="ML1.html#ML1">13</a> &amp; <a href="ML2.html#ML2">14</a>) führt in die
 Techniken des <em>machine learnings</em> ein. Wir betrachten wie wir <em>unsupervised</em>
 machine learning nutzen können um latente Dimensionen in unkategorisierten
 Textdaten zu erkennen und diese automatisch nach Gemeinsamkeiten und
 Unterschiedenen zu gruppieren. Im <em>supervised</em> machine learning geben wir für
 einen Teil der Daten Kategorien vor um mit dem so trainierten Modell neue
 ungesehene Daten zu kategorieseren. Dabei gehen wir auch auf die Unterschiede
-und potentiellen anwendungsfälle beider Ansätze ein.</p>
+und potentiellen Anwendungsfälle beider Ansätze ein.</p>
 </div>
 <div id="konventionen" class="section level2 unnumbered">
 <h2>Konventionen</h2>
@@ -403,17 +406,18 @@ die meisten Begriffe die sich auf R und RStudio beziehen englischsprachig.
 Sinnvolle Übersetzungen existieren meist nicht. Auch wäre es nicht zielführend
 diese Begriffe selbst zu übersetzen da dies nur unnötig verwirren würde. Einer
 der wichtigsten Skills die Sie im Umgang mit einer Sprache wie R entwickeln
-müssen, ist das gezielte googlen nach Problemen bzw. Lösungen. Dazu benötigen
-Sie das englischsprachige Fachvokabular. Dies alles spräche dafür diese
-Einführung in Englisch zu verfassen. Da aber das Datennmaterial, die
-Plenarprotokolle, Deutsche Texte sind, blieb als Option nur der Kompromiss die
-Seite auf Deutsch zu schreiben und die englischsprachigen Fachbegriffe
-einzubinden ohne sie zu übersetzen.</p>
-<p>Die Namen von R packages werden fett geschrieben. Da R <em>case sensitive</em>,
+müssen, ist das gezielte Suchen nach Problemen beziehungsweisen deren Lösungen
+in Büchern und vor allem auch im Internet. Dazu benötigen Sie das
+englischsprachige Fachvokabular. Dies alles spräche dafür diese Einführung in
+Englisch zu verfassen. Da aber das Datennmaterial, die Plenarprotokolle,
+Deutsche Texte sind, blieb als Option nur der Kompromiss die Seite auf Deutsch
+zu schreiben und die englischsprachigen Fachbegriffe einzubinden ohne sie zu
+übersetzen.</p>
+<p>Die Namen von R packages werden fett geschrieben. Da R <em>case sensitive</em> ist,
 also Groß- und Kleinschreibung nicht beliebig austauschbar ist, werden die Namen
-der packages exakt so geschrieben, wie sie benannt sind. Ein Beispiel ist:
-<strong>tidytext</strong></p>
-<p>Alle Codebeispiele sind in <em>code font</em> gesetzt. Teilweise im Text:
+der packages exakt so geschrieben wie sie benannt sind, auch wenn sie am
+Satzbeginn stehen. Ein Beispiel ist: <strong>tidytext</strong></p>
+<p>Alle Codebeispiele sind in <code>code font</code> gesetzt. Teilweise im Text:
 <code>print("Hello World")</code>, teilweise als <em>code block</em>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</span>
 <span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Hello World!&quot;</span></span></code></pre></div>
@@ -421,9 +425,9 @@ der packages exakt so geschrieben, wie sie benannt sind. Ein Beispiel ist:
 gedruckt.</p>
 <p>Ich empfehle dringend den Inhalt der code blocks selbst in RStudio laufen zu
 lassen und den code dabei auch selbst zu tippen statt ihn zu kopieren. Um eine
-Sprache wir R zu erlernen, muss man sie regelmäßig selbst tippen. Nur so können
-die Namen häufig genutzter Funktionen sowie die R syntax in Ihr “muscle memory”
-übergehen.</p>
+Sprache wir R zu erlernen, muss man sie regelmäßig selbst schreiben. Nur so
+können die Namen häufig genutzter Funktionen sowie die R syntax in Ihr “muscle
+memory” übergehen.</p>
 </div>
 <div id="danksagung" class="section level2 unnumbered">
 <h2>Danksagung</h2>
@@ -440,7 +444,7 @@ R community.</p>
 </div>
 <div id="colophon" class="section level2 unnumbered">
 <h2>Colophon</h2>
-<p>Bei der Gestaltung dieser website sowie der vorgestellten code Beispiele kam
+<p>Bei der Gestaltung dieser Website sowie der vorgestellten code Beispiele kam
 Folgendes zum Einsatz:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span>
 <span id="cb2-2"><a href="index.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## ─ Session info ───────────────────────────────────────────────────────────────</span></span>

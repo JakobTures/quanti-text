@@ -27,8 +27,8 @@ und die automatisierte Einordnung von Texten in latente oder explizite
 Kategorien. Diese und andere Techniken der quantiativen Textanalyse werden wir
 in diesem Kurs behandeln.
 
-Texte als Datenbasis empirischer Wissenschaft kommen vor allem in der
-qualitativen Forschung zum Einsatz. Hier werden Texte "per Hand" nach Ihren
+Textdaten in der empirischen Wissenschaft werden vor allem in der
+qualitativen Forschung genutzt. Hier werden Texte "per Hand" nach Ihren
 Bedutungsinhalten kodiert oder kategorisiert. Dies hat den Vorteil, dass Sprache
 in ihrem Kontext und ihrer enormen Komplexität von Menschen verstanden wird und
 Ebenen analysiert werden können die tiefer liegen als das reine geschriebene
@@ -36,20 +36,20 @@ Wort es ausdrücken könnte. In der quantitativen Textanalyse nutzen wir hingege
 vor allem computergestützte Methoden. Computer können menschliche Sprache jedoch
 nicht in dem Sinne *verstehen*, wie eine menschliche Kodierer:in dies kann.
 Möchten wir beispielsweise den emotionalen Gehalt eines Textes -- das
-**sentiment** -- analysieren, können wir ein dictionary mit nach Emotionen
+**Sentiment** -- analysieren, können wir ein Dictionary mit nach Emotionen
 kodierten Wörtern an unsere Textdaten anlegen, die Relation von "positiven" und
-"negativen" Wörtern berechnen und Aussagen zu dem durchschnittlichen sentiment
+"negativen" Wörtern berechnen und Aussagen zu dem durchschnittlichen Sentiment
 eines Textes treffen. Da bei diesen relativ einfachen Techniken in der Regel
 nur einzelne Wörter für sich betrachtet werden, kann der Computer bereits
 Probleme mit der Verneinung von Begriffen haben. "Nicht gut" können wir als
 Menschen sofort als negativ verstehen während unsere Software "nicht" und "gut"
 getrennt betrachtet und so im besten Fall ein neutrales, im schlimmsten Fall ein
-positives sentiment erkennt. Noch schwieriger wird es Ironie, Humor,
+positives Sentiment erkennt. Noch schwieriger wird es Ironie, Humor,
 Anspielungen usw. adäquat mit den Mitteln der quantitiven Analyse zu erfassen,
 eine Aufgabe die vor allem in der geschriebenen Sprache bereits für Menschen
 schwierig sein kann -- vermutlich kennt jeder von uns die Situation, das
-sentiment von Textnachrichten falsch ausgelegt zu haben. Auch bei der Anwendung
-der ausgfeilteren Methoden quantitativer Textanalyse müssen wir uns dieser
+Sentiment von Textnachrichten falsch ausgelegt zu haben. Auch bei Anwendung der
+ausgfeilteren Methoden quantitativer Textanalyse müssen wir uns dieser
 Beschränkungen stets bewusst sein. Unsere Techniken und Algorithmen werden die
 Fähigkeit menschlicher Kodierer:innen Sprache in ihrem Kontext zu verstehen
 nicht erreichen.
@@ -89,7 +89,7 @@ modifizieren. Diese Replizierbarkeit ist eine fundamentale Säule empirischer
 Wissenschaft und unabhängig von der nicht in Frage gestellten Fähigkeit und
 Gründlichkeit qualitativer Forscher:innen dort in dieser Form nicht möglich.
 
-Eine letzte einleitende Bemerkung: Auch wenn ich in den obrigen zeilen viele
+Eine letzte einleitende Bemerkung: Auch wenn ich in den obrigen Zeilen viele
 Vergleiche zur qualitativen Textanalyse -- der klassischen "Heimat" von
 Textanalysen -- gezogen habe, möchte ich klar betonen, dass es mir weder um eine
 Aufwertung des einen noch um eine Abwertung des anderen Ansatzes geht.
@@ -100,6 +100,7 @@ bleiben und andersherum. Die relevante Frage ist also nicht, welcher Ansatz ist
 
 ### Beispiele {-}
 
+WIP
 
 ## Kursinhalte {-}
 
@@ -115,36 +116,38 @@ von Textdaten ermöglichen. RStudio ist ein IDE --
 der Sprache. Der erste Block umfasst Informationen zur Installation beider
 Softwares, der Bedienung von RStudio sowie grundlegenden R Befehlen.
 Abgeschlossen wird er mit einem Überblick zur Transformation von Daten und deren
-graphischer Analyse mit dem verbreiteten R package **tidyverse**.
+graphischer Analyse mit dem **tidyverse**, einer populären Sammlung von R
+packages.
 
-Kapitel \@ref(BT19) befasst sich mit dem Datensatz der im Kurs zur Textanalyse
-verwendet wird, den Plenarprotokollen des 19. Deutschen Bundestags. Wir
-betrachten den Inhalt des Datensatzes sowie dessen Struktur.
+Kapitel \@ref(BT19) befasst sich mit dem Inhalt und der Struktur des
+Datensatzes, welcher im Kurs zur Textanalyse verwendet wird, den
+Plenarprotokollen des 19. Deutschen Bundestags.
 
 Im dritten Block (Kapitel \@ref(tidytext1), \@ref(tidytext2), \@ref(tidytext3) &
 \@ref(tidytext4)) beginnt die eigentliche Textanalyse. Wir nutzen dazu das
 **tidytext** package, welches nach der Logik des **tidyverse** funktioniert und
-sich somit sehr gut in dessen datenanalytischen workflow integriert. Wir
+sich somit sehr gut in dessen datenanalytischen Workflow integriert. Wir
 beginnen mit dem Umgang mit Textdaten und der statistischen Analyse einzelner
-Wörter bevor wir uns der Arbeit mit Wortkombinationen widmen. Abgeschlossen wird
-der Block mit Techniken zur sentiment Analyse anhand eines dictionaries.
+Wörter bevor wir uns der Arbeit mit Kombinationen mehrerer Wörter widmen.
+Abgeschlossen wird der Block mit Techniken der Sentiment Analyse anhand eines
+Dictionaries.
 
 Block Vier (Kapitel \@ref(quanteda1), \@ref(quanteda2) & \@ref(quanteda3)) führt
 ein weiteres package zur quantitativen Textanalyse ein, **quanteda**. Dieses
 nutzt eine alternative Struktur für Textdaten, deren Prinzipien wir beleuchten
-und uns damit auseinandersetzen, wie wir sie mit dme **tidyverse** integrieren
+und uns damit auseinandersetzen, wie wir sie mit dem **tidyverse** integrieren
 können. Im Weiteren befassen wir uns mit grundlegenden Textanalyse Techniken in
 **quanteda** und vor allem mit Methoden die über die Möglichkeiten von
 **tidytext** hinausgehen.
 
-Der abschließenden fünften Block (Kapitel \@ref(ML1) & \@ref(ML2)) führt in die
+Der abschließende fünfte Block (Kapitel \@ref(ML1) & \@ref(ML2)) führt in die
 Techniken des *machine learnings* ein. Wir betrachten wie wir *unsupervised*
 machine learning nutzen können um latente Dimensionen in unkategorisierten
 Textdaten zu erkennen und diese automatisch nach Gemeinsamkeiten und
 Unterschiedenen zu gruppieren. Im *supervised* machine learning geben wir für
 einen Teil der Daten Kategorien vor um mit dem so trainierten Modell neue
 ungesehene Daten zu kategorieseren. Dabei gehen wir auch auf die Unterschiede
-und potentiellen anwendungsfälle beider Ansätze ein.
+und potentiellen Anwendungsfälle beider Ansätze ein.
 
 
 
@@ -156,19 +159,20 @@ die meisten Begriffe die sich auf R und RStudio beziehen englischsprachig.
 Sinnvolle Übersetzungen existieren meist nicht. Auch wäre es nicht zielführend
 diese Begriffe selbst zu übersetzen da dies nur unnötig verwirren würde. Einer
 der wichtigsten Skills die Sie im Umgang mit einer Sprache wie R entwickeln
-müssen, ist das gezielte googlen nach Problemen bzw. Lösungen. Dazu benötigen
-Sie das englischsprachige Fachvokabular. Dies alles spräche dafür diese
-Einführung in Englisch zu verfassen. Da aber das Datennmaterial, die
-Plenarprotokolle, Deutsche Texte sind, blieb als Option nur der Kompromiss die
-Seite auf Deutsch zu schreiben und die englischsprachigen Fachbegriffe
-einzubinden ohne sie zu übersetzen.
+müssen, ist das gezielte Suchen nach Problemen beziehungsweisen deren Lösungen
+in Büchern und vor allem auch im Internet. Dazu benötigen Sie das
+englischsprachige Fachvokabular. Dies alles spräche dafür diese Einführung in
+Englisch zu verfassen. Da aber das Datennmaterial, die Plenarprotokolle,
+Deutsche Texte sind, blieb als Option nur der Kompromiss die Seite auf Deutsch
+zu schreiben und die englischsprachigen Fachbegriffe einzubinden ohne sie zu
+übersetzen.
 
-Die Namen von R packages werden fett geschrieben. Da R *case sensitive*,
+Die Namen von R packages werden fett geschrieben. Da R *case sensitive* ist,
 also Groß- und Kleinschreibung nicht beliebig austauschbar ist, werden die Namen
-der packages exakt so geschrieben, wie sie benannt sind. Ein Beispiel ist:
-**tidytext**
+der packages exakt so geschrieben wie sie benannt sind, auch wenn sie am
+Satzbeginn stehen. Ein Beispiel ist: **tidytext**
 
-Alle Codebeispiele sind in *code font* gesetzt. Teilweise im Text:
+Alle Codebeispiele sind in `code font` gesetzt. Teilweise im Text:
 `print("Hello World")`, teilweise als *code block*:
 
 ``` {r hello_world_1}
@@ -180,9 +184,9 @@ gedruckt.
 
 Ich empfehle dringend den Inhalt der code blocks selbst in RStudio laufen zu
 lassen und den code dabei auch selbst zu tippen statt ihn zu kopieren. Um eine
-Sprache wir R zu erlernen, muss man sie regelmäßig selbst tippen. Nur so können
-die Namen häufig genutzter Funktionen sowie die R syntax in Ihr "muscle memory"
-übergehen.
+Sprache wir R zu erlernen, muss man sie regelmäßig selbst schreiben. Nur so
+können die Namen häufig genutzter Funktionen sowie die R syntax in Ihr "muscle
+memory" übergehen.
 
 
 ## Danksagung {-}
@@ -209,7 +213,7 @@ library(quanteda)
 library(bookdown)
 ```
 
-Bei der Gestaltung dieser website sowie der vorgestellten code Beispiele kam
+Bei der Gestaltung dieser Website sowie der vorgestellten code Beispiele kam
 Folgendes zum Einsatz:
 
 ``` {r colophon}

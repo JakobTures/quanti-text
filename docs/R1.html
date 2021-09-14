@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-09-13" />
+<meta name="date" content="2021-09-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,7 +160,7 @@ Quantitative Textanalyse mit R
 <li class="chapter" data-level="1.2.1" data-path="R1.html"><a href="R1.html#übersicht-rstudio"><i class="fa fa-check"></i><b>1.2.1</b> Übersicht RStudio</a></li>
 <li class="chapter" data-level="1.2.2" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>1.2.2</b> Hello World!</a></li>
 <li class="chapter" data-level="1.2.3" data-path="R1.html"><a href="R1.html#rechnen-mit-r"><i class="fa fa-check"></i><b>1.2.3</b> Rechnen mit R</a></li>
-<li class="chapter" data-level="1.2.4" data-path="R1.html"><a href="R1.html#vergleichsoperatoren"><i class="fa fa-check"></i><b>1.2.4</b> Vergleichsoperatoren</a></li>
+<li class="chapter" data-level="1.2.4" data-path="R1.html"><a href="R1.html#vergleich"><i class="fa fa-check"></i><b>1.2.4</b> Vergleichsoperatoren</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="R1.html"><a href="R1.html#objekte"><i class="fa fa-check"></i><b>1.3</b> Objekte</a></li>
 <li class="chapter" data-level="1.4" data-path="R1.html"><a href="R1.html#vektoren"><i class="fa fa-check"></i><b>1.4</b> Vektoren</a>
@@ -219,7 +219,7 @@ Quantitative Textanalyse mit R
 <li class="chapter" data-level="3.4.1" data-path="R3.html"><a href="R3.html#summarise"><i class="fa fa-check"></i><b>3.4.1</b> <code>summarise()</code></a></li>
 <li class="chapter" data-level="3.4.2" data-path="R3.html"><a href="R3.html#summarise-group_by"><i class="fa fa-check"></i><b>3.4.2</b> <code>summarise()</code> &amp; <code>group_by()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="R3.html"><a href="R3.html#export-von-tabellen"><i class="fa fa-check"></i><b>3.5</b> Export von Tabellen</a></li>
+<li class="chapter" data-level="3.5" data-path="R3.html"><a href="R3.html#export"><i class="fa fa-check"></i><b>3.5</b> Export von Tabellen</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="R4.html"><a href="R4.html"><i class="fa fa-check"></i><b>4</b> Graphische Analyse mit ggplot2</a>
 <ul>
@@ -280,16 +280,16 @@ zunächst einige Worte zur Installation der kostenlos zugänglichen Software.</p
 <h3><span class="header-section-number">1.1.1</span> R</h3>
 <p><em>R</em> ist eine Programmiersprache die vor allem für statistische Analysen und data
 science angewandt wird. Generelle Informationen zu R und die ausführliche
-Dokumentation, finden sie unter: <a href="https://www.r-project.org/" target="_blank">https://www.r-project.org/</a>.</p>
-<p>Die aktuelleste Version von R für alle gängigen Betriebssysteme finden sich
+Dokumentation finden sie unter: <a href="https://www.r-project.org/" target="_blank">https://www.r-project.org/</a>.</p>
+<p>Die aktuelleste Version von R für alle gängigen Betriebssysteme findet sich
 stets im <em>CRAN</em>, dem <em>Comprehensive R Archive Network</em> unter:
 <a href="https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>. Die Links zu den
-Installationsdateien finden sich im oberen Bereich der website.
+Installationsdateien finden sich im oberen Bereich der Website.
 Falls Sie Windows nutzen, wählen Sie bitte die “base” Version. Im Falle von
-macOS, hängt die Wahl des Installers von der Version Ihres Betriebssystems ab.
-In beiden Fällen führen Sie bitte die Datei aus und Installieren Sie R in ein
-Verzeichnis Ihrer Wahl. Für Linux Systeme stellt CRAN Installationsanweisungen
-für einige der populäreren Distribution bereit.</p>
+MacOS, hängt die Wahl des Installers von der Version Ihres Betriebssystems ab.
+In beiden Fällen führen Sie bitte die passende Datei aus und Installieren Sie R
+in ein Verzeichnis Ihrer Wahl. Für Linux Systeme stellt CRAN
+Installationsanweisungen für einige der populäreren Distribution bereit.</p>
 <p>Die Code Beispiele auf dieser Website wurden mit der R Version 4.1.1
 “Kick Things” erstellt und getestet.</p>
 </div>
@@ -312,7 +312,7 @@ dann in Zukunft nur noch RStudio.</p>
 <div id="übersicht-rstudio" class="section level3" number="1.2.1">
 <h3><span class="header-section-number">1.2.1</span> Übersicht RStudio</h3>
 <p><img src="images/RStudio.png" /><!-- --></p>
-<p>Das RStudio interface besteht aus vier Unterbereichen. Links-unten finden Sie
+<p>Das RStudio Interface besteht aus vier Unterbereichen. Links-unten finden Sie
 die “Console” sowie weitere Tabs, die Sie zu Beginn selten bis nie brauchen
 werden. Die console kann genutzt werden um R code einzugeben und auszuführen,
 mehr dazu in Kürze. Links-oben werden geöffnete R scripts angezeigt. Aktuell
@@ -335,26 +335,25 @@ ausführen. Versuchen Sie des mit folgender Zeile:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="R1.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</span>
 <span id="cb3-2"><a href="R1.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Hello World!&quot;</span></span></code></pre></div>
 <p>Sie haben gerade ihren ersten R Befehl ausgeführt, Ihren ersten output erhalten
-und gleichzeitig auch Ihre erste Funktion genutzt. Mehr zu Funktionen folgt in
-Kapitel <a href="R2.html#R2">2</a>), fürs Erste genügt es aber zu wissen, dass <code>print()</code> alles
+und gleichzeitig auch Ihre erste Funktion genutzt. Mehr zu Funktionen folgt am
+Ende dieses Kapitels, fürs Erste genügt es aber zu wissen, dass <code>print()</code> alles
 was von den Klammern, und im Fall von Text von den Anführungszeichen innerhalb
-der Klammern, umfasst ist als output druckt. Der output selbst beginnt mit
+der Klammern, umfasst ist, als output druckt. Der output selbst beginnt mit
 <code>[1]</code>, was anzeigt, dass dies das erste und hier das Einzige Element des outputs
 ist.</p>
-<p>Bitte beachten Sie, dass R die auf dieser website vor dem output dargestellten
+<p>Bitte beachten Sie, dass R die auf dieser Website vor dem output dargestellten
 <code>##</code> nicht abdruckt.</p>
 </div>
 <div id="rechnen-mit-r" class="section level3" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> Rechnen mit R</h3>
-<p>R versteht die bekannten arithmethischen Operatoren <code>+ - * /</code>. Sie können R also
-auch als übergroßen Taschenrechner nutzen. Für fortgeschrittenere
-Rechenoperationen steht eine Vielzahl von Funktionen zur Verfügung.
-Beispielsweise gibt Ihnen <code>sqrt()</code> die Quadratwurzel der von den Klammern
-umfassten Zahl als output zurück. Oben mussten wir den Text <code>"Hello World!"</code> in
-Anführungszeichen einfassen. Zahlen müssen hingegen ohne Anführungszeichen
-geschrieben werden. Potenzen bekommen wir mit der Notation <code>x^y</code>. Im folgenden
-code block finden Sie einige Beispiele, die Sie Zeile für Zeile in die console
-tippen und mit “Enter” ausführen können:</p>
+<p>R versteht die arithmethischen Operatoren <code>+ - * /</code>. Sie können R also auch als
+übergroßen Taschenrechner nutzen. Für fortgeschrittenere Rechenoperationen steht
+eine Vielzahl von Funktionen zur Verfügung. Beispielsweise gibt Ihnen <code>sqrt()</code>
+die Quadratwurzel der von den Klammern umfassten Zahl als output zurück. Oben
+mussten wir den Text <code>"Hello World!"</code> in Anführungszeichen einfassen. Zahlen
+müssen hingegen ohne Anführungszeichen geschrieben werden. Potenzen bekommen wir
+mit der Notation <code>x^y</code>. Im folgenden code Block finden Sie einige Beispiele, die
+Sie Zeile für Zeile in die console tippen und mit “Enter” ausführen können:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="R1.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="sc">+</span> <span class="dv">25</span></span>
 <span id="cb4-2"><a href="R1.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
 <span id="cb4-3"><a href="R1.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dv">99</span> <span class="sc">-</span> <span class="dv">57</span></span>
@@ -368,14 +367,14 @@ tippen und mit “Enter” ausführen können:</p>
 <span id="cb4-11"><a href="R1.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fl">6.480741</span> <span class="sc">^</span> <span class="dv">2</span></span>
 <span id="cb4-12"><a href="R1.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
 </div>
-<div id="vergleichsoperatoren" class="section level3" number="1.2.4">
+<div id="vergleich" class="section level3" number="1.2.4">
 <h3><span class="header-section-number">1.2.4</span> Vergleichsoperatoren</h3>
 <p>Vergleichsoperatoren können genutzt werden um zwei Werte miteinander zu
-vergleichen und das Ergebnis als <code>TRUE</code> oder <code>FALSE</code> im putput zu erhalten. Um
+vergleichen und das Testergebnis als <code>TRUE</code> oder <code>FALSE</code> output zu erhalten. Um
 zu überprüfen ob zwei Werte gleich sind, schreiben wir <code>==</code>. Dabei ist zu
 beachten, dass ein Vergleich zweier Werte stets zwei Gleichheitszeichen
 voraussetzt. <code>=</code> hat eine andere Bedeutung! Um zu testen ob zwei Werte <em>nicht</em>
-gleich sind, können wir <code>!=</code> nutzen, wobei das <code>!</code> geneerell für <em>nicht</em> steht.</p>
+gleich sind, können wir <code>!=</code> nutzen, wobei das <code>!</code> generell für <em>nicht</em> steht.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="R1.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span> <span class="sc">==</span> <span class="dv">42</span></span>
 <span id="cb5-2"><a href="R1.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
 <span id="cb5-3"><a href="R1.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span> <span class="sc">!=</span> <span class="dv">42</span></span>
@@ -401,14 +400,14 @@ Daten zuweisen. Namen müssen dabei mit einem Buchstaben beginnen und sollten nu
 weitere Buchstaben, Ziffern sowie die Sonderzeichen <code>_</code> und <code>.</code> beinhalten.
 Verbreitete Konventionen für längere Objektnamen sind <em>snake case</em>
 – <code>the_answer</code> – und <em>camel case</em> – <code>theAnswer</code>. Dies ist letztlich
-Geschmackssache, es empfielt sich aber eine einheitliche Schreibweise zu
-verwenden sowie kurze aber klare Namen zu verwenden. Daten weisen wir einem
-Objekt mit dem <em>assignment operator</em> <code>&lt;-</code>zu.</p>
+Geschmackssache, es empfielt sich aber eine einheitliche Schreibweise sowie
+kurze aber klar verständliche Namen zu verwenden. Daten weisen wir einem Objekt
+mit dem <em>assignment operator</em> <code>&lt;-</code> zu.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="R1.html#cb7-1" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> <span class="dv">42</span></span></code></pre></div>
 <p>Um sich Fingerakrobatik zu ersparen, ist es sinnvoll sich frühzeitig die
-Tastenkombination “Alt” + “-” anzugewöhnen, die <code>&lt;-</code> an der aktuellen cursor
+Tastenkombination “Alt” + “-” anzugewöhnen, die <code>&lt;-</code> an der aktuellen Cursor
 Position einfügt.</p>
-<p>Die so in einem Objekt gespeicherten Daten, können wir aufrufen, indem wir den
+<p>Die so in einem Objekt gespeicherten Daten können wir aufrufen, indem wir den
 Objektnamen als Befehl schreiben.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="R1.html#cb8-1" aria-hidden="true" tabindex="-1"></a>the_answer</span>
 <span id="cb8-2"><a href="R1.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
@@ -427,7 +426,7 @@ werden, wenn wir diesem neue Daten zuweisen.</p>
 <p>So erstelle Objekte werden in dem “Environment” Tab (rechts-oben) gelistet.
 Möchten wir erstellte Objekte entfernen, können wir dazu die <code>rm()</code> Funktion
 nutzen. Dies ist zwar in der Regel nicht notwendig, kann aber hilfreich sein um
-versehentlich oder nut zum Test erstellte Objekte zu löschen und so den Tab
+versehentlich oder nur zum Test erstellte Objekte zu löschen und so den Tab
 etwas aufzuräumen.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="R1.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(the_answer)</span></code></pre></div>
 </div>
@@ -465,18 +464,18 @@ das dritte Element unseres Vektors abzurufen:</p>
 <h3><span class="header-section-number">1.4.2</span> Typen von Vektoren</h3>
 <p>Betrachten wir den Vektor <code>v</code> im environment, fällt auf, dass RStudio
 <code>num [1:4]</code> vor den gespeicherten Werten abduckt. Dies drückt zum einen aus,
-dass der Vektor die Länge 4 hat, zum anderen den Typ des Vektors. Hier handelt
-es sich um einen numerischen Vektor – <em>numeric</em>, ausgedrücht durch “num” –
-also einen Vektor der Zahlen enthält.</p>
+dass der Vektor die Länge 4 hat, zum anderen zeigt es den Typ des Vektors an.
+Hier handelt es sich um einen numerischen Vektor – <em>numeric</em>, ausgedrücht durch
+“num” – also einen Vektor der Zahlen enthält.</p>
 <p>Um Imformationen zu Typ, Länge und Inhalt von Objekten zu erhalten können wir
-auch die Funktion <code>str()</code>– structure – nutzen. Dies ist vor allem bei
+auch die Funktion <code>str()</code> – structure – nutzen. Dies ist vor allem bei
 komplexeren Objekten wie Listen oder data frames (mehr dazu später) hilfreich um
 einen ersten Überblick zu erhalten ohne das komplette Objekt abzudrucken.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="R1.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(v)</span>
 <span id="cb14-2"><a href="R1.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  num [1:4] 7 8 9 10</span></span></code></pre></div>
 <p>R kennt noch weitere Typen von Vektoren, wobei für uns vor allem die Typen
 <em>logical</em> und <em>character</em> von Bedeutung sind.</p>
-<p>Logical Vektoren können nur die Werte <code>TRUE</code> und <code>FALSE</code> enthalten. Diese
+<p>Logische Vektoren können nur die Werte <code>TRUE</code> und <code>FALSE</code> enthalten. Diese
 entstehen beispielsweise wenn wir Vergleichsoperatoren für einen Test nutzen.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="R1.html#cb15-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
 <span id="cb15-2"><a href="R1.html#cb15-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;=</span> <span class="dv">5</span></span>
@@ -487,7 +486,9 @@ entstehen beispielsweise wenn wir Vergleichsoperatoren für einen Test nutzen.</
 <span id="cb16-3"><a href="R1.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  TRUE FALSE  TRUE</span></span></code></pre></div>
 <p><em>Character</em> Vektoren beinhalten Zeichenfolgen, sogenannte <em>strings</em>. Strings
 müssen stets von Anführungszeichen umschlossen sein.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="R1.html#cb17-1" aria-hidden="true" tabindex="-1"></a>char_v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;This&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;vector!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="R1.html#cb17-1" aria-hidden="true" tabindex="-1"></a>char_v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;This&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;vector!&quot;</span>)</span>
+<span id="cb17-2"><a href="R1.html#cb17-2" aria-hidden="true" tabindex="-1"></a>char_v</span>
+<span id="cb17-3"><a href="R1.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This&quot;      &quot;is&quot;        &quot;a&quot;         &quot;character&quot; &quot;vector!&quot;</span></span></code></pre></div>
 <p>Auch character Vektoren können miteinander verglichen werden.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="R1.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">==</span> <span class="st">&quot;same&quot;</span></span>
 <span id="cb18-2"><a href="R1.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
@@ -539,7 +540,7 @@ Klammern benannte Spalten und ihre Inhalte, getrennt durch Kommas.</p>
 <span id="cb23-3"><a href="R1.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ Name    : chr  &quot;Peter&quot; &quot;Mary&quot;</span></span>
 <span id="cb23-4"><a href="R1.html#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ Alter   : num  42 24</span></span>
 <span id="cb23-5"><a href="R1.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ Weiblich: logi  FALSE TRUE</span></span></code></pre></div>
-<p>Wir können data frames auch zuvor definierten Vektoren zusammensetzen.</p>
+<p>Wir können data frames auch aus zuvor definierten Vektoren zusammensetzen.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="R1.html#cb24-1" aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Peter&quot;</span>, <span class="st">&quot;Mary&quot;</span>)</span>
 <span id="cb24-2"><a href="R1.html#cb24-2" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">42</span>, <span class="dv">24</span>)</span>
 <span id="cb24-3"><a href="R1.html#cb24-3" aria-hidden="true" tabindex="-1"></a>female <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
@@ -620,14 +621,13 @@ Grundinstallation bereits enthalten waren, steht eine stetig steigende Zahl von
 nutzergeschriebenen packages zum Download zur Verfügung. Diese packages haben
 stets einen thematischen Fokus – beispielsweise Datenbereinigung, graphische
 Analyse oder Textanalyse – und enthalten eine Reihe von Funktionen die den
-Einsatzbereich von R über das hinaus erweitern was von den Originalentwicklern
+Einsatzbereich von R über das hinaus erweitern, was von den Originalentwicklern
 geplant war oder die etwas zu kompliziert gestaltete base R Ansätze durch neue
 anwenderfreundlichere Funktionen ersetzen.</p>
-<p>Packages, ihre Dokumentation und weitere Informationen werden auf CRAN –
-“Comprehensive R Archive Network” – gehostet. Hier haben Sie auch bereits die
-Installationsdateien für R heruntergeladen. Wenn Sie gleich ein package direkt
-aus RStudio installieren, greift die software auf CRAN zu um die erforderlichen
-Dateien herunterzuladen.</p>
+<p>Packages, ihre Dokumentation und weitere Informationen werden ebenfalls auf CRAN
+gehostet. Hier haben Sie auch bereits die Installationsdateien für R
+heruntergeladen. Wenn Sie gleich ein package direkt aus RStudio installieren,
+greift die Software auf CRAN zu um die erforderlichen Dateien herunterzuladen.</p>
 <div id="installieren-und-laden" class="section level3" number="1.6.1">
 <h3><span class="header-section-number">1.6.1</span> Installieren und Laden</h3>
 <p>Packages installieren wir mit der R Funktion <code>install.packages()</code>, mit dem Namen
@@ -636,25 +636,21 @@ des Seminars eine Reihe von packages nutzen, darunter das <strong>tidyverse</str
 Installation des core <strong>tidyverse</strong> packages schreiben wir in der console:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="R1.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
 <p>R wird während der Installation eine lange Reihe von Informationen ausgeben, von
-denen uns solange alles gut geht nur das <code>DONE (tidyverse)</code> interessieren muss.</p>
-<p>Nach erfolgreicher Installation, können wir das Paket laden. Dies sollte
-normalerweise in den ersten Zeilen eines scripts passieren. So werden alle
-notwendigen packages zu Beginn eines scripts geladen und andere Nutzer*innen
-sehen sofort welche packages eventuell noch nachinstalliert werden müssen.
-Ein package laden wir mit <code>library()</code> mit dem Namen des packages innerhalb der
-Klammern, hier ausnahmsweise ohne <code>""</code>.</p>
+denen uns – solange alles gut geht – nur das <code>DONE (tidyverse)</code> interessieren
+muss. Nach erfolgreicher Installation, können wir das Paket laden. Ein package
+laden wir mit <code>library()</code> mit dem Namen des packages innerhalb der Klammern,
+hier ausnahmsweise ohne <code>""</code>.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="R1.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>Manche Pakete, wie das <strong>tidyverse</strong>, geben uns auch beim Laden eine Reihe von
-Informationen die wir im weiteren Verlauf des Kapitels noch genauer betrachten
-werden. Andere Pakete laden aber auch still, ohne Informationen in die console
-zu schreiben. Sollte beim laden eines packages ein Problem auftauchen, wird R
-dies rückmelden.</p>
+Informationen die wir gleich noch genauer betrachten werden. Andere Pakete laden
+aber auch still, ohne Informationen in die console zu schreiben. Sollte beim
+Laden eines packages ein Problem auftauchen, wird R dies rückmelden.</p>
 </div>
 </div>
 <div id="funktionen" class="section level2" number="1.7">
 <h2><span class="header-section-number">1.7</span> Funktionen</h2>
 <p>Bis zu diesem Punkt haben wir bereits eine Reihe von Funktionen genutzt, ohne
-eigentlich zu Wissen, was Funktionen sind. Die in base R und den diversen
+eigentlich zu wissen, was Funktionen sind. Die in base R und den diversen
 packages enthaltenen Funktionen bieten einen einfachen Zugang zu komplexeren im
 Hintergrund ablaufenden Operationen. Statt beispielsweise eine komplizierte
 Datenanalysetechnik selbst zu implementieren, also jeden Rechenschritt Zeile für
@@ -690,14 +686,14 @@ verändern. Dies wird uns im weiteren Verlauf regelmäßig begegenen.</p>
 <div id="namesspaces" class="section level3" number="1.7.1">
 <h3><span class="header-section-number">1.7.1</span> namesspaces</h3>
 <p>Betrachten wir nochmals den output nach dem Laden von <strong>tidyverse</strong> weiter oben.
-R gibt uns neben den Namen und Versionen der geladenen packages – das core
+R gibt uns neben Namen und Versionen der geladenen packages – das core
 <strong>tidyverse</strong> package welches wir geladen haben ist eigentlich eine Sammlung von
-packages – auch die Information über zwei Konflikte aus. Konflikte
-entstehen, wenn zwei geladene packages Funktionen mit den selben Namen
-enthalten. Die Funktion aus dem später geladenen package überschreibt dabei die
-zuvor geladene Funktion. Hier überschreibt das tidyverse package <strong>dplyr</strong>die
-Funktionen <code>filter()</code> und <code>lag()</code> aus dem base R package <strong>stats</strong>. Ohne
-<strong>dplyr</strong> bzw. <strong>tidyverse</strong> zu laden wäre beim aufruf von <code>filter()</code> die
+packages – auch die Information über zwei Konflikte aus. Konflikte entstehen,
+wenn zwei geladene packages Funktionen mit den selben Namen enthalten. Die
+Funktion aus dem später geladenen package überschreibt dabei die zuvor geladene
+Funktion. Hier überschreibt das tidyverse package <strong>dplyr</strong> die Funktionen
+<code>filter()</code> und <code>lag()</code> aus dem base R package <strong>stats</strong>. Ohne <strong>dplyr</strong>
+beziehungsweise <strong>tidyverse</strong> zu laden wäre beim aufruf von <code>filter()</code> die
 Funktion aus dem <strong>stats</strong> package genutzt worden. Nun wird die gleichnamige
 Funktion aus <strong>dplyr</strong> angewandt.</p>
 <p>Möchten wir zwar <strong>dplyr</strong> laden, aber die Funktion <code>filter()</code> aus <strong>stats</strong>

@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-09-13" />
+<meta name="date" content="2021-09-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,7 +160,7 @@ Quantitative Textanalyse mit R
 <li class="chapter" data-level="1.2.1" data-path="R1.html"><a href="R1.html#übersicht-rstudio"><i class="fa fa-check"></i><b>1.2.1</b> Übersicht RStudio</a></li>
 <li class="chapter" data-level="1.2.2" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>1.2.2</b> Hello World!</a></li>
 <li class="chapter" data-level="1.2.3" data-path="R1.html"><a href="R1.html#rechnen-mit-r"><i class="fa fa-check"></i><b>1.2.3</b> Rechnen mit R</a></li>
-<li class="chapter" data-level="1.2.4" data-path="R1.html"><a href="R1.html#vergleichsoperatoren"><i class="fa fa-check"></i><b>1.2.4</b> Vergleichsoperatoren</a></li>
+<li class="chapter" data-level="1.2.4" data-path="R1.html"><a href="R1.html#vergleich"><i class="fa fa-check"></i><b>1.2.4</b> Vergleichsoperatoren</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="R1.html"><a href="R1.html#objekte"><i class="fa fa-check"></i><b>1.3</b> Objekte</a></li>
 <li class="chapter" data-level="1.4" data-path="R1.html"><a href="R1.html#vektoren"><i class="fa fa-check"></i><b>1.4</b> Vektoren</a>
@@ -219,7 +219,7 @@ Quantitative Textanalyse mit R
 <li class="chapter" data-level="3.4.1" data-path="R3.html"><a href="R3.html#summarise"><i class="fa fa-check"></i><b>3.4.1</b> <code>summarise()</code></a></li>
 <li class="chapter" data-level="3.4.2" data-path="R3.html"><a href="R3.html#summarise-group_by"><i class="fa fa-check"></i><b>3.4.2</b> <code>summarise()</code> &amp; <code>group_by()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="R3.html"><a href="R3.html#export-von-tabellen"><i class="fa fa-check"></i><b>3.5</b> Export von Tabellen</a></li>
+<li class="chapter" data-level="3.5" data-path="R3.html"><a href="R3.html#export"><i class="fa fa-check"></i><b>3.5</b> Export von Tabellen</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="R4.html"><a href="R4.html"><i class="fa fa-check"></i><b>4</b> Graphische Analyse mit ggplot2</a>
 <ul>
@@ -280,13 +280,11 @@ besteht darin, dass unser code nach dem Ausführen nicht erhalten bleibt. Wir
 können zwar durch die console scrollen um nachzuvollziehen, welche Befehle wir
 genutzt haben, dies ist uns aber spätestens nach dem Schließen von RStudio nicht
 mehr zugänglich. In der Realität werden Sie aber häufig längere Zeiträume an
-einem Projket arbeiten und möchten eventuell ihren code mit Kommiliton:innen,
+einem Projekt arbeiten und möchten eventuell ihren code mit Kommiliton:innen,
 Kolleg:innen oder der R community teilen. Je komplexer unser code wird, desto
 mehr Fehler werden wir auch machen. Ein früher Fehler in der console der erst
-spät auffällt, kann bedeuten, dass der Großteil unserer Arbeit wiederholt werden
+spät auffällt kann bedeuten, dass der Großteil unserer Arbeit wiederholt werden
 müsste.</p>
-<p>Dies sind einige der Argumente die dafür sprechen, mit R scripts statt direkt in
-der console zu arbeiten.</p>
 <div id="r-scripts" class="section level3" number="2.1.1">
 <h3><span class="header-section-number">2.1.1</span> R scripts</h3>
 <p>Ein R script ist eine Datei in der wir unsere Befehle niederschreiben und so für
@@ -311,24 +309,24 @@ ausgeben.</p>
 direkt auszuführen, schreiben wir zunächst den kompletten code block in unser
 neues script. Danach können wir unser komplettes script durch einen Klick auf
 “Source” in der toolbar des script Fensters ausführen. Ich empfehle Ihnen
-stattdessen aber scripts stets Befehl für Befehl auszuführen. So haben Sie die
+stattdessen aber, scripts stets Befehl für Befehl auszuführen. So haben Sie die
 volle Kontrolle über den Prozess, sehen sofort das Ergebnis (oder den Fehler)
 jedes einzelnen Befehls und können die Ausführung an jeder beliebigen Stelle
 pausieren, zum Beispiel um den Code besser nachzuvollziehen, Fehler zu erkennen
-oder Veränderungen vorzunehmen. Umsetzen könenn Sie dies mit einem Klick auf
-“Run” in der toolbar des script Fensters oder noch einfacher durch das Drücken
-von “CTRL” + “Enter”. In beiden Fällen wird die Zeile in der sich aktuell Ihr
-cursor befindet ausgeführt. Dieser springt daraufhin automatisch in die nächste
-Zeile, so dass sie auch Befehl für Befehl schnell ihr ganzes script ausführen
-können, dabei aber die volle Kontrolle behalten. Was für Sie praktikabler ist,
-müssen Sie selbst entscheiden und kann auch von der Situation abhängen. Bedenken
-Sie aber immer, dass R zu jeden Zeitpunkt davon ausgeht, dass Sie wissen was Sie
+oder Veränderungen vorzunehmen. Umsetzen können Sie dies mit einem Klick auf
+“Run” in der Toolbar des Scripttabs oder noch einfacher durch das Drücken von
+“CTRL” + “Enter”. In beiden Fällen wird die Zeile in der sich aktuell Ihr Cursor
+befindet ausgeführt. Dieser springt daraufhin automatisch in die nächste Zeile,
+so dass Sie auch Befehl für Befehl schnell ihr ganzes script ausführen können,
+dabei aber die volle Kontrolle behalten. Was für Sie praktikabler ist, müssen
+Sie selbst entscheiden und kann auch von der Situation abhängen. Bedenken Sie
+aber immer, dass R zu jeden Zeitpunkt davon ausgeht, dass Sie wissen was Sie
 tun. Es wird keine Warnmeldungen geben, wenn Sie etwas überschreiben das Sie
 eigentlich nicht überschreiben wollten.</p>
 <p>Sie sollten ihr script regelmäßig abspeichern. Nicht nur dann wenn Sie eine
-Arbeitssession beenden, sondern regelmäßig. Dies können sie über “File” &gt; “Save”
-erreichen oder durch die Tastenkombination “CTRL” + “S”. Sie können den Namen
-des scripts frei wählen, die Endung muss jedoch immer “.R” sein.</p>
+Arbeitssession beenden, sondern <em>regelmäßig</em>. Dies können sie über “File” &gt;
+“Save” erreichen oder durch die Tastenkombination “CTRL” + “S”. Sie können den
+Namen des scripts frei wählen, die Endung muss jedoch immer “.R” sein.</p>
 <p>Ein Problem, dass Ihnen früher oder später begegnen wird, ist dass Sie
 versehentlich versuchen werden inkompletten code aus einem script auszuführen.
 Der Grund ist sehr häufig eine fehlende schließende Klammer, wie in
@@ -336,8 +334,8 @@ Der Grund ist sehr häufig eine fehlende schließende Klammer, wie in
 der fehlenden Klammer davon aus, dass der code noch weitergehen soll. R
 übernimmt dann den inkompletten code in die console, führt ihn aber nicht aus
 sondern beginnt eine neue Zeile mit einem <code>+</code>. Dies bedeutet, dass wir hinter
-dem <code>+</code> den code fortsetzen können. In der Regel ist es am praktikabelsten die
-Ausführung des codes abzubrechen indem sie in die console klicken und danach
+dem <code>+</code> den code fortsetzen können. In der Regel ist es dann am praktikabelsten
+die Ausführung des codes abzubrechen indem sie in die console klicken und danach
 “Esc” drücken. Dann können wir den code in unserem script korrigieren und erenut
 ausführen.</p>
 </div>
@@ -359,9 +357,9 @@ RStudio. Der “Files” tab (rechts-unten) zeigt nun auch den Inhalt des
 Projektordners. Dies ist ihr aktuelles working directory, mehr dazu gleich. Sie
 können nun Dateien erstellen und bearbeiten und speichern diese ganz normal ab.
 Das Projekt selbst muss nie gespeichert werden. Möchten Sie in einer späteren R
-session ihre Arbeit an dem Projekt fortsetzen, klicken Sie auf “File” &gt; “Open
+Session ihre Arbeit an dem Projekt fortsetzen, klicken Sie auf “File” &gt; “Open
 Project”. Das Projekt wird geöffnet, alle Dateien die Sie bei der letzten
-session geöffnet hatten sind erneut geöffnet und Sie befinden sich auch wieder
+Session geöffnet hatten sind erneut geöffnet und Sie befinden sich auch wieder
 im working directory des Projekts. Projekte sind eine einfache und praktische
 Methode um Ihre Arbeiten zu organisieren und aufgeräumt zu halten.</p>
 <p>An dieser Stelle wäre es eventuell sinnnvoll, wenn Sie ein Projekt zu diesem
@@ -384,16 +382,15 @@ wird.</p>
 <p>Einer der wichtigsten skills beim Schreiben von code, ist das Kommentieren des
 selbigen. Kommentare können wir direkt in scripts schreiben, diese werden jedoch
 nicht ausgeführt sondern dienen der Erläuterung und Strukturierung des codes.
-Einen Kommentar markieren wir mit einem oder mehreren <code>#</code> zu Beginn einer Zeile.
-Text der auf ein <code>#</code> folgt wird von R als Kommentar erkannt und entsprechend
-nicht ausgeführt.</p>
+Einen Kommentar markieren wir mit einem oder mehreren <code>#</code>. Text der auf ein <code>#</code>
+folgt wird von R als Kommentar erkannt und entsprechend nicht ausgeführt.</p>
 <p>Wenn Sie über längere Zeit an einem Projekt arbeiten oder dieses nach längerer
 Zeit erneut öffnen, kann es für sie selbst manchmal schwierig sein
 nachzuvollziehen, was Sie mit ihrem code erreichen wollten. Gut kommentierter
 code erleichtert dies stark. Dies wird nochmals relevanter, wenn Sie ihren code
 mit anderen Personen teilen. Für die meisten Probleme in R bestehen eine
 Vielzahl möglicher Ansätze. Gut kommentierter code hilft Anderen zu verstehen,
-was ihr Ansatz ist. Hier können Sie die Zeit die Sie in das Kommentieren
+was <em>ihr</em> Ansatz ist. Hier können Sie die Zeit die Sie in das Kommentieren
 investieren als Respekt gegenüber der Zeit verstehen, die Andere investieren um
 Ihnen mit Ihrem code zu helfen.</p>
 <p>Ihnen wird eventuell aufgefallen sein, dass der output der code Blöcke auf
@@ -425,19 +422,19 @@ schlechtesten bringen Sie die Ordnerstruktur einer anderen Person durcheinander.
 beispielsweise Datensätze oder exportierte Graphiken. Die R community ist
 grundsätzlich sehr bereitwillig auch Anfängern mit coding Problemen zu helfen.
 Wir sollten diese Bereitschaft damit würdigen gut kommentierten code
-weiterzugeben und davon abzusehen, in die Datenstruktur von anderen Personen
+weiterzugeben und davon abzusehen, in die Dateistruktur anderer Personen
 einzugreifen.</p>
 </div>
 <div id="speichern" class="section level3" number="2.1.4">
 <h3><span class="header-section-number">2.1.4</span> Speichern</h3>
-<p>Aus meiner Sicht ist es aus dem Blickwinkel reproduzierbarer Datenanalyse meist
+<p>Aus dem Blickwinkel reproduzierbarer Datenanalyse ist es aus meiner Sicht meist
 der beste Ansatz, ein script zu erstellen in dem die rohen Daten eingelesen,
 bereinigt, transformiert sowie statistisch und graphisch analysiert werden. So
 ist es jeder Person mit Zugriff auf die Daten und ihr script möglich, jeden
 ihrer Arbeitsschritte nachzuvollziehen und zu reproduzieren. Dies ist eine der
 Säulen transparenter wissenschaftlicher Praxis. Bei diesem Ansatz müssen wir
 also selten die Ergebnisse unserer Analysen als Datensatz abspeichern. Das
-script – die .R Datei – ist ausreichend.</p>
+script – die “.R” Datei – ist ausreichend.</p>
 <p>Es gibt aber auch Situationen in denen es sinnvoll sein kann, Ergebnisse
 abzuspeichern. Quantitative Textanalysen können bespielsweise sehr
 rechenintensiv sein. Bei der Anwendung fortgeschrittener Methoden im machine
@@ -462,12 +459,13 @@ der <code>""</code> legen wir einen Dateinamen mit einem optionalen Pfad fest. E
 ohne angegebenen Pfad wird im aktuellen working directory gespeichert.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="R2.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data, <span class="at">file =</span> <span class="st">&quot;peter_paul_mary.RData&quot;</span>)</span></code></pre></div>
 <p>Um die gespeicherten Daten wieder zu laden, nutzen wir die Funktion <code>load()</code> mit
-dem Namen bzw. Pfad der Datei als einziges Argument.</p>
+dem Namen beziehungsweise Pfad der Datei als einzigem Argument.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="R2.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;peter_paul_mary.RData&quot;</span>)</span></code></pre></div>
 <p>So haben wir Daten in dem schnellen und gut komprimierten nativen “.RData”
 Format gespeichert. Der Nachteil ist, dass diese Daten auch nur in R genutzt
 werden können. Interessieren sie sich dafür, Daten in einem besser
-transportierbaren Format zu speichern, biete sich “.csv” an. Mehr dazu hier:
+transportierbaren Format zu speichern, bietet sich “.csv” an. Mehr dazu in
+Kapitel <a href="R3.html#export">3.5</a> sowie hier:
 <a href="https://jakobtures.github.io/web-scraping/files.html" target="_blank">https://jakobtures.github.io/web-scraping/files.html</a></p>
 </div>
 </div>
@@ -478,13 +476,9 @@ wird uns durch das ganze Seminar begleiten. Das tiydverse ist eine beliebte
 Sammlung von R packages die einer gemeinsamen Philosophie der Funktionssyntax
 sowie der Datenstruktur folgen und dabei viele datenanalytische Arbeitsprozesse
 abdecken. Der Vorteil ist, dass Sie, sobald Sie die Grundlogik verstanden haben,
-sehr schnell auch weitere tidyverse packages verstehen werden. Dies ist
-letztlich Geschmackssache, aber aus meiner Sicht führt das Arbeiten mit dem
-tidyverse zu intuitiverem und flüßiger zu schreibendem R code, vor allem dank
-der pipe <code>%&gt;%</code>, die im nächsten Kapitel eingeführt wird.</p>
-<p>Für eine umfassendere Einführung in das tidyverse, bietet sich das Buch “R for
-Data Science” von Wickham &amp; Grolemund an, welches auch Online zugänglich ist:
-<a href="https://r4ds.had.co.nz/" target="_blank">https://r4ds.had.co.nz/</a></p>
+sehr schnell auch weitere tidyverse packages verstehen werden. Letztlich ist es
+Geschmackssache, aber aus meiner Sicht führt das Arbeiten mit dem tidyverse zu
+intuitiverem und flüßiger zu schreibendem R code, vor allem dank der pipe <code>%&gt;%</code>.</p>
 <p>Aktuell besteht das core <strong>tidyverse</strong> package aus acht individuellen packages.
 Diese werden alle automatisch geladen wenn wir <code>library(tidyverse)</code> schreiben.
 Das core <strong>tidyverse</strong> deckt einen Großteil der besonders regelmäßig
@@ -492,20 +486,23 @@ auftretenden datenanalytischen Funktionalitäten ab. Dazu gehören das Einlesen,
 Reinigen und Transformieren von Daten, die angesprochene pipe oder die
 graphische Analyse. Im weiteren werden wir viele Funktionen aus dem core
 <strong>tidyverse</strong> sehr regelmäßig nutzen.</p>
-<p>Nebem dem core tidyverse besteht eine wachsende Zahl zugehöriger packages,
+<p>Nebem dem core <strong>tidyverse</strong> besteht eine wachsende Zahl zugehöriger packages,
 welche nach den selben Grundsätzen funktionieren, dabei aber speziellere
 Aufgabenfelder abdecken. Auch diese wurden mit <code>install.packages("tidyverse")</code>
 bereits installiert, müssen aber explizit geladen werden. Darunter
 beispielsweise <strong>lubridate</strong> zum Umgang mit Datumsangaben und eine Reihe von
 packages zum Einlesen bestimmter Datentypen.</p>
 <p>Eine volle Liste der tidyverse packages finden Sie unter: <a href="https://www.tidyverse.org/packages/" target="_blank">https://www.tidyverse.org/packages/</a></p>
+<p>Für eine umfassendere Einführung in das tidyverse bietet sich das Buch “R for
+Data Science” von Wickham &amp; Grolemund an, welches auch Online zugänglich ist:
+<a href="https://r4ds.had.co.nz/" target="_blank">https://r4ds.had.co.nz/</a></p>
 <div id="tidy-data" class="section level3" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> tidy data</h3>
 <p>Das tidyverse folgt einer geteilten Philosophie der Datenstruktur namens
 <em>tidy data</em>. Einfach ausgedrückt steht tidy data dafür, dass jede Variable eines
 Datensatz eine eigene Spalte in einer Tabelle bekommt und jede Beobachtung eine
 eigene Zeile. Die Werte zu den Kombinationen von Variablen und Beobachtungen
-stehen in den Zellen.</p>
+stehen dann logisch folgend in den Zellen.</p>
 <p>Betrachten wir folgenden data frame, welcher aktuelle (04.09.2021) Umfragewerte
 für die Wahl zum 20. Bundestag enthält. Die Daten stammen von:
 <a href="https://www.wahlrecht.de/umfragen/index.htm" target="_blank">https://www.wahlrecht.de/umfragen/index.htm</a></p>
@@ -514,7 +511,7 @@ für die Wahl zum 20. Bundestag enthält. Die Daten stammen von:
 ## 2 Infratest      20  25    16  13     6  12        8</code></pre>
 <p>Diese Darstellungsform ist uns sofort intuitiv verständlich. So sehen Tabellen
 in Excel oder in Zeitungen aus und die Darstellung ist kompakt und
-übersichtlich. Aber ist Sie auch tidy? Dazu müssen wir uns Gedanken darüber
+übersichtlich. Aber ist Sie auch <em>tidy</em>? Dazu müssen wir uns Gedanken darüber
 machen, welche Variablen die Tabelle enthält. Die erste Spalte bildet die
 Variable “Institut” ab. Dies macht Sinn. Die restlichen 7 Spalten enthalten die
 Umfragewerte für die 6 aktuell im Bundestag vertretenen Parteien sowie
@@ -544,11 +541,11 @@ abgebildet. Die Tabelle ist also eindeutig nicht tidy.</p>
 nun nicht mehr das komplette Set von Umfragewerten eines Umfrageinstituts,
 sondern der Umfragewert einer Partei bei einem Insitut. Das Ergebnis ist eine
 Tabelle die den Prinzipien der tidy data folgt, die uns auf den ersten Blick
-aber ungewohnt erscheint, da wir nicht daran gewohnt sind Daten in dieser Form
-darzustellen. Dies erfordert zu Beginn etwas Gewöhnung. Wir sollten aber auch
-bedenken, dass es an dieser Stelle nicht das Ziel ist eine schöne Tabelle zu
-präsentieren sondern ein Datenobjekt zu konstruieren welches uns die praktische
-und komfortabele Weiterarbeit mit den diversen tidyverse packages ermöglicht.</p>
+aber seltsam erscheint, da wir nicht daran gewohnt sind Daten in dieser Form
+darzustellen. Wir sollten aber auch bedenken, dass es an dieser Stelle nicht das
+Ziel ist eine schöne Tabelle für menschliche Leser zu präsentieren sondern ein
+Datenobjekt zu konstruieren, welches uns die praktische und komfortabele
+Weiterarbeit mit den diversen tidyverse packages ermöglicht.</p>
 <p>Mehr zu den angedeuteten Prinzipien der tidy data finden Sie im entsprechenden
 Kapitel von “R for Data Science” von Wickham &amp; Grolemund:
 <a href="https://r4ds.had.co.nz/tidy-data.html." target="_blanK">https://r4ds.had.co.nz/tidy-data.html.</a></p>
@@ -559,13 +556,17 @@ Kapitel von “R for Data Science” von Wickham &amp; Grolemund:
 Alternative zur base R Darstellung von Tabellen als data frames. Dabei liegen
 viele der Unterschiede zwischen tibbles und data frames eher im Detail. Für uns
 sind vor allem die Art wie tibbles in die console gedruckt werden und wie das
-subsetting funktioniert relevant. Mehr zu beidem gleich. Eine ausführlichere
-Einführung finden Sie in “R for Data Science”:
+subsetting funktioniert relevant. Mehr zu Beidem gleich. Eine ausführlichere
+Einführung finden Sie erneut in “R for Data Science”:
 <a href="https://r4ds.had.co.nz/tibbles.html" target="_blank">https://r4ds.had.co.nz/tibbles.html</a></p>
 <p>Tibbles erstellen wir dabei auf die selbe Weise wie data frames, nutzen dazu
-aber die Funktion <code>tibble()</code>. Dazu müssen wir aber zunächst das <strong>tibble</strong>
-beziehungsweise das <strong>tidyverse</strong> package, welches <strong>tibble</strong> enthält laden.
-Hier geben wir die Daten direkt bei der Erstellung des tibbles ein. Wie bei data
+aber die Funktion <code>tibble()</code>. Dazu müssen wir zunächst das <strong>tibble</strong>
+beziehungsweise das <strong>tidyverse</strong> package, welches <strong>tibble</strong> enthält, laden.
+Das Laden von packages sollte in den ersten Zeilen eines scripts passieren. So
+werden alle notwendigen packages zu Beginn eines scripts geladen und andere
+Nutzer*innen sehen sofort welche packages eventuell noch nachinstalliert werden
+müssen.</p>
+<p>Hier geben wir die Daten direkt bei der Erstellung des tibbles ein. Wie bei data
 frames können wir tibbles aber auch aus zuvor definierten Vektoren
 zusammensetzen.</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="R2.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -583,7 +584,7 @@ wird, desto unübersichtlicher wird er auch. Wir sollten längeren code deshalb
 Segmente zusammengehörig sind. Das Einrücken übernimmt RStudio weitestgehend
 automatisch, wir können aber auch selbst tab stops hinzufügen oder entfernen um
 Zeilen einzurücken. Eine übersichtlicher formatierte, inhaltlich aber identische
-Version des vorangegangenen codes könne wie folgt aussehen:</p>
+Version des vorangegangenen codes könnte wie folgt aussehen:</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="R2.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb43-2"><a href="R2.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
 <span id="cb43-3"><a href="R2.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
@@ -658,7 +659,7 @@ Funktion <code>as_tibble()</code>.</p>
 ermöglicht das Aneinanderketten von Befehlen, wobei das Ergebnis des
 vorangegangenen Befehls an den nächsten weitergegeben wird. Dies klingt noch
 sehr abstrakt, betrachten wir also ein praktisches Beispiel.</p>
-<p>Folgender code hat das Ziel, für einen vektor von Zahlen einen auf eine
+<p>Folgender code hat das Ziel, für einen Vektor von Zahlen den auf eine
 Nachkommastelle gerundeten Mittelwert zu berechnen. Dazu müssen wir zunächt den
 Vektor erstellen und einem Objekt zuweisen, dann den Mittelwert berechnen und
 erneut einem Objekt zuweisen und in einem letzten Schritt das Runden mit der
@@ -689,7 +690,7 @@ Mittelwert, wird durch die nächste pipe an die letzte Zeile weitergegeben und
 eneut als erstes Argument eingesetzt, hier in die Funktion <code>round()</code>. Die
 Rundung wird also auf den in der Zeile zuvor berechneten Mittelwert angewandt.</p>
 <p>Dies funktioniert reibungslos mit allen Funktionen, die ein Datenobjekt auf das
-sie angwandt werden sollen als erstes Argument nehmen, was sehr häufig der Fall
+sie angewandt werden sollen als erstes Argument nehmen, was sehr häufig der Fall
 ist, aber nicht immer.</p>
 <p>Der resultierende code ist intuitiver zu lesen und weniger schreibintensiv,
 insbesondere wenn Sie sich früh angewöhnen die pipe mit der Tastenkombination
@@ -713,9 +714,9 @@ davon, was diese machen. Wie bekommen wir aber weitere Informationen zu diesen
 und neuen Funktionen, zu deren Funktionsweise, den zugelassenen Argumenten
 oder den zurückgegebenen Ergebnissen?</p>
 <p>Der einfachste Weg ist das Nutzen der eingebauten Hilfefunktionalitäten in R.
-Dazu schreiben wir einfach ein <code>?</code> vor den Namen einer Funktion zu der wir Hilfe
-benötigen. Die zugehörige Hilfedatei öffnet sich dann im “Help” Tab,
-rechts-unten. Versuchen wir dies für die Funktion <code>rnorm()</code>.</p>
+Dazu schreiben wir in der console einfach ein <code>?</code> vor den Namen einer Funktion
+zu der wir Hilfe benötigen. Die zugehörige Hilfedatei öffnet sich dann im “Help”
+Tab, rechts-unten. Versuchen wir dies für die Funktion <code>rnorm()</code>.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="R2.html#cb49-1" aria-hidden="true" tabindex="-1"></a>?<span class="fu">rnorm</span>()</span></code></pre></div>
 <p>Die Hilfedatei gibt uns eine ganze reihe von Informationen. <code>rnorm()</code> ist Teil
 einer Familie von Funktionen die sich auf die Normalverteilung beziehen. Dabei
@@ -745,8 +746,8 @@ dies für das <strong>tibble</strong> package an:</p>
 <p>Wir bekommen so eine Liste mit allen zu <strong>tibble</strong> verfügbaren vignettes zurück.
 Einzelne dieser vignettes, rufen wir wie folgt auf:</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="R2.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">&quot;types&quot;</span>)</span></code></pre></div>
-<p>Eine ausführlichere Dokumentation zu einem package, finden Sie meist auf der
-dazugehörigen CRAN Seite, hier z.B. für <strong>tibble</strong>:
+<p>Eine ausführlichere Dokumentation zu einem package, finden Sie außerdem meist
+auf der dazugehörigen CRAN Seite, hier z.B. für <strong>tibble</strong>:
 <a href="https://cran.r-project.org/web/packages/tibble/index.html" target="_blank">https://cran.r-project.org/web/packages/tibble/index.html</a>.</p>
 </div>
 <div id="empfohlene-externe-resourcen" class="section level3" number="2.3.2">
@@ -754,14 +755,16 @@ dazugehörigen CRAN Seite, hier z.B. für <strong>tibble</strong>:
 <p>Es gibt eine Vielzahl von websites und Büchern zu R und RStudio. Einige davon
 möchte ich hier vorstellen.</p>
 <p>Die website von RStudio umfasst eine große Sammlung von Resourcen zu R und
-der Arbeit mit spezfischen packages, darunter auch viele Webinars und tutorial
+der Arbeit mit spezfischen packages, darunter auch viele Webinars und Tutorial
 Videos. Diese finden sie unter dem Menüpunkt “Resources” auf:
 <a href="https://www.rstudio.com/" target="_blank">https://www.rstudio.com/</a></p>
 <p>Die RStudio <em>cheatsheets</em> zu einigen der beliebteren packages bieten auf kleinem
 Raum meist sehr gut zusammengefasste Informationen zu den Funktionen und der
-Arbeitsweise eines packages:
+Arbeitsweise eines packages. Die Nutzung der cheatsheets sei von mir dringend
+empfohlen, und sie sind nicht nur beim Erlernen eines neuen packages sondern
+auch als Erinnerungsstütze extrem hilfreich:
 <a href="https://www.rstudio.com/resources/cheatsheets/" target="_blank">https://www.rstudio.com/resources/cheatsheets/</a></p>
-<p>Eine weitere Sammlung von tutorials zu unterschiedlichsten R Themen finden Sie
+<p>Eine weitere Sammlung von Tutorials zu unterschiedlichsten R Themen finden Sie
 auf “R-bloggers”:
 <a href="https://www.r-bloggers.com/" target="_blank">https://www.r-bloggers.com/</a></p>
 <p>Generell finden Sie im Internet eine kaum überschaubare Fülle von Informationen

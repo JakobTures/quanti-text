@@ -18,17 +18,17 @@ zunächst einige Worte zur Installation der kostenlos zugänglichen Software.
 
 *R* ist eine Programmiersprache die vor allem für statistische Analysen und data
 science angewandt wird. Generelle Informationen zu R und die ausführliche
-Dokumentation, finden sie unter: <https://www.r-project.org/>{target="_blank"}.
+Dokumentation finden sie unter: <https://www.r-project.org/>{target="_blank"}.
 
-Die aktuelleste Version von R für alle gängigen Betriebssysteme finden sich
+Die aktuelleste Version von R für alle gängigen Betriebssysteme findet sich
 stets im *CRAN*, dem *Comprehensive R Archive Network* unter:
 <https://cran.r-project.org/>{target="_blank"}. Die Links zu den
-Installationsdateien finden sich im oberen Bereich der website.
+Installationsdateien finden sich im oberen Bereich der Website.
 Falls Sie Windows nutzen, wählen Sie bitte die "base" Version. Im Falle von
-macOS, hängt die Wahl des Installers von der Version Ihres Betriebssystems ab.
-In beiden Fällen führen Sie bitte die Datei aus und Installieren Sie R in ein
-Verzeichnis Ihrer Wahl. Für Linux Systeme stellt CRAN Installationsanweisungen
-für einige der populäreren Distribution bereit.
+MacOS, hängt die Wahl des Installers von der Version Ihres Betriebssystems ab.
+In beiden Fällen führen Sie bitte die passende Datei aus und Installieren Sie R
+in ein Verzeichnis Ihrer Wahl. Für Linux Systeme stellt CRAN
+Installationsanweisungen für einige der populäreren Distribution bereit.
 
 Die Code Beispiele auf dieser Website wurden mit der R Version 4.1.1
 "Kick Things" erstellt und getestet. 
@@ -56,7 +56,7 @@ dann in Zukunft nur noch RStudio.
 include_graphics("images/RStudio.png")
 ```
 
-Das RStudio interface besteht aus vier Unterbereichen. Links-unten finden Sie
+Das RStudio Interface besteht aus vier Unterbereichen. Links-unten finden Sie
 die "Console" sowie weitere Tabs, die Sie zu Beginn selten bis nie brauchen
 werden. Die console kann genutzt werden um R code einzugeben und auszuführen,
 mehr dazu in Kürze. Links-oben werden geöffnete R scripts angezeigt. Aktuell
@@ -83,27 +83,26 @@ print("Hello World!")
 ```
 
 Sie haben gerade ihren ersten R Befehl ausgeführt, Ihren ersten output erhalten
-und gleichzeitig auch Ihre erste Funktion genutzt. Mehr zu Funktionen folgt in
-Kapitel \@ref(R2)), fürs Erste genügt es aber zu wissen, dass `print()` alles
+und gleichzeitig auch Ihre erste Funktion genutzt. Mehr zu Funktionen folgt am
+Ende dieses Kapitels, fürs Erste genügt es aber zu wissen, dass `print()` alles
 was von den Klammern, und im Fall von Text von den Anführungszeichen innerhalb
-der Klammern, umfasst ist als output druckt. Der output selbst beginnt mit
+der Klammern, umfasst ist, als output druckt. Der output selbst beginnt mit
 `[1]`, was anzeigt, dass dies das erste und hier das Einzige Element des outputs
-ist. 
+ist.
 
-Bitte beachten Sie, dass R die auf dieser website vor dem output dargestellten
-`##` nicht abdruckt. 
+Bitte beachten Sie, dass R die auf dieser Website vor dem output dargestellten
+`##` nicht abdruckt.
 
 ### Rechnen mit R
 
-R versteht die bekannten arithmethischen Operatoren `+ - * /`. Sie können R also
-auch als übergroßen Taschenrechner nutzen. Für fortgeschrittenere
-Rechenoperationen steht eine Vielzahl von Funktionen zur Verfügung.
-Beispielsweise gibt Ihnen `sqrt()` die Quadratwurzel der von den Klammern
-umfassten Zahl als output zurück. Oben mussten wir den Text `"Hello World!"` in
-Anführungszeichen einfassen. Zahlen müssen hingegen ohne Anführungszeichen
-geschrieben werden. Potenzen bekommen wir mit der Notation `x^y`. Im folgenden
-code block finden Sie einige Beispiele, die Sie Zeile für Zeile in die console
-tippen und mit "Enter" ausführen können:
+R versteht die arithmethischen Operatoren `+ - * /`. Sie können R also auch als
+übergroßen Taschenrechner nutzen. Für fortgeschrittenere Rechenoperationen steht
+eine Vielzahl von Funktionen zur Verfügung. Beispielsweise gibt Ihnen `sqrt()`
+die Quadratwurzel der von den Klammern umfassten Zahl als output zurück. Oben
+mussten wir den Text `"Hello World!"` in Anführungszeichen einfassen. Zahlen
+müssen hingegen ohne Anführungszeichen geschrieben werden. Potenzen bekommen wir
+mit der Notation `x^y`. Im folgenden code Block finden Sie einige Beispiele, die
+Sie Zeile für Zeile in die console tippen und mit "Enter" ausführen können:
 
 ``` {r calculator}
 17 + 25
@@ -115,14 +114,14 @@ sqrt(1764)
 ```
 
 
-### Vergleichsoperatoren
+### Vergleichsoperatoren {#vergleich}
 
 Vergleichsoperatoren können genutzt werden um zwei Werte miteinander zu
-vergleichen und das Ergebnis als `TRUE` oder `FALSE` im putput zu erhalten. Um
+vergleichen und das Testergebnis als `TRUE` oder `FALSE` output zu erhalten. Um
 zu überprüfen ob zwei Werte gleich sind, schreiben wir `== `. Dabei ist zu
 beachten, dass ein Vergleich zweier Werte stets zwei Gleichheitszeichen
 voraussetzt. `=` hat eine andere Bedeutung! Um zu testen ob zwei Werte *nicht*
-gleich sind, können wir `!=` nutzen, wobei das `!` geneerell für *nicht* steht.
+gleich sind, können wir `!=` nutzen, wobei das `!` generell für *nicht* steht.
 
 ``` {r compare_1}
 42 == 42
@@ -149,19 +148,19 @@ Daten zuweisen. Namen müssen dabei mit einem Buchstaben beginnen und sollten nu
 weitere Buchstaben, Ziffern sowie die Sonderzeichen `_` und `.` beinhalten.
 Verbreitete Konventionen für längere Objektnamen sind *snake case*
 -- `the_answer` -- und *camel case* -- `theAnswer`. Dies ist letztlich
-Geschmackssache, es empfielt sich aber eine einheitliche Schreibweise zu
-verwenden sowie kurze aber klare Namen zu verwenden. Daten weisen wir einem
-Objekt mit dem *assignment operator* `<-`zu.
+Geschmackssache, es empfielt sich aber eine einheitliche Schreibweise sowie
+kurze aber klar verständliche Namen zu verwenden. Daten weisen wir einem Objekt
+mit dem *assignment operator* `<-` zu.
 
 ``` {r answer_1}
 the_answer <- 42
 ```
 
 Um sich Fingerakrobatik zu ersparen, ist es sinnvoll sich frühzeitig die
-Tastenkombination "Alt" + "-" anzugewöhnen, die `<-` an der aktuellen cursor
+Tastenkombination "Alt" + "-" anzugewöhnen, die `<-` an der aktuellen Cursor
 Position einfügt.
 
-Die so in einem Objekt gespeicherten Daten, können wir aufrufen, indem wir den
+Die so in einem Objekt gespeicherten Daten können wir aufrufen, indem wir den
 Objektnamen als Befehl schreiben.
 
 ``` {r answer_2}
@@ -185,7 +184,7 @@ the_answer
 So erstelle Objekte werden in dem "Environment" Tab (rechts-oben) gelistet.
 Möchten wir erstellte Objekte entfernen, können wir dazu die `rm()` Funktion
 nutzen. Dies ist zwar in der Regel nicht notwendig, kann aber hilfreich sein um
-versehentlich oder nut zum Test erstellte Objekte zu löschen und so den Tab
+versehentlich oder nur zum Test erstellte Objekte zu löschen und so den Tab
 etwas aufzuräumen.
 
 ``` {r answer_42}
@@ -237,12 +236,12 @@ v[2:4]
 
 Betrachten wir den Vektor `v` im environment, fällt auf, dass RStudio
 `num [1:4]` vor den gespeicherten Werten abduckt. Dies drückt zum einen aus,
-dass der Vektor die Länge 4 hat, zum anderen den Typ des Vektors. Hier handelt
-es sich um einen numerischen Vektor -- *numeric*, ausgedrücht durch "num" --
-also einen Vektor der Zahlen enthält.
+dass der Vektor die Länge 4 hat, zum anderen zeigt es den Typ des Vektors an.
+Hier handelt es sich um einen numerischen Vektor -- *numeric*, ausgedrücht durch
+"num" -- also einen Vektor der Zahlen enthält.
 
 Um Imformationen zu Typ, Länge und Inhalt von Objekten zu erhalten können wir
-auch die Funktion `str()`-- structure -- nutzen. Dies ist vor allem bei
+auch die Funktion `str()` -- structure -- nutzen. Dies ist vor allem bei
 komplexeren Objekten wie Listen oder data frames (mehr dazu später) hilfreich um
 einen ersten Überblick zu erhalten ohne das komplette Objekt abzudrucken.
 
@@ -253,7 +252,7 @@ str(v)
 R kennt noch weitere Typen von Vektoren, wobei für uns vor allem die Typen
 *logical* und *character* von Bedeutung sind.
 
-Logical Vektoren können nur die Werte `TRUE` und `FALSE` enthalten. Diese
+Logische Vektoren können nur die Werte `TRUE` und `FALSE` enthalten. Diese
 entstehen beispielsweise wenn wir Vergleichsoperatoren für einen Test nutzen.
 
 ``` {r vectors_5}
@@ -267,11 +266,13 @@ Wir können logische Vektoren aber auch selbst erstellen.
 z <- c(TRUE, FALSE, TRUE)
 z
 ```
+
 *Character* Vektoren beinhalten Zeichenfolgen, sogenannte *strings*. Strings
 müssen stets von Anführungszeichen umschlossen sein.
 
 ``` {r vectors_6}
 char_v <- c("This", "is", "a", "character", "vector!")
+char_v
 ```
 
 Auch character Vektoren können miteinander verglichen werden.
@@ -333,7 +334,7 @@ R erkennt dabei automatisch, welche Datentypen die Spalten enthalten.
 str(df)
 ```
 
-Wir können data frames auch zuvor definierten Vektoren zusammensetzen.
+Wir können data frames auch aus zuvor definierten Vektoren zusammensetzen.
 
 ``` {r data_frame_3}
 name <- c("Peter", "Mary")
@@ -419,15 +420,14 @@ Grundinstallation bereits enthalten waren, steht eine stetig steigende Zahl von
 nutzergeschriebenen packages zum Download zur Verfügung. Diese packages haben
 stets einen thematischen Fokus -- beispielsweise Datenbereinigung, graphische
 Analyse oder Textanalyse -- und enthalten eine Reihe von Funktionen die den
-Einsatzbereich von R über das hinaus erweitern was von den Originalentwicklern
+Einsatzbereich von R über das hinaus erweitern, was von den Originalentwicklern
 geplant war oder die etwas zu kompliziert gestaltete base R Ansätze durch neue
 anwenderfreundlichere Funktionen ersetzen.
 
-Packages, ihre Dokumentation und weitere Informationen werden auf CRAN --
-"Comprehensive R Archive Network" -- gehostet. Hier haben Sie auch bereits die
-Installationsdateien für R heruntergeladen. Wenn Sie gleich ein package direkt
-aus RStudio installieren, greift die software auf CRAN zu um die erforderlichen
-Dateien herunterzuladen.
+Packages, ihre Dokumentation und weitere Informationen werden ebenfalls auf CRAN
+gehostet. Hier haben Sie auch bereits die Installationsdateien für R
+heruntergeladen. Wenn Sie gleich ein package direkt aus RStudio installieren,
+greift die Software auf CRAN zu um die erforderlichen Dateien herunterzuladen.
 
 ### Installieren und Laden
 
@@ -441,30 +441,25 @@ install.packages("tidyverse")
 ```
 
 R wird während der Installation eine lange Reihe von Informationen ausgeben, von
-denen uns solange alles gut geht nur das `DONE (tidyverse)` interessieren muss.
-
-Nach erfolgreicher Installation, können wir das Paket laden. Dies sollte
-normalerweise in den ersten Zeilen eines scripts passieren. So werden alle
-notwendigen packages zu Beginn eines scripts geladen und andere Nutzer*innen
-sehen sofort welche packages eventuell noch nachinstalliert werden müssen.
-Ein package laden wir mit `library()` mit dem Namen des packages innerhalb der
-Klammern, hier ausnahmsweise ohne `""`.
+denen uns -- solange alles gut geht -- nur das `DONE (tidyverse)` interessieren
+muss. Nach erfolgreicher Installation, können wir das Paket laden. Ein package
+laden wir mit `library()` mit dem Namen des packages innerhalb der Klammern,
+hier ausnahmsweise ohne `""`.
 
 ``` {r package_load_exmpl}
 library(tidyverse)
 ```
 
 Manche Pakete, wie das **tidyverse**, geben uns auch beim Laden eine Reihe von
-Informationen die wir im weiteren Verlauf des Kapitels noch genauer betrachten
-werden. Andere Pakete laden aber auch still, ohne Informationen in die console
-zu schreiben. Sollte beim laden eines packages ein Problem auftauchen, wird R
-dies rückmelden.
+Informationen die wir gleich noch genauer betrachten werden. Andere Pakete laden
+aber auch still, ohne Informationen in die console zu schreiben. Sollte beim
+Laden eines packages ein Problem auftauchen, wird R dies rückmelden.
 
 
 ## Funktionen
 
 Bis zu diesem Punkt haben wir bereits eine Reihe von Funktionen genutzt, ohne
-eigentlich zu Wissen, was Funktionen sind. Die in base R und den diversen
+eigentlich zu wissen, was Funktionen sind. Die in base R und den diversen
 packages enthaltenen Funktionen bieten einen einfachen Zugang zu komplexeren im
 Hintergrund ablaufenden Operationen. Statt beispielsweise eine komplizierte
 Datenanalysetechnik selbst zu implementieren, also jeden Rechenschritt Zeile für
@@ -509,14 +504,14 @@ verändern. Dies wird uns im weiteren Verlauf regelmäßig begegenen.
 ### namesspaces
 
 Betrachten wir nochmals den output nach dem Laden von **tidyverse** weiter oben.
-R gibt uns neben den Namen und Versionen der geladenen packages -- das core
+R gibt uns neben Namen und Versionen der geladenen packages -- das core
 **tidyverse** package welches wir geladen haben ist eigentlich eine Sammlung von
-packages -- auch die Information über zwei Konflikte aus. Konflikte
-entstehen, wenn zwei geladene packages Funktionen mit den selben Namen
-enthalten. Die Funktion aus dem später geladenen package überschreibt dabei die
-zuvor geladene Funktion. Hier überschreibt das tidyverse package **dplyr**die
-Funktionen `filter()` und `lag()` aus dem base R package **stats**. Ohne
-**dplyr** bzw. **tidyverse** zu laden wäre beim aufruf von `filter()` die
+packages -- auch die Information über zwei Konflikte aus. Konflikte entstehen,
+wenn zwei geladene packages Funktionen mit den selben Namen enthalten. Die
+Funktion aus dem später geladenen package überschreibt dabei die zuvor geladene
+Funktion. Hier überschreibt das tidyverse package **dplyr** die Funktionen
+`filter()` und `lag()` aus dem base R package **stats**. Ohne **dplyr**
+beziehungsweise **tidyverse** zu laden wäre beim aufruf von `filter()` die
 Funktion aus dem **stats** package genutzt worden. Nun wird die gleichnamige
 Funktion aus **dplyr** angewandt.
 
