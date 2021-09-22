@@ -9,25 +9,25 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 
 ## Die Stammdaten des 19. Bundestags
 
-Dieses und das Folgende Kapitel behandeln die Bereinigung, Transformation und
-deskriptive statistische Analyse von Daten mit **dplyr** sowie der graphische
+Dieses und das folgende Kapitel behandeln die Bereinigung, Transformation und
+deskriptive statistische Analyse von Daten mit **dplyr** sowie die graphische
 Analyse mit **ggplot2**. Zur Veranschaulichung analysieren wir eine Auswahl
 biographischer Daten der Bundestagsabgeordneten des 19. Bundestags. Darunter
-auch die Regierungsmitglieder und Funktionsträger wie Bundestagspräsident*innen.
-Die Daten stammen aus einer vom Bundestag bereitgestellten ".xml" Datei und
-wurden am 07.09.2021 unter folgender URL heruntergeladen:
-<https://www.bundestag.de/services/opendata>{target="_blank"}
+sind auch die Regierungsmitglieder und Funktionsträger wie
+Bundestagspräsident*innen.  Die Daten stammen aus einer vom Bundestag
+bereitgestellten ".xml" Datei und wurden am 07.09.2021 unter folgender URL
+heruntergeladen: <https://www.bundestag.de/services/opendata>{target="_blank"}
 
-Das script zur Extraktion der interessierenden Variablen aus den XML Daten und
+Das Script zur Extraktion der interessierenden Variablen aus den XML Daten und
 der Konstruktion des hier genutzten tibbles, finden Sie in meinem GitHub:
 <https://github.com/JakobTures/quanti-text/blob/master/scripts/stammdaten.R>{target="_blank"}
 
-Das script speichert einen tibble mit allen genutzten Daten in der Datei
-"stammdaten.RData", die von Seminarteilnehmern auch in Moodle heruntergeladen
-werden kann. Laden wir diese Daten zunächst in R. Da es sich bei dem Datenobjekt
-um einen tibble handelt, müssen wir auch zunächst das **tidyverse** package
-laden. R kennt ohne dieses keine tibbles und interpretiert das Objekt als data
-frame.
+Das Script speichert eine Tibble mit allen genutzten Daten in der Datei
+"stammdaten.RData", die von Seminarteilnehmer*innen auch in Moodle
+heruntergeladen werden kann. Laden wir diese Daten zunächst in R. Da es sich bei
+dem Datenobjekt um eine Tibble handelt, müssen wir auch zunächst das
+**tidyverse** package laden. R kennt ohne dieses keine Tibbles und interpretiert
+das Objekt als Dataframe.
 
 ``` {r load_stammdaten, include = FALSE}
 library(tidyverse)
@@ -41,23 +41,23 @@ library(tidyverse)
 load("stammdaten.RData")
 ```
 
-Die Datei enthielt als Einziges das Objekt `stammdaten`, einen tibble der die
-ausgewählten Stammdaten aller jetzigen und ehemaligen Bundestagsabgeordneten
-enthält. Schauen wir uns den tibble einmal an:
+Die Datei enthielt das Objekt `stammdaten`, eine Tibble, der die ausgewählten
+Stammdaten aller jetzigen und ehemaligen Bundestagsabgeordneten enthält. Schauen
+wir uns die Tibble einmal an:
 
 ``` {r print_stammdaten}
 stammdaten
 ```
 
-Der tibble enthält 4089 Zeilen, also Daten zu 4089 Abgeordneten. Zu jeder
-Beobachtung, stehen 9 Variablen bereit. Nachname, Vorname, akademischer Titel,
-Geschlecht, Parteizugehörigkeit, die erste und letzte Wahlperiode in der das MdB
-im Bundestag vertreten war sowie Alter und Geburtsdatum.
+Die Tibble enthält 4089 Zeilen, also Daten zu 4089 Abgeordneten. Zu jeder
+Beobachtung stehen 9 Variablen bereit. Nachname, Vorname, akademischer Titel,
+Geschlecht, Parteizugehörigkeit, die erste und letzte Wahlperiode, in der das
+MdB im Bundestag vertreten war, sowie Alter und Geburtsdatum.
 
-Wie Sie sehen, werden bei tibbles standardmäßig nur die ersten 10 Zeilen
-gedruckt. Die Darstellung ist dadurch kompakt und übersichtlich, eventuell
+Wie Sie sehen, werden bei Tibbles standardmäßig nur die ersten 10 Zeilen
+gedruckt. Die Darstellung ist dadurch kompakt und übersichtlich. Eventuell
 könnten wir aber daran interessiert sein mehr als 10 Zeilen zu sehen. Ein Weg
-ist das anklicken des Objekts im "Environment" Tab oder das Schreiben von
+ist das Anklicken des Objekts im "Environment" Tab oder das Schreiben von
 `View(objektname)` in der console. Nun öffnet sich das Objekt in einem neuen Tab
 und kann komplett betrachtet werden. Ein anderer Weg ist es, R zu zwingen mehr
 Zeilen in die console abzudrucken. Dies ist mit der Funktion `print()` möglich.
@@ -73,12 +73,12 @@ print(stammdaten, n = 20)
 
 Das **dplyr** package enthält eine Reihe von Funktionen zur Bereinigung,
 Transformation und deskriptiven Analyse von Daten. Wir beginnen damit, Zeilen
-und Spalten die wir nicht benötigen aus dem tibble zu entfernen, bevor wir die
+und Spalten, die wir nicht benötigen, aus der Tibble zu entfernen, bevor wir die
 Daten in einigen bestehenden Spalten transformieren und neue Spalten aus den
 vorhandenen Daten erzeugen.
 
 Empfohlene weiterführende Resourcen zu **dplyr** sind das entsprechende RStudio
-cheatsheet:
+Cheatsheet:
 <https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf>{target="_blank"}
 sowie das Kapitel "Data transformation" in "R for Data Science":
 <https://r4ds.had.co.nz/transform.html>{target="_blank"}
@@ -86,15 +86,15 @@ sowie das Kapitel "Data transformation" in "R for Data Science":
 
 ### `filter()`
 
-`filter()` dient dazu, Beobachtungen -- also Zeilen -- aus einem tibble zu
-filtern. Die Funktion nimmt dabei die Daten auf die es angewandt werden soll als
-erstes und eine oder mehrere expressions als zweites Argument. Diese Ausdrücke
-sind letztlich die Regeln, nach denen die Funktion filtern soll.
+`filter()` dient dazu, Beobachtungen -- also Zeilen -- aus einer Tibble zu
+filtern. Die Funktion nimmt dabei die Daten, auf die sie angewandt werden soll,
+als erstes und eine oder mehrere expressions als zweites Argument. Diese
+Ausdrücke sind letztlich die Regeln, nach denen die Funktion filtern soll.
 
 Zum Schreiben der Ausdrücke benötigen wir die in Kapitel \@ref(vergleich)
 bereits eingeführten Vergleichsoperatoren. Diese vergleichen den Wert auf der
-linken Seite des Operators mit dem auf der rechten, und geben als Ergebnis ein
-`TRUE` zurück wenn der Test bestanden wurde bwziehungsweise `FALSE` wenn er
+linken Seite des Operators mit dem auf der rechten und geben als Ergebnis ein
+`TRUE` zurück, wenn der Test bestanden wurde, beziehungsweise `FALSE`, wenn er
 nicht bestanden wurde.
 
 Wir könnten nun beispielsweise daran interessiert sein, nur die Daten bestimmter
@@ -109,10 +109,10 @@ stammdaten %>%
 ```
 
 Möchten wir mehrere Ausdrücke kombinieren, benötigen wir dazu
-*logische Operatoren*. `&` -- *UND* -- testet ob beide verbundenen Ausdrücke
+*logische Operatoren*. `&` -- *UND* -- testet, ob beide verbundenen Ausdrücke
 gleichzeitig `TRUE` sind und gibt nur dann `TRUE` zurück. `|` -- *ODER* --
-testet ob wenigstens einer der verbundenen Ausdrücke `TRUE` ist und gibt in
-diesem fall `TRUE` zurück. Dies sind alle möglichen Kombinationen für 2
+testet, ob wenigstens einer der verbundenen Ausdrücke `TRUE` ist und gibt in
+diesem Fall `TRUE` zurück. Dies sind alle möglichen Kombinationen für 2
 Ausdrücke:
 
 * `TRUE & TRUE` gibt `TRUE` zurück
@@ -137,9 +137,14 @@ stammdaten %>%
   filter(Partei == "CDU" | Partei == "CSU")
 ```
 
-Es lassen sich auch mehr als zwei Ausdrücke mit `&`und `|` kombinieren. 
+Es lassen sich auch mehr als zwei Ausdrücke mit `&`und `|` kombinieren.
 
-Die Daten enthalten aktuell noch alle Abgeordneten die jemals ein Mandat im
+``` {r filter_4}
+stammdaten %>% 
+  filter(Partei == "CDU" | Partei == "CSU" | Partei == "FDP" | Partei == "AfD")
+```
+
+Die Daten enthalten aktuell noch alle Abgeordneten, die jemals ein Mandat im
 Bundestag hatten. Mit `filter()` können wir den Datensatz auf diejenigen
 reduzieren, die auch im 19. Bundestag vertreten waren.
 
@@ -152,12 +157,13 @@ Ab hier arbeiten wir mit dem Objekt `stammdaten_19` weiter.
 
 ### `select()`
 
-Möchten wir ein subset von Variablen bilden, könne wir dazu `select()` nutzen.
-Die Funktion nimmt die Daten auf die sie angewendet werden soll als erstes
-Argument -- hier weitergegeben durch die pipe -- und dann einen oder mehrere
-Spaltennamen, die im tibble verbleiben sollen. Folgen die zu behaltenden Spalten
-aufeinander, können wir auch eine "von:bis" Notation nutzen. Nehmen wir an, wir
-möchten Die Spalten "nachname", "vorname", "Titel" und "Partei" extrahieren:
+Möchten wir ein Subset von Variablen bilden, könne wir dazu `select()` nutzen.
+Die Funktion nimmt die Daten, auf die sie angewendet werden soll, als erstes
+Argument -- hier weitergegeben durch die Pipe -- und dann einen oder mehrere
+Spaltennamen, die in der Tibble verbleiben sollen. Folgen die zu behaltenden
+Spalten aufeinander, können wir auch eine "von:bis" Notation nutzen. Nehmen wir
+an, wir möchten die Spalten "nachname", "vorname", "Titel" und "Partei"
+extrahieren:
 
 ``` {r select_1}
 stammdaten_19 %>% 
@@ -167,12 +173,12 @@ stammdaten_19 %>%
   select(nachname:Titel, Partei)
 ```
 
-Wir können `select()`auch nutzen um Variablen zu entfernen. Dazu schreiben wir
+Wir können `select()`auch nutzen, um Variablen zu entfernen. Dazu schreiben wir
 `-` vor den zu entfernenden Spaltennamen. Da das genaue Geburtsdatum der
 Abgeordneten im Folgenden nicht mehr benötigt wird, können wir die Spalte "geb"
 entfernen. "letzte_WP" kann ebenfalls entfernt werden, da die Spalte nach dem
-Filtern keine Informationen mehr enthält, ihr Wert ist für alle Beobachtungen
-"19".
+Filtern keine Informationen mehr enthält. Ihr Wert ist für alle Beobachtungen
+19.
 
 ``` {r select_2}
 stammdaten_19 <- stammdaten_19 %>% 
@@ -187,9 +193,9 @@ stammdaten_19
 Ihnen wird eventuell bereits aufgefallen sein, dass die meisten Spaltennamen mit
 einem kleingeschriebenen Buchstaben beginnen, "Titel" und "Partei" aber nicht.
 Da habe ich anscheinend beim Erstellen des Datenobjekts meine eigenen
-Namenskonventionen -- alles beginnt mit kleinen Buchstaben -- ausser Acht
+Namenskonventionen -- alles beginnt mit kleinen Buchstaben -- außer Acht
 gelassen. Um diese nun umzubenennen, können wir `rename()` nutzen. Erneut werden
-als erstes Argument die Daten durch die pipe weitergegeben, gefolgt von einem
+als erstes Argument die Daten durch die Pipe weitergegeben, gefolgt von einem
 oder mehreren Argumenten in der Form `neuer_name = alter_name`.
 
 ``` {r rename}
@@ -203,7 +209,7 @@ stammdaten_19
 
 ### `mutate()`
 
-`mutate()` dient dazu Daten in bestehenden Spalten zu transformieren und neue
+`mutate()` dient dazu, Daten in bestehenden Spalten zu transformieren und neue
 Spalten aus den Daten bestehender Spalten zu generieren.
 
 Aktuell ist der Name der Abgeordneten über zwei Spalten verteilt. Möchten wir
@@ -213,7 +219,7 @@ zu transformierenden oder neu zu erstellenden Spalte `=` einem Ausdruck der
 beschreibt, wir die Daten transformiert oder generiert werden sollen. Dies kann
 eine einfache Berechnung wie `mutate(neue_spalte = spalte_a + spalte b)` sein,
 aber auch weitere Funktionen beinhalten. Hier nutzen wir die Funktion `str_c()`
-aus dem core tidyverse package **stringr** um zwei Strings zu einem zu
+aus dem core tidyverse Package **stringr**, um zwei Strings zu einem zu
 kombinieren. Das optionale Argument `sep = ` wird dazu genutzt um festzulegen,
 welche Zeichen zwischen die zu kombinierenden Strings eingefügt werden. Setzen
 wir dies um und betrachten die neue sowie die alten Spalten:
@@ -229,14 +235,14 @@ stammdaten_19 %>%
 Die Spalte "titel" listet aktuell die akademischen Titel der Abgeordneten. Liegt
 ein Titel vor, wird dieser genau benannt. Liegt keiner vor enthält die Spalte
 ein `NA`, die Repräsentation fehlender Werte in R. Für diese Analyse
-interessiert uns nur ob ein Titel vorliegt, aber nicht welcher. Dazu könnten wir
-eine neue Spalte generieren, welche einen logischen Vektor enthält der angibt ob
-ein Titel vorliegt, `TRUE`, oder nicht, `FALSE`. Dies ist eine sogenannte
-Dummyvariable. Zum generieren können wir die **dplyr** Funktion `if_else()`
-nutzen. Wir geben als erstes Argument eine Bedingung an die getestet wird. Hier
-`!is.na(titel)`, welche testet ob der Inhalt von "titel" *nicht* -- angezeigt
-durch das `!` -- missing ist. Das zweite und dritte Argument geben an, was
-eingesetzt werden soll wenn die getestete Bedingung erfüllt beziehungsweise
+interessiert uns nur, ob ein Titel vorliegt, aber nicht welcher. Dazu könnten
+wir eine neue Spalte generieren, welche einen logischen Vektor enthält, der
+angibt, ob ein Titel vorliegt (`TRUE`) oder nicht (`FALSE`). Dies ist eine
+sogenannte Dummyvariable. Zum Generieren können wir die **dplyr** Funktion
+`if_else()` nutzen. Wir geben als erstes Argument eine Bedingung an, die getestet
+wird. Hier `!is.na(titel)`, welche testet ob der Inhalt von "titel" *nicht* --
+angezeigt durch das `!` -- missing ist. Das zweite und dritte Argument geben an,
+was eingesetzt werden soll wenn die getestete Bedingung erfüllt beziehungsweise
 nicht erfüllt ist. Hier soll im ersten Fall `TRUE`, im zweiten `FALSE`
 eingesetzt werden.
 
@@ -248,16 +254,16 @@ stammdaten_19 %>%
   select(titel, titel_dummy)
 ```
 
-Die Spalte "partei" ist auch als character Vektor abgelegt. Bei der
+Die Spalte "partei" ist auch als Character Vektor abgelegt. Bei der
 Parteizugehörigkeit handelt es sich um eine kategoriale Variable. So gibt es nur
 eine begrenzte Anzahl möglicher Ausprägungen, nämlich die Namen der im 19.
 Bundestag vertretenen Parteien sowie die Kategorie "Plos" für Parteilose. Die
 Repräsentation kategorialer Variablen in R nennt sich *factor*. Das core
-tidyverse package **forcats** ermöglicht es uns Faktorvariablen anzulegen und zu
-manipulieren. Dies erleichtert vor allem die graphische Analyse im weiteren
+tidyverse Package **forcats** ermöglicht es uns, Faktorvariablen anzulegen und
+zu manipulieren. Dies erleichtert vor allem die graphische Analyse im weiteren
 Verlauf des Kapitels.
 
-Der einfachste Weg ist es, R selbst auslesen zu lassen welche Kategorien in
+Der einfachste Weg ist es, R selbst auslesen zu lassen, welche Kategorien in
 einer Variable vorhanden sind. Dazu wenden wir einfach die Funktion `factor()`
 innerhalb von `mutate()` auf eine Spalte an.
 
@@ -266,22 +272,22 @@ stammdaten_19 <- stammdaten_19 %>%
   mutate(partei = factor(partei))
 ```
 
-Um herauszufinden welche Kategorien ein factor vector umfasst, nutzen wir
+Um herauszufinden, welche Kategorien ein factor vector umfasst, nutzen wir
 `levels()`.
 
 ``` {r factor_2}
 levels(stammdaten_19$partei)
 ```
 
-Dies scheint funktioniert zu haben, es fallen aber auch zwei Probleme auf um die
-wir uns noch kümmern sollten. Erstens könnten wir daran interessiert sein die
-Union als ganzes zu analysiseren. Zweitens sind die Kategorien aktuell
+Dies scheint funktioniert zu haben, es fallen aber auch zwei Probleme auf, um die
+wir uns noch kümmern sollten. Erstens könnten wir daran interessiert sein, die
+Union als Ganzes zu analysiseren. Zweitens sind die Kategorien aktuell
 alphabetisch geordnet, inhaltlicher sinnvoller wäre aber beispielsweise eine
 Ordnung nach der Größe der Fraktionen im 19. Bundestag.
 
 Fassen wir zuerst "CDU" und "CDU" zur "Union" zusammen. Dazu können wir
 `fct_collapse()` nutzen. Dabei geben wir vor dem `=` den Namen der neuen
-Kategorie an, nach dem `=` mit `c()` kombiniert die Namen der alten Kategorien
+Kategorie an, nach dem `=` mit `c()` kombiniert die Namen der alten Kategorien,
 die wir zusammenfassen möchten.
 
 ``` {r factor_3}
@@ -292,9 +298,9 @@ stammdaten_19 <- stammdaten_19 %>%
 levels(stammdaten_19$partei)
 ```
 
-Das Zuammenfassen mehrer factors wäre auch mit `fct_recode()` möglich, erfordert
-aber etwas mehr Schreibart. Diese Funktion eignet sich aber zum Anpassen der
-Namen einzelner factors.
+Das Zuammenfassen mehrerer Factors wäre auch mit `fct_recode()` möglich,
+erfordert aber etwas mehr Schreibarbeit. Diese Funktion eignet sich aber zum
+Anpassen der Namen einzelner Factors.
 
 Um die Kategorien manuell neu zu ordnen, könnten wir `fct_relevel()` nutzen.
 Dazu müssten wir aber die gewünschte Reihenfolge per Hand notieren. Bequemer
@@ -309,8 +315,8 @@ stammdaten_19 <- stammdaten_19 %>%
 levels(stammdaten_19$partei)
 ```
 
-Die Spalte "geschlecht" liegt ebenfalls als character Vektor vor und kann auf
-dem selben Weg in einen factor umgewandelt werden.
+Die Spalte "geschlecht" liegt ebenfalls als Character Vektor vor und kann auf
+dem selben Weg in einen Factor umgewandelt werden.
 
 ``` {r factor_5}
 stammdaten_19 <- stammdaten_19 %>% 
@@ -320,10 +326,10 @@ levels(stammdaten_19$geschlecht)
 ```
 
 Damit sind die Daten zur weiteren Analyse vorbereitet. Wir können nun noch nicht
-mehr benötigte Spalten entfernen um den tibble übersichtlich zu halten, sowie
+mehr benötigte Spalten entfernen, um die Tibble übersichtlich zu halten, sowie
 die dann noch vorhandenen Spalten in eine sinnvollere Reihenfolge bringen.
-Beides ist nicht zwingend notwendig, führt aber zu einem aufgeräumteren output
-des tibbles.
+Beides ist nicht zwingend notwendig, führt aber zu einem aufgeräumteren Output
+der Tibble.
 
 Die Spalten "nachname", "vorname" und "titel" sind nicht mehr notwendig, da wir
 die enthaltenen Informationen in neue Variablen überführt haben.
@@ -336,7 +342,7 @@ stammdaten_19
 ```
 
 Was eine sinnvolle Reihenfolge der verbleibenden Variablen sein kann ist
-natürlich subjektiv, Ich würde aber folgende Reihenfolge vorschlagen und mit
+natürlich subjektiv. Ich würde aber folgende Reihenfolge vorschlagen und mit
 `relocate()` umsetzen. Die Syntax funktioniert dabei ähnllich zu `select()`.
 
 ``` {r cleanup_2}
@@ -349,8 +355,8 @@ stammdaten_19
 ## Speichern der transformierten Daten
 
 Wir werden im nächsten Kapitel mit den hier transformierten Daten
-weiterarbeiten. Dazu sollten Sie entweder zu Beginn des Kapitels das script aus
-diesem Kapitel nochmals durchlaufen lassen, oder sie speichern die bearbeiteten
+weiterarbeiten. Dazu sollten Sie entweder zu Beginn des Kapitels das Script aus
+diesem Kapitel nochmals durchlaufen lassen, oder Sie speichern die bearbeiteten
 Daten:
 
 ``` {r save_R3}
@@ -363,10 +369,10 @@ save(stammdaten_19, file = "stammdaten_19.RData")
 ### `summarise()`
 
 Die Funktion `summarise()` ermöglicht es uns, zusammenfassende Maßzahlen zu
-einem tibble zu berechnen. Die Syntax funktioniert dabei ähnlich zu `mutate()`.
-Wir definieren einen Namen für die Spalte in der die Maßzahlen gelistet werden
-sollen und nach dem `=` eine entsprechende Berechnung oder Funktion. Das
-Ergebnis ist ein neuer tibble der die angeforderten Statistiken enthält.
+einer Tibble zu berechnen. Die Syntax funktioniert dabei ähnlich zu `mutate()`.
+Wir definieren einen Namen für die Spalte, in der die Maßzahlen gelistet werden
+sollen, und nach dem `=` eine entsprechende Berechnung oder Funktion. Das
+Ergebnis ist ein neue Tibble, welche die angeforderten Statistiken enthält.
 
 Betrachten wir zunächst die Spalte "alter". Wir könnten uns für das
 arithmetische Mittel des Alters der MdBs interessieren. Dazu definieren wir
@@ -400,8 +406,8 @@ jede dieser Gruppen separat berechnen.
 
 Unsere Daten bieten sich für eine Analyse nach Parteimitgliedschaft an. Als
 ersten Schritt können wir die Daten also nach dem Inhalt der Spalte "partei"
-gruppieren und zunächst einmal Zählen, wie viele Abgeordnete pro Partei im
-Bundestag vertreten sind. Dazu nutzen wir innerhalb von `mutate()` die **dplyr**
+gruppieren und zunächst einmal zählen, wie viele Abgeordnete pro Partei im
+Bundestag vertreten sind. Dazu nutzen wir innerhalb von `summarise()` die **dplyr**
 Funktion `n()`, welche die Anzahl Beobachtungen pro Gruppe, also die
 Gruppengröße, zurückgibt.
 
@@ -426,7 +432,7 @@ stammdaten_19 %>%
             anzahl = n())
 ```
 
-Oft ist es hilfreich die Daten nach einer Statistik die uns interessiert zu
+Oft ist es hilfreich, die Daten nach einer Statistik, die uns interessiert, zu
 ordnen. Möchten wir beispielsweise wissen, welche Partei den höchsten
 beziehungsweise niedrigsten Mittelwert des Alters hat, können wir die Ergebnisse
 in einem weiteren Schritt mit der Funktion `arrange()` nach den Werten dieser
@@ -465,7 +471,7 @@ einem logischen Vektor stehen Zahlenwerte. `TRUE` ist die Repräsentation von 1,
 `FALSE` von 0. Wir können also direkt mit den Werten des Vektors rechnen. Um die
 absolute Anzahl an Titeln zu berechenn, reicht es so die Summe des Vektors zu
 bilden. Alle Werte werden aufaddiert und da wir nur Einsen und Nullen haben, ist
-das Ergebnis gleich der Anzahl der Abgeordneten die einen akademischen Titel
+das Ergebnis gleich der Anzahl der Abgeordneten, die einen akademischen Titel
 tragen. Um den relativen Anteil zu berechnen, können wir das arithmetische
 Mittel nutzen. Alle Einsen und Nullen werden aufaddiert und durch die Anzahl der
 Beobachtungen geteilt. Dies ist der Anteil der Abgeordneten mit Titel.
@@ -529,7 +535,7 @@ automatisch entfernt. Im letzten Beispiel hatten wir zwei Gruppierungsebenen.
 Von diesen wurde nur die niedrigere Gruppierungsebene -- die Reihenfolge der
 Variablen in `group_by()` bestimmt auch die Reihenfolge der Gruppierung --, also
 die Gruppierung nach dem Titel aufgelöst. Die Gruppierung nach der
-Parteimitgliedschaft ist weiterhin aktiv. Dies ist auch im output anhand der
+Parteimitgliedschaft ist weiterhin aktiv. Dies ist auch im Output anhand der
 Zeile `# Groups:   partei [7]` erkennbar. Die Daten sind nach der Partei
 gruppiert und wir haben 7 Gruppen. Möchten wir mit den Ergebnissen dieser
 Berechnungen weiterarbeiten, müssen wir uns auch über die Gruppierung bewusst
@@ -557,18 +563,10 @@ stammdaten_19 %>%
 
 ## Export von Tabellen {#export}
 
-Das Exportieren von Tabellen -- beispielsweise die oben berechneten Statistiken
--- aus R ist leider nicht ganz so einfach wie man denken oder hoffen würde. Wir
-können natürlich immer copy & paste nutzen um die Werte in Word oder eine
-sonstige Software zu kopieren, dies aber nicht nur langweilige Fleißarbeit
-sondern auch fehleranfällig, vor allem bei umfassenderen Analysen als solche,
-die wir bisher betrachet haben.
-
 Ein flexibler Weg zum direkten Export von Tabellen ist es, diese als ".csv"
-abzuspeichern. Dieses Format kann wiedrum direkt in Excel und vermutlich auch in
-Word importiert werden. Da ich kein aktiver Office Nutzer bin, kann Ich Ihnen
-hier nur begrenzte praktische Ratschläge geben. Der Import sollte aber im
-Normalfall möglich sein. 
+abzuspeichern. Dieses Format kann wiedrum direkt in Excel importiert werden. Da
+ich kein aktiver Office Nutzer bin, kann Ich Ihnen hier nur begrenzte praktische
+Ratschläge geben. Der Import sollte aber im Normalfall möglich sein.
 
 *CSV* steht für "comma-separated values". Da diese Dateien sehr einfach gehalten
 sind und von einer großen Bandbreite an Software verarbeitet werden können, ist
@@ -585,7 +583,7 @@ data3_1, data3_2, data3_3
 ```
 
 Die Zeilen einer Tabelle sind durch Zeilenumbrüche getrennt, die Spalten durch
-Kommas. In der ersten Zeile stehen dabei häufig, aber nicht immer, die
+Kommata. In der ersten Zeile stehen dabei häufig, aber nicht immer, die
 Spaltennamen. Damit wissen Sie bereits das Wichtigste. Mehr zu ".csv" Dateien
 finden sie unter:
 <https://jakobtures.github.io/web-scraping/files.html>{target="_blank"}
@@ -606,22 +604,22 @@ stammdaten_19 %>%
   write_csv(file = "alter_partei_titel_1.csv")
 ```
 
-Aus Gründen die vermutlich nur Microsoft selbst bekannt sind -- ich tippe auf
-missverstandene "Nutzerfreundlichkeit" --, können ".csv" Dateien in denen die
-Spalten durch Kommas getrennt sind -- der internationale Standard -- auf
+Aus Gründen, die vermutlich nur Microsoft selbst bekannt sind -- ich tippe auf
+missverstandene "Nutzerfreundlichkeit" --, können ".csv" Dateien, in denen die
+Spalten durch Kommata getrennt sind -- der internationale Standard --, auf
 deutschen Windows Systemen nicht ohne weiteres importiert werden. Nutzen Sie
-statt Microsoft Office die open source Alternative Libre Office, ist das Problem
+statt Microsoft Office die Open Source Alternative LibreOffice, ist das Problem
 bereits behoben. Möchten Sie aber Microsoft Office auf einem deutschen System
 nutzen, sollten Sie die Datei im Deutschen Standard speichern. Dabei werden
-statt Kommas Semikolons als Trennzeichen der Spalten verwendet da die Kommas in
-Deutschland zur Darstellung von Dezimalzahlen benötigt werden. Dies ist mit
+statt Kommata Semikolons als Trennzeichen der Spalten verwendet, da die Kommata
+in Deutschland zur Darstellung von Dezimalzahlen benötigt werden. Dies ist mit
 `write_csv2()` auf einfachem Wege möglich.
 
 
 
 #### Weiterführende Resourcen
 
-Es existiert eine Vielzahl von packages die Funktionen zur Formatierung und dem
+Es existiert eine Vielzahl von Packages, die Funktionen zur Formatierung und dem
 Export von Tabellen mitbringen. Aus Platzgründen können wir nicht auf die
 Details eingehen, hier aber einige Startpunkte:
 
@@ -636,11 +634,11 @@ Tabellen direkt im ".docx" Format zu erstellen ermöglicht **flextable**:
 **huxtable** kann Tabellen im ".tex" Format zur Arbeit in LaTeX ausgeben:
 <https://hughjonesd.github.io/huxtable/>{target="_blank"}
 
-Möchten sie externe Software zum Schreiben von Hausarbieten und Papers ganz
+Möchten sie externe Software zum Schreiben von Hausarbeiten und Papers ganz
 umgehen, könnte *R Markdown* für Sie von Interesse sein. Dies ermöglicht das
 gleichzeitige Schreiben von Text und Code in einem Dokument. Die Ausgabe ist
-unter anderem in ".pdf" möglich und kann neben dem Text auch Code der
-dargettellt werden soll sowie Tabellen und Grafiken enthalten. Einige Resourcen
+unter anderem in ".pdf" möglich und kann neben dem Text auch Code, der
+dargettellt werden soll, sowie Tabellen und Grafiken enthalten. Einige Resourcen
 zu R Markdown finden Sie hier:
 
 * Einführung der RStudio website: <https://rmarkdown.rstudio.com/lesson-1.html>{target_"blank"}
@@ -648,7 +646,7 @@ zu R Markdown finden Sie hier:
 * Kapitel zu R Markdown in "R for Data Science" von Hadley Wickham und Garrett Grolemund: <https://r4ds.had.co.nz/r-markdown.html>{target="_blank"}
 * "R Markdown Cookbook" von Yihui Xie, Christophe Dervieux, Emily Riederer: <https://bookdown.org/yihui/rmarkdown-cookbook/>{target="_blank"}
 
-Die Website die Sie aktuell betrachten sowie viele der verlinkten Resourcen
+Die Website, die Sie aktuell betrachten, sowie viele der verlinkten Resourcen
 sind mit **bookdown** geschrieben, welches auf R Markdown aufbaut und sich vor
 allem für umfangreichere Projekte eignet.
 
