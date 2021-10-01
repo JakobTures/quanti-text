@@ -12,7 +12,7 @@ vektoren
 subsetting
 typen-von-vektoren
 weitere-datentypen
-data-frames
+dataframes
 listen
 r-packages
 installieren-und-laden
@@ -52,13 +52,3 @@ kontinuierliches-x-y
 kategoriales-x-kontinuierliches-y
 kontinuierliches-x
 graphiken-exportieren
-BT19
-tidytext1
-tidytext2
-tidytext3
-tidytext4
-quanteda1
-quanteda2
-quanteda3
-ML1
-ML2

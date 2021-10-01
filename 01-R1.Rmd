@@ -1,5 +1,3 @@
-# (PART) R & RStudio {-}
-
 # R Basics {#R1}
 
 ``` {r, include = FALSE}

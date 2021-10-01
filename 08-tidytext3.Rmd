@@ -1,7 +1,0 @@
-# n-grams & correlations {#tidytext3}
-
-``` {r, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE)
-knitr::opts_chunk$set(cache = TRUE)
-knitr::opts_chunk$set(cache.path = 'cache/')
-```

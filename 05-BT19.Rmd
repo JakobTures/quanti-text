@@ -1,9 +1,0 @@
-# (PART) Der Datensatz {-}
-
-# Plenarprotokolle des 19. Bundestags {#BT19}
-
-``` {r, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE)
-knitr::opts_chunk$set(cache = TRUE)
-knitr::opts_chunk$set(cache.path = 'cache/')
-```

@@ -4,7 +4,7 @@ bookdown::gitbook:
       collapse: section
       scroll_highlight: yes
       before: |
-        Quantitative Textanalyse mit R
+        Kurzeinführung R
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     edit: https://github.com/JakobTures/quanti-text.git/%s
